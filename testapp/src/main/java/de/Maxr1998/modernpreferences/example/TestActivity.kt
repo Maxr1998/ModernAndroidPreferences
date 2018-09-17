@@ -1,4 +1,4 @@
-package de.Maxr1998.testapp
+package de.Maxr1998.modernpreferences.example
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
