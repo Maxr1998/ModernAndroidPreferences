@@ -2,10 +2,12 @@ package de.Maxr1998.modernpreferences.helpers
 
 import android.content.Context
 import android.view.View
+import android.widget.CompoundButton
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.preferences.CategoryHeader
 import de.Maxr1998.modernpreferences.preferences.SwitchPreference
+import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
 
 inline fun screen(context: Context?, block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
     return PreferenceScreen.Builder(context).apply(block).build()
@@ -32,6 +34,12 @@ inline fun PreferenceScreen.Builder.switch(key: String, block: SwitchPreference.
 inline fun Preference.click(crossinline callback: (View) -> Unit) {
     clickListener = View.OnClickListener {
         callback(it)
+    }
+}
+
+inline fun TwoStatePreference.changed(crossinline callback: (CompoundButton, Boolean) -> Unit) {
+    checkedChangeListener = CompoundButton.OnCheckedChangeListener { button, checked ->
+        callback(button, checked)
     }
 }
 
