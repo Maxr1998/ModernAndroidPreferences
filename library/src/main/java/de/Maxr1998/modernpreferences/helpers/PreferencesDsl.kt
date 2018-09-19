@@ -1,6 +1,7 @@
 package de.Maxr1998.modernpreferences.helpers
 
 import android.content.Context
+import android.view.View
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.preferences.CategoryHeader
@@ -26,6 +27,12 @@ inline fun PreferenceScreen.Builder.pref(key: String, block: Preference.() -> Un
 
 inline fun PreferenceScreen.Builder.switch(key: String, block: SwitchPreference.() -> Unit) {
     addPreferenceItem(SwitchPreference(key).apply(block))
+}
+
+inline fun Preference.click(crossinline callback: (View) -> Unit) {
+    clickListener = View.OnClickListener {
+        callback(it)
+    }
 }
 
 inline fun <reified T : Preference> PreferenceScreen.Builder.custom(key: String, block: T.() -> Unit) {
