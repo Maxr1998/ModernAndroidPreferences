@@ -10,7 +10,7 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
 
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
         super.bindViews(holder)
-        checked = getBoolean(false)
+        checked = getBoolean(checked)
         updateView(holder)
     }
 
