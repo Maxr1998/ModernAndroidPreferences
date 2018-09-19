@@ -6,7 +6,7 @@ import de.Maxr1998.modernpreferences.PreferencesAdapter
 
 abstract class TwoStatePreference(key: String) : Preference(key) {
     var checked = false
-    var checkedChangeListener: CompoundButton.OnCheckedChangeListener? = null
+    var checkedChangeListener: OnCheckedChangeListener? = null
 
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
         super.bindViews(holder)
@@ -21,7 +21,17 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
     override fun onClick(holder: PreferencesAdapter.ViewHolder) {
         checked = !checked
         commitBoolean(checked)
-        updateView(holder)
-        checkedChangeListener?.onCheckedChanged(holder.widget as CompoundButton, checked)
+        if (checkedChangeListener?.onCheckedChanged(this, holder, checked) == true)
+            bindViews(holder)
+        else updateView(holder)
+    }
+
+    interface OnCheckedChangeListener {
+        /**
+         * Notified when the [checked][TwoStatePreference.checked] state of the connected [TwoStatePreference] changes
+         *
+         * @return true if the preference changed and needs to update its views
+         */
+        fun onCheckedChanged(preference: TwoStatePreference, holder: PreferencesAdapter.ViewHolder, checked: Boolean): Boolean
     }
 }

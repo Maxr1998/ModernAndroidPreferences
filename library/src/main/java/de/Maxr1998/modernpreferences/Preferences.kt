@@ -3,7 +3,6 @@ package de.Maxr1998.modernpreferences
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
-import android.view.View
 import androidx.annotation.CallSuper
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
@@ -49,7 +48,7 @@ open class Preference(key: String) : AbstractPreference(key) {
     var enabled = true
     var dependency: String? = null
 
-    var clickListener: View.OnClickListener? = null
+    var clickListener: OnClickListener? = null
 
     private var attachedScreen: PreferenceScreen? = null
 
@@ -90,7 +89,8 @@ open class Preference(key: String) : AbstractPreference(key) {
 
     internal fun performClick(holder: PreferencesAdapter.ViewHolder) {
         onClick(holder)
-        clickListener?.onClick(holder.itemView)
+        if (clickListener?.onClick(this, holder) == true)
+            bindViews(holder)
     }
 
     open fun onClick(holder: PreferencesAdapter.ViewHolder) {}
@@ -138,6 +138,15 @@ open class Preference(key: String) : AbstractPreference(key) {
         attachedScreen?.prefs?.getString(key, defaultValue) ?: defaultValue
     } catch (e: ClassCastException) {
         defaultValue
+    }
+
+    interface OnClickListener {
+        /**
+         * Notified when the connected [Preference] is clicked
+         *
+         * @return true if the preference changed and needs to update its views
+         */
+        fun onClick(preference: Preference, holder: PreferencesAdapter.ViewHolder): Boolean
     }
 }
 

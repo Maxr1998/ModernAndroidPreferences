@@ -1,10 +1,9 @@
 package de.Maxr1998.modernpreferences.helpers
 
 import android.content.Context
-import android.view.View
-import android.widget.CompoundButton
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferenceScreen
+import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.preferences.CategoryHeader
 import de.Maxr1998.modernpreferences.preferences.SwitchPreference
 import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
@@ -31,15 +30,17 @@ inline fun PreferenceScreen.Builder.switch(key: String, block: SwitchPreference.
     addPreferenceItem(SwitchPreference(key).apply(block))
 }
 
-inline fun Preference.click(crossinline callback: (View) -> Unit) {
-    clickListener = View.OnClickListener {
-        callback(it)
+inline fun Preference.click(crossinline callback: (Preference, PreferencesAdapter.ViewHolder) -> Boolean) {
+    clickListener = object : Preference.OnClickListener {
+        override fun onClick(preference: Preference, holder: PreferencesAdapter.ViewHolder) =
+                callback(preference, holder)
     }
 }
 
-inline fun TwoStatePreference.changed(crossinline callback: (CompoundButton, Boolean) -> Unit) {
-    checkedChangeListener = CompoundButton.OnCheckedChangeListener { button, checked ->
-        callback(button, checked)
+inline fun TwoStatePreference.changed(crossinline callback: (TwoStatePreference, PreferencesAdapter.ViewHolder, Boolean) -> Boolean) {
+    checkedChangeListener = object : TwoStatePreference.OnCheckedChangeListener {
+        override fun onCheckedChanged(preference: TwoStatePreference, holder: PreferencesAdapter.ViewHolder, checked: Boolean) =
+                callback(preference, holder, checked)
     }
 }
 
