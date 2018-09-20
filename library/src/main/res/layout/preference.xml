@@ -30,7 +30,7 @@ https://android.googlesource.com/platform/frameworks/base/+/master/core/res/res/
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="-4dp"
-        android:gravity="start|center_vertical"
+        android:gravity="center"
         android:minWidth="60dp"
         android:orientation="horizontal"
         android:paddingStart="0dp"
@@ -38,12 +38,10 @@ https://android.googlesource.com/platform/frameworks/base/+/master/core/res/res/
         android:paddingEnd="12dp"
         android:paddingBottom="4dp">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@android:id/icon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxWidth="48dp"
-            android:maxHeight="48dp" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <RelativeLayout

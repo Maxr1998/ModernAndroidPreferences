@@ -41,6 +41,10 @@ class TestActivity : AppCompatActivity() {
                 title = "Switch"
                 description = "This is a switch"
             }
+            pref("five") {
+                title = "With icon!"
+                iconRes = R.drawable.ic_emoji_24dp
+            }
         })
     }
 
