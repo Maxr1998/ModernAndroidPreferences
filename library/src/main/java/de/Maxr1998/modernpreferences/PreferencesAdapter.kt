@@ -42,9 +42,9 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
         if (secondScreenAdapter?.goBack() == true)
             return true
 
-        // Remove current screen from stack and check if it was the last one
-        screenStack.pop()
-        if (screenStack.peek() != emptyScreen) {
+        // Remove current screen from stack if more than root and empty screen are on it
+        if (screenStack.size > 2) {
+            screenStack.pop()
             notifyDataSetChanged()
             return true
         }
