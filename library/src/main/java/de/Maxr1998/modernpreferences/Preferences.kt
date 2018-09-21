@@ -126,7 +126,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    internal fun requestRebind() {
+    fun requestRebind() {
         attachedScreen?.requestRebind(screenPosition)
     }
 
@@ -254,7 +254,7 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
     fun requestRebind(key: String) {
         val index = indexOf(key)
         if (index > 0)
-            requestRebind()
+            requestRebind(index)
     }
 
     internal fun requestRebind(position: Int, itemCount: Int = 1) {
