@@ -26,8 +26,7 @@ https://android.googlesource.com/platform/frameworks/base/+/master/core/res/res/
         android:id="@+id/icon_frame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-4dp"
-        android:minWidth="60dp" />
+        android:minWidth="56dp" />
 
     <TextView
         android:id="@android:id/title"

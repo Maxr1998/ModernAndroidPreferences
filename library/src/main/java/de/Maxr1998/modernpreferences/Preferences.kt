@@ -3,6 +3,8 @@ package de.Maxr1998.modernpreferences
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
+import android.view.Gravity
+import android.widget.LinearLayout
 import androidx.annotation.CallSuper
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
@@ -69,20 +71,41 @@ open class Preference(key: String) : AbstractPreference(key) {
      */
     @CallSuper
     open fun bindViews(holder: PreferencesAdapter.ViewHolder) {
-        holder.itemView.isVisible = visible
+        if (attachedScreen == null)
+            throw IllegalStateException("Trying to bind view for a preference not attached to a screen!")
 
+        holder.itemView.isVisible = visible
         var itemVisible = false
         holder.icon?.apply {
             itemVisible = true
-            if (iconRes != -1) setImageResource(iconRes) else if (icon != null) setImageDrawable(icon) else itemVisible = false
+            when {
+                iconRes != -1 -> setImageResource(iconRes)
+                icon != null -> setImageDrawable(icon)
+                else -> {
+                    setImageDrawable(null)
+                    itemVisible = false
+                }
+            }
         }
-        holder.iconFrame?.isVisible = itemVisible
+        holder.iconFrame.apply {
+            isVisible = itemVisible || !attachedScreen!!.collapseIcon
+            if (isVisible && this is LinearLayout) {
+                gravity = if (attachedScreen!!.centerIcon) Gravity.CENTER else Gravity.START or Gravity.CENTER_VERTICAL
+            }
+        }
         holder.title.apply {
             if (titleRes != -1) setText(titleRes) else text = title
         }
         holder.summary?.apply {
             itemVisible = true
-            if (descriptionRes != -1) setText(descriptionRes) else if (description != null) text = description else itemVisible = false
+            when {
+                descriptionRes != -1 -> setText(descriptionRes)
+                description != null -> text = description
+                else -> {
+                    text = null
+                    itemVisible = false
+                }
+            }
             isVisible = itemVisible
         }
     }
@@ -162,6 +185,8 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
     internal val prefs = builder.prefs
     private val keyMap: Map<String, Preference> = builder.keyMap
     private val preferences: List<Preference> = builder.preferences
+    internal val collapseIcon: Boolean = builder.collapseIcon
+    internal val centerIcon: Boolean = builder.centerIcon
 
     init {
         copyFrom(builder)
@@ -189,6 +214,14 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
         constructor(builder: Builder) : this(builder.context)
 
         var preferenceFileName: String = (context?.packageName ?: "package") + "_preferences"
+        /**
+         * If true, the preference items in this screen will have a smaller left padding when they have no icon
+         */
+        var collapseIcon: Boolean = false
+        /**
+         * Center the icon inside its keylines. If false, it will be aligned with a potential back arrow in the toolbar
+         */
+        var centerIcon: Boolean = true
         internal var prefs: SharedPreferences? = null
         internal val keyMap = HashMap<String, Preference>()
         internal val preferences = ArrayList<Preference>()

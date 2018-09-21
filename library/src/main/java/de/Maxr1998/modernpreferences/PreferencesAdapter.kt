@@ -80,7 +80,7 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
     override fun getItemViewType(position: Int) = currentScreen[position].getWidgetLayoutResource()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val iconFrame: View? = itemView.findViewById(R.id.icon_frame)
+        val iconFrame: View = itemView.findViewById(R.id.icon_frame)
         val icon: ImageView? = itemView.findViewById(android.R.id.icon)
         val title: TextView = itemView.findViewById(android.R.id.title)
         val summary: TextView? = itemView.findViewById(android.R.id.summary)
