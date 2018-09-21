@@ -61,17 +61,19 @@ open class Preference(key: String) : AbstractPreference(key) {
 
     var clickListener: OnClickListener? = null
 
-    private var attachedScreen: PreferenceScreen? = null
+    internal var attachedScreen: PreferenceScreen? = null
+    internal var screenPosition: Int = 0
 
     @LayoutRes
     open fun getWidgetLayoutResource(): Int {
         return -1
     }
 
-    internal fun attachToScreen(screen: PreferenceScreen) {
+    internal fun attachToScreen(screen: PreferenceScreen, position: Int) {
         if (attachedScreen != null)
             throw IllegalStateException("Preference was already attached to a screen!")
         attachedScreen = screen
+        screenPosition = position
     }
 
     /**
@@ -117,6 +119,10 @@ open class Preference(key: String) : AbstractPreference(key) {
             }
             isVisible = itemVisible
         }
+    }
+
+    internal fun requestRebind() {
+        attachedScreen?.requestRebind(screenPosition)
     }
 
     internal fun performClick(holder: PreferencesAdapter.ViewHolder) {
@@ -197,10 +203,12 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
     internal val collapseIcon: Boolean = builder.collapseIcon
     internal val centerIcon: Boolean = builder.centerIcon
 
+    internal var adapter: PreferencesAdapter? = null
+
     init {
         copyFrom(builder)
         for (i in preferences.indices)
-            preferences[i].attachToScreen(this)
+            preferences[i].attachToScreen(this, i)
     }
 
     /**
@@ -215,9 +223,29 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
      */
     operator fun get(key: String) = keyMap[key]
 
+    fun indexOf(key: String): Int {
+        if (!contains(key))
+            return -1
+        for (i in preferences.indices) {
+            if (key == preferences[i].key)
+                return i
+        }
+        throw IllegalStateException("Preference not found although it's in the keyMap, how could this happen??")
+    }
+
     fun size() = preferences.size
 
-    fun contains(preference: String) = keyMap.containsKey(preference)
+    fun contains(key: String) = keyMap.containsKey(key)
+
+    fun requestRebind(key: String) {
+        val index = indexOf(key)
+        if (index > 0)
+            requestRebind()
+    }
+
+    internal fun requestRebind(position: Int, itemCount: Int = 1) {
+        adapter?.notifyItemRangeChanged(position, itemCount)
+    }
 
     class Builder(private var context: Context?) : AbstractPreference("") {
         constructor(builder: Builder) : this(builder.context)

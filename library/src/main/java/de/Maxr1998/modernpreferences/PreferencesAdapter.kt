@@ -25,17 +25,21 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
     var secondScreenAdapter: PreferencesAdapter? = null
 
     fun setRootScreen(root: PreferenceScreen) {
+        currentScreen.adapter = null
         while (screenStack.peek() != emptyScreen) {
             screenStack.pop()
         }
         screenStack.push(root)
+        currentScreen.adapter = this
         notifyDataSetChanged()
         onScreenChangeListener?.onScreenChanged(root, false)
     }
 
     private fun openScreen(screen: PreferenceScreen) {
         secondScreenAdapter?.setRootScreen(screen) ?: /* ELSE */ run {
+            currentScreen.adapter = null
             screenStack.push(screen)
+            currentScreen.adapter = this
             notifyDataSetChanged()
         }
         onScreenChangeListener?.onScreenChanged(screen, true)
@@ -48,9 +52,12 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
         if (secondScreenAdapter?.goBack() == true)
             return true
 
+        currentScreen.adapter = null
+
         // Remove current screen from stack if more than root and empty screen are on it
         if (isInSubScreen()) {
             screenStack.pop()
+            currentScreen.adapter = this
             notifyDataSetChanged()
             onScreenChangeListener?.onScreenChanged(currentScreen, isInSubScreen())
             return true
