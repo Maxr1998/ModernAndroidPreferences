@@ -37,13 +37,15 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
         }
     }
 
+    fun isInSubScreen() = screenStack.size > 2
+
     fun goBack(): Boolean {
         // Check if second screen can still go back
         if (secondScreenAdapter?.goBack() == true)
             return true
 
         // Remove current screen from stack if more than root and empty screen are on it
-        if (screenStack.size > 2) {
+        if (isInSubScreen()) {
             screenStack.pop()
             notifyDataSetChanged()
             return true
