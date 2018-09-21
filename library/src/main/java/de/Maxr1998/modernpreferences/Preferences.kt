@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.view.Gravity
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.annotation.CallSuper
 import androidx.annotation.DrawableRes
@@ -86,6 +87,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         if (attachedScreen == null)
             throw IllegalStateException("Trying to bind view for a preference not attached to a screen!")
 
+        holder.itemView.layoutParams.height = if (visible) ViewGroup.LayoutParams.WRAP_CONTENT else 0
         holder.itemView.isVisible = visible
         var itemVisible = false
         holder.icon?.apply {
