@@ -30,6 +30,12 @@ inline fun PreferenceScreen.Builder.switch(key: String, block: SwitchPreference.
     addPreferenceItem(SwitchPreference(key).apply(block))
 }
 
+inline fun PreferenceScreen.Builder.collapse(block: PreferenceScreen.Builder.() -> Unit) {
+    collapseNext()
+    block()
+    collapseEnd()
+}
+
 inline fun Preference.click(crossinline callback: (Preference) -> Boolean) {
     clickListener = object : Preference.OnClickListener {
         override fun onClick(preference: Preference, holder: PreferencesAdapter.ViewHolder) =

@@ -11,6 +11,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.core.view.isVisible
+import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 
 abstract class AbstractPreference internal constructor(val key: String) {
     // UI
@@ -263,6 +264,8 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
         internal val keyMap = HashMap<String, Preference>()
         internal val preferences = ArrayList<Preference>()
 
+        private var collapsePreference: CollapsePreference? = null
+
         /**
          * Add the specified preference to this screen - it doesn't make sense to call this directly,
          * use the dsl helper methods like [pref][de.Maxr1998.modernpreferences.helpers.pref],
@@ -276,6 +279,18 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
             if (p is PreferenceScreen || keyMap.put(p.key, p) == null)
                 preferences.add(p)
             else throw UnsupportedOperationException("A preference with this key is already in the screen!")
+
+            collapsePreference?.addItem(p)
+        }
+
+        fun collapseNext() {
+            val collapse = CollapsePreference()
+            addPreferenceItem(collapse)
+            collapsePreference = collapse
+        }
+
+        fun collapseEnd() {
+            collapsePreference = null
         }
 
         fun build(): PreferenceScreen {
