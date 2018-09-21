@@ -224,6 +224,11 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
      */
     operator fun get(key: String) = keyMap[key]
 
+    /**
+     * Find the index of the Preference with the supplied [key]
+     *
+     * @return the index or -1 if it wasn't found
+     */
     fun indexOf(key: String): Int {
         if (!contains(key))
             return -1
@@ -238,6 +243,10 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
 
     fun contains(key: String) = keyMap.containsKey(key)
 
+    /**
+     * Request rebind of the Preference in this screen with the specified [key]
+     * No-op if this screen doesn't contain such preference
+     */
     fun requestRebind(key: String) {
         val index = indexOf(key)
         if (index > 0)
@@ -251,6 +260,9 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
     class Builder(private var context: Context?) : AbstractPreference("") {
         constructor(builder: Builder) : this(builder.context)
 
+        /**
+         * The filename to use for the [SharedPreferences] of this [PreferenceScreen]
+         */
         var preferenceFileName: String = (context?.packageName ?: "package") + "_preferences"
         /**
          * If true, the preference items in this screen will have a smaller left padding when they have no icon

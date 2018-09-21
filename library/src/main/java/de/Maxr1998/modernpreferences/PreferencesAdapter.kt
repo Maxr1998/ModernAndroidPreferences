@@ -20,6 +20,9 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
     val currentScreen: PreferenceScreen
         get() = screenStack.peek()
 
+    /**
+     * Listener which will be notified of screen change events
+     */
     var onScreenChangeListener: OnScreenChangeListener? = null
 
     var secondScreenAdapter: PreferencesAdapter? = null
@@ -47,16 +50,17 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
 
     fun isInSubScreen() = screenStack.size > 2
 
+    /**
+     * If possible, return to the previous screen
+     *
+     * @return true if it returned to an earlier screen, false if we're already at the root
+     */
     fun goBack(): Boolean {
-        // Check if second screen can still go back
-        if (secondScreenAdapter?.goBack() == true)
+        if (secondScreenAdapter?.goBack() == true) // Check if the second screen can still go back
             return true
-
         currentScreen.adapter = null
-
-        // Remove current screen from stack if more than root and empty screen are on it
-        if (isInSubScreen()) {
-            screenStack.pop()
+        if (isInSubScreen()) { // If we're in a sub-screen...
+            screenStack.pop() // ...remove current screen from stack
             currentScreen.adapter = this
             notifyDataSetChanged()
             onScreenChangeListener?.onScreenChanged(currentScreen, isInSubScreen())
@@ -93,6 +97,9 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
     @LayoutRes
     override fun getItemViewType(position: Int) = currentScreen[position].getWidgetLayoutResource()
 
+    /**
+     * Common ViewHolder in [PreferencesAdapter] for every [Preference] object/every preference extending it
+     */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val iconFrame: View = itemView.findViewById(R.id.icon_frame)
         val icon: ImageView? = itemView.findViewById(android.R.id.icon)
@@ -101,6 +108,10 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
         val widget: View? = itemView.findViewById<ViewGroup>(R.id.widget_frame)?.getChildAt(0)
     }
 
+    /**
+     * An interface to notify observers in [PreferencesAdapter] of screen change events,
+     * when a sub-screen was opened or closed
+     */
     interface OnScreenChangeListener {
         fun onScreenChanged(screen: PreferenceScreen, subScreen: Boolean)
     }
