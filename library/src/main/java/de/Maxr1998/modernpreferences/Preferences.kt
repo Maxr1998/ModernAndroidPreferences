@@ -37,6 +37,15 @@ abstract class AbstractPreference internal constructor(val key: String) {
 
         visible = other.visible
     }
+
+    override fun equals(other: Any?): Boolean {
+        return when {
+            other == null -> false
+            this === other -> true
+            this::class.java == other::class.java && key == (other as AbstractPreference).key -> true
+            else -> false
+        }
+    }
 }
 
 /**
