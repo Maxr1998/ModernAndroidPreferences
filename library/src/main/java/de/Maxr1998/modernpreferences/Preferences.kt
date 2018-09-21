@@ -48,6 +48,8 @@ abstract class AbstractPreference internal constructor(val key: String) {
             else -> false
         }
     }
+
+    override fun hashCode() = key.hashCode()
 }
 
 /**
