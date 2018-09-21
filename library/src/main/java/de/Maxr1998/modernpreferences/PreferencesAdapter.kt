@@ -20,6 +20,8 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
     val currentScreen: PreferenceScreen
         get() = screenStack.peek()
 
+    var onScreenChangeListener: OnScreenChangeListener? = null
+
     var secondScreenAdapter: PreferencesAdapter? = null
 
     fun setRootScreen(root: PreferenceScreen) {
@@ -28,6 +30,7 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
         }
         screenStack.push(root)
         notifyDataSetChanged()
+        onScreenChangeListener?.onScreenChanged(root, false)
     }
 
     private fun openScreen(screen: PreferenceScreen) {
@@ -35,6 +38,7 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
             screenStack.push(screen)
             notifyDataSetChanged()
         }
+        onScreenChangeListener?.onScreenChanged(screen, true)
     }
 
     fun isInSubScreen() = screenStack.size > 2
@@ -48,6 +52,7 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
         if (isInSubScreen()) {
             screenStack.pop()
             notifyDataSetChanged()
+            onScreenChangeListener?.onScreenChanged(currentScreen, isInSubScreen())
             return true
         }
         return false
@@ -87,5 +92,9 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
         val title: TextView = itemView.findViewById(android.R.id.title)
         val summary: TextView? = itemView.findViewById(android.R.id.summary)
         val widget: View? = itemView.findViewById<ViewGroup>(R.id.widget_frame)?.getChildAt(0)
+    }
+
+    interface OnScreenChangeListener {
+        fun onScreenChanged(screen: PreferenceScreen, subScreen: Boolean)
     }
 }
