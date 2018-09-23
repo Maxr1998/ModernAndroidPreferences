@@ -61,6 +61,10 @@ abstract class AbstractPreference internal constructor(val key: String) {
 open class Preference(key: String) : AbstractPreference(key) {
     // State
     var enabled = true
+        set(value) {
+            field = value
+            requestRebind()
+        }
     var dependency: String? = null
 
     var clickListener: OnClickListener? = null
@@ -93,7 +97,13 @@ open class Preference(key: String) : AbstractPreference(key) {
             throw IllegalStateException("Trying to bind view for a preference not attached to a screen!")
 
         holder.itemView.layoutParams.height = if (visible) ViewGroup.LayoutParams.WRAP_CONTENT else 0
-        holder.itemView.isVisible = visible
+        if (!visible) {
+            holder.itemView.isVisible = false
+            return
+        }
+        if (enabled != holder.itemView.isEnabled) // Only set if different from ViewHolder
+            holder.setEnabledState(enabled)
+
         var itemVisible = false
         holder.icon?.apply {
             itemVisible = true
@@ -127,6 +137,7 @@ open class Preference(key: String) : AbstractPreference(key) {
             }
             isVisible = itemVisible
         }
+        holder.itemView.isVisible = visible
     }
 
     fun requestRebind() {

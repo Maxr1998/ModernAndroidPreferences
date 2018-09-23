@@ -1,11 +1,13 @@
 package de.Maxr1998.modernpreferences
 
+import android.preference.Preference
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.helpers.emptyScreen
 import de.Maxr1998.modernpreferences.preferences.CategoryHeader
@@ -106,6 +108,19 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
         val title: TextView = itemView.findViewById(android.R.id.title)
         val summary: TextView? = itemView.findViewById(android.R.id.summary)
         val widget: View? = itemView.findViewById<ViewGroup>(R.id.widget_frame)?.getChildAt(0)
+
+        internal fun setEnabledState(enabled: Boolean) {
+            setEnabledStateRecursive(itemView, enabled)
+        }
+
+        private fun setEnabledStateRecursive(v: View, enabled: Boolean) {
+            v.isEnabled = enabled
+            if (v is ViewGroup) {
+                for (i in v.childCount - 1 downTo 0) {
+                    setEnabledStateRecursive(v[i], enabled)
+                }
+            }
+        }
     }
 
     /**
