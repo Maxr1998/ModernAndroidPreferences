@@ -1,6 +1,7 @@
 package de.Maxr1998.modernpreferences.preferences
 
 import android.widget.CompoundButton
+import androidx.core.view.isVisible
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 
@@ -15,12 +16,22 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
     var defaultValue = false
     var checkedChangeListener: OnCheckedChangeListener? = null
 
+    var summaryOn: String? = null
+    var summaryOnRes: Int = -1
+
     override fun onAttach() {
         checkedInternal = getBoolean(defaultValue)
     }
 
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
         super.bindViews(holder)
+        holder.summary?.apply {
+            when {
+                !isVisible -> return@apply
+                summaryOnRes != -1 -> setText(summaryOnRes)
+                summaryOn != null -> text = summaryOn
+            }
+        }
         updateButton(holder)
     }
 
