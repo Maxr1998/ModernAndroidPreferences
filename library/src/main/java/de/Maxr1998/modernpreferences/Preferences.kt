@@ -78,7 +78,10 @@ open class Preference(key: String) : AbstractPreference(key) {
             throw IllegalStateException("Preference was already attached to a screen!")
         attachedScreen = screen
         screenPosition = position
+        onAttach()
     }
+
+    internal open fun onAttach() {}
 
     /**
      * Binds the preference-data to its views from the [view holder][PreferencesAdapter.ViewHolder]
