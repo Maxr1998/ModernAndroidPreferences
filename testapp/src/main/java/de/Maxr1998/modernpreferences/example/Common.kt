@@ -24,9 +24,18 @@ object Common {
                 iconRes = R.drawable.ic_emoji_24dp
             }
         }
+        val five = pref("three") {
+            title = "Dependent on the above"
+            summary = "Make sure the summary also gets disabled"
+        }
         switch("four") {
             title = "Switch"
             summary = "This is a switch"
+            summaryOn = "Now it's checked!"
+            changed { _, _, checked ->
+                five.enabled = checked
+                true
+            }
         }
         collapse {
             pref("five") {
