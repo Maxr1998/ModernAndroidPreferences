@@ -50,9 +50,9 @@ inline fun Preference.clickView(crossinline callback: (Preference, PreferencesAd
     }
 }
 
-inline fun TwoStatePreference.changed(crossinline callback: (TwoStatePreference, PreferencesAdapter.ViewHolder, Boolean) -> Boolean) {
+inline fun TwoStatePreference.changed(crossinline callback: (TwoStatePreference, PreferencesAdapter.ViewHolder?, Boolean) -> Boolean) {
     checkedChangeListener = object : TwoStatePreference.OnCheckedChangeListener {
-        override fun onCheckedChanged(preference: TwoStatePreference, holder: PreferencesAdapter.ViewHolder, checked: Boolean) =
+        override fun onCheckedChanged(preference: TwoStatePreference, holder: PreferencesAdapter.ViewHolder?, checked: Boolean) =
                 callback(preference, holder, checked)
     }
 }

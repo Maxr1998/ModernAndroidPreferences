@@ -5,11 +5,18 @@ import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 
 abstract class TwoStatePreference(key: String) : Preference(key) {
-    var checked = false
+    private var checkedInternal = false
+    var checked: Boolean
+        get() = checkedInternal
+        set(value) {
+            if (value != checkedInternal)
+                updateState(null, value)
+        }
+    var defaultValue = false
     var checkedChangeListener: OnCheckedChangeListener? = null
 
     override fun onAttach() {
-        checked = getBoolean(checked)
+        checkedInternal = getBoolean(defaultValue)
     }
 
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
@@ -17,24 +24,34 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
         updateButton(holder)
     }
 
+    private fun updateState(holder: PreferencesAdapter.ViewHolder?, new: Boolean) {
+        if (checkedChangeListener?.onCheckedChanged(this, holder, new) != false) {
+            commitBoolean(new)
+            checkedInternal = new // Update internal state
+            if (holder != null)
+                updateButton(holder)
+        }
+    }
+
     private fun updateButton(holder: PreferencesAdapter.ViewHolder) {
-        (holder.widget as CompoundButton).isChecked = checked
+        (holder.widget as CompoundButton).isChecked = checkedInternal
     }
 
     override fun onClick(holder: PreferencesAdapter.ViewHolder) {
-        checked = !checked
-        commitBoolean(checked)
-        if (checkedChangeListener?.onCheckedChanged(this, holder, checked) == true)
-            bindViews(holder)
-        else updateButton(holder)
+        updateState(holder, !checkedInternal)
     }
 
     interface OnCheckedChangeListener {
         /**
-         * Notified when the [checked][TwoStatePreference.checked] state of the connected [TwoStatePreference] changes
+         * Notified when the [checked][TwoStatePreference.checked] state of the connected [TwoStatePreference] changes.
+         * This is called before the change gets persisted and can be prevented by returning false.
          *
-         * @return true if the preference changed and needs to update its views
+         * @param holder the [ViewHolder][PreferencesAdapter.ViewHolder] with the views of the Preference instance,
+         * or null if the change didn't occur as part of a click event
+         * @param checked the new state
+         *
+         * @return true to commit the new button state to [SharedPreferences][android.content.SharedPreferences]
          */
-        fun onCheckedChanged(preference: TwoStatePreference, holder: PreferencesAdapter.ViewHolder, checked: Boolean): Boolean
+        fun onCheckedChanged(preference: TwoStatePreference, holder: PreferencesAdapter.ViewHolder?, checked: Boolean): Boolean
     }
 }
