@@ -19,9 +19,9 @@ abstract class AbstractPreference internal constructor(val key: String) {
     var title: String = ""
     @StringRes
     var titleRes: Int = -1
-    var description: String? = null
+    var summary: String? = null
     @StringRes
-    var descriptionRes: Int = -1
+    var summaryRes: Int = -1
     var icon: Drawable? = null
     @DrawableRes
     var iconRes: Int = -1
@@ -32,8 +32,8 @@ abstract class AbstractPreference internal constructor(val key: String) {
     internal fun copyFrom(other: AbstractPreference) {
         title = other.title
         titleRes = other.titleRes
-        description = other.description
-        descriptionRes = other.descriptionRes
+        summary = other.summary
+        summaryRes = other.summaryRes
         icon = other.icon
         iconRes = other.iconRes
 
@@ -118,8 +118,8 @@ open class Preference(key: String) : AbstractPreference(key) {
         holder.summary?.apply {
             itemVisible = true
             when {
-                descriptionRes != -1 -> setText(descriptionRes)
-                description != null -> text = description
+                summaryRes != -1 -> setText(summaryRes)
+                summary != null -> text = summary
                 else -> {
                     text = null
                     itemVisible = false

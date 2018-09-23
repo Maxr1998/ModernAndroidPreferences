@@ -7,7 +7,7 @@ object Common {
     fun createRootScreen(context: Context) = screen(context) {
         pref("one") {
             title = "Important"
-            description = "It actually is!"
+            summary = "It actually is!"
             iconRes = R.drawable.ic_important_24dp
         }
         pref("two") {
@@ -26,7 +26,7 @@ object Common {
         }
         switch("four") {
             title = "Switch"
-            description = "This is a switch"
+            summary = "This is a switch"
         }
         collapse {
             pref("five") {
@@ -38,7 +38,7 @@ object Common {
             }
             pref("seven") {
                 title = "See summary"
-                description = "Here we also have a summary"
+                summary = "Here we also have a summary"
             }
         }
     }
