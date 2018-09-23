@@ -22,12 +22,16 @@ inline fun PreferenceScreen.Builder.categoryHeader(key: String, block: Preferenc
     addPreferenceItem(CategoryHeader(key).apply(block))
 }
 
-inline fun PreferenceScreen.Builder.pref(key: String, block: Preference.() -> Unit) {
-    addPreferenceItem(Preference(key).apply(block))
+inline fun PreferenceScreen.Builder.pref(key: String, block: Preference.() -> Unit): Preference {
+    val p = Preference(key).apply(block)
+    addPreferenceItem(p)
+    return p
 }
 
-inline fun PreferenceScreen.Builder.switch(key: String, block: SwitchPreference.() -> Unit) {
-    addPreferenceItem(SwitchPreference(key).apply(block))
+inline fun PreferenceScreen.Builder.switch(key: String, block: SwitchPreference.() -> Unit): SwitchPreference {
+    val sp = SwitchPreference(key).apply(block)
+    addPreferenceItem(sp)
+    return sp
 }
 
 inline fun PreferenceScreen.Builder.collapse(block: PreferenceScreen.Builder.() -> Unit) {
@@ -57,6 +61,8 @@ inline fun TwoStatePreference.changed(crossinline callback: (TwoStatePreference,
     }
 }
 
-inline fun <reified T : Preference> PreferenceScreen.Builder.custom(key: String, block: T.() -> Unit) {
-    addPreferenceItem(T::class.java.getConstructor(String::class.java).newInstance(key).apply(block))
+inline fun <reified T : Preference> PreferenceScreen.Builder.custom(key: String, block: T.() -> Unit): T {
+    val c = T::class.java.getConstructor(String::class.java).newInstance(key).apply(block)
+    addPreferenceItem(c)
+    return c
 }
