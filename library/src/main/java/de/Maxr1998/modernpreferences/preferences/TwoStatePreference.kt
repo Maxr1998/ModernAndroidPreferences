@@ -8,13 +8,16 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
     var checked = false
     var checkedChangeListener: OnCheckedChangeListener? = null
 
-    override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
-        super.bindViews(holder)
+    override fun onAttach() {
         checked = getBoolean(checked)
-        updateView(holder)
     }
 
-    private fun updateView(holder: PreferencesAdapter.ViewHolder) {
+    override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
+        super.bindViews(holder)
+        updateButton(holder)
+    }
+
+    private fun updateButton(holder: PreferencesAdapter.ViewHolder) {
         (holder.widget as CompoundButton).isChecked = checked
     }
 
@@ -23,7 +26,7 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
         commitBoolean(checked)
         if (checkedChangeListener?.onCheckedChanged(this, holder, checked) == true)
             bindViews(holder)
-        else updateView(holder)
+        else updateButton(holder)
     }
 
     interface OnCheckedChangeListener {
