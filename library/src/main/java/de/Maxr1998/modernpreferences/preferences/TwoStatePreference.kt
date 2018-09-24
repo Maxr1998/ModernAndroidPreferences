@@ -64,13 +64,23 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
         (holder.widget as CompoundButton).isChecked = checkedInternal
     }
 
-    private fun updateDependents() {
-        for (i in dependents.indices)
-            dependents[i].enabled = checkedInternal xor disableDependents
+    private fun updateDependent(dependent: Preference) {
+        dependent.enabled = checkedInternal xor disableDependents
     }
 
+    private fun updateDependents() {
+        for (i in dependents.indices)
+            updateDependent(dependents[i])
+    }
+
+    /**
+     * Called from attachToScreen - If we were attached first, we need to update the new dependent here,
+     * otherwise, we'll update all once we get attached ourselves
+     */
     internal fun addDependent(dependent: Preference) {
         dependents.add(dependent)
+        if (attachedScreen != null)
+            updateDependent(dependent)
     }
 
     override fun onClick(holder: PreferencesAdapter.ViewHolder) {
