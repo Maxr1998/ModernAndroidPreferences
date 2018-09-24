@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.core.view.get
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.helpers.emptyScreen
 import de.Maxr1998.modernpreferences.preferences.CategoryHeader
@@ -98,6 +99,25 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
 
     @LayoutRes
     override fun getItemViewType(position: Int) = currentScreen[position].getWidgetLayoutResource()
+
+    /**
+     * Restores the last scroll position if needed and (re-)attaches this adapter's scroll listener
+     */
+    fun restoreAndObserveScrollPosition(preferenceView: RecyclerView) {
+        (preferenceView.layoutManager as? LinearLayoutManager)
+                ?.scrollToPositionWithOffset(currentScreen.scrollPosition, currentScreen.scrollOffset)
+        preferenceView.addOnScrollListener(scrollListener)
+    }
+
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            val position = layoutManager.findFirstCompletelyVisibleItemPosition()
+            val top = recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.top ?: 0
+            currentScreen.scrollPosition = position
+            currentScreen.scrollOffset = top
+        }
+    }
 
     /**
      * Common ViewHolder in [PreferencesAdapter] for every [Preference] object/every preference extending it

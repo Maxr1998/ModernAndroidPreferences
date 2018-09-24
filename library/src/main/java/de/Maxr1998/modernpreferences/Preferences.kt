@@ -231,6 +231,9 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
 
     internal var adapter: PreferencesAdapter? = null
 
+    var scrollPosition = 0
+    var scrollOffset = 0
+
     init {
         copyFrom(builder)
         for (i in preferences.indices)
