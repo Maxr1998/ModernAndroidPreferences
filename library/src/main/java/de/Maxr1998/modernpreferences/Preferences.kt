@@ -13,6 +13,7 @@ import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.core.view.isVisible
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
+import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
 
 abstract class AbstractPreference internal constructor(val key: String) {
     // UI
@@ -82,6 +83,12 @@ open class Preference(key: String) : AbstractPreference(key) {
             throw IllegalStateException("Preference was already attached to a screen!")
         attachedScreen = screen
         screenPosition = position
+        dependency?.also {
+            val p = attachedScreen?.get(it)
+            if (p != null && p is TwoStatePreference)
+                p.addDependent(this)
+            else dependency = null // Invalid
+        }
         onAttach()
     }
 

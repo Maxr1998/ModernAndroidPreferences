@@ -19,8 +19,11 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
     var summaryOn: String? = null
     var summaryOnRes: Int = -1
 
+    private val dependents = ArrayList<Preference>()
+
     override fun onAttach() {
         checkedInternal = getBoolean(defaultValue)
+        updateDependents()
     }
 
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
@@ -44,11 +47,21 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
                     bindViews(holder)
                 } else updateButton(holder)
             } else requestRebind()
+            updateDependents()
         }
     }
 
     private fun updateButton(holder: PreferencesAdapter.ViewHolder) {
         (holder.widget as CompoundButton).isChecked = checkedInternal
+    }
+
+    private fun updateDependents() {
+        for (i in dependents.indices)
+            dependents[i].enabled = checkedInternal
+    }
+
+    internal fun addDependent(dependent: Preference) {
+        dependents.add(dependent)
     }
 
     override fun onClick(holder: PreferencesAdapter.ViewHolder) {
