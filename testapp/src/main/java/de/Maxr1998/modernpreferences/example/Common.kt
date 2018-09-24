@@ -24,6 +24,15 @@ object Common {
                 iconRes = R.drawable.ic_emoji_24dp
             }
         }
+        subScreen {
+            title = "Long list"
+            collapseIcon = true
+            for (i in 1..100)
+                pref(i.toString()) {
+                    title = "Preference item #$i"
+                    summary = "Lorem ipsum …"
+                }
+        }
         switch("four") {
             title = "Switch"
             summary = "This is a switch"
