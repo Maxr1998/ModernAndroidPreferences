@@ -27,7 +27,7 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
         super.bindViews(holder)
         holder.summary?.apply {
             when {
-                !isVisible -> return@apply
+                !isVisible || !checkedInternal -> return@apply
                 summaryOnRes != -1 -> setText(summaryOnRes)
                 summaryOn != null -> text = summaryOn
             }
@@ -39,8 +39,11 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
         if (checkedChangeListener?.onCheckedChanged(this, holder, new) != false) {
             commitBoolean(new)
             checkedInternal = new // Update internal state
-            if (holder != null)
-                updateButton(holder)
+            if (holder != null) {
+                if (summaryOnRes != -1 || summaryOn != null) {
+                    bindViews(holder)
+                } else updateButton(holder)
+            } else requestRebind()
         }
     }
 
