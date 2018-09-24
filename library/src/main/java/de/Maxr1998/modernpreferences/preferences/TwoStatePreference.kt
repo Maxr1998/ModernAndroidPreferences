@@ -13,11 +13,20 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
             if (value != checkedInternal)
                 updateState(null, value)
         }
+    /**
+     * The default value of this preference, when nothing was committed to storage yet
+     */
     var defaultValue = false
     var checkedChangeListener: OnCheckedChangeListener? = null
 
     var summaryOn: String? = null
     var summaryOnRes: Int = -1
+
+    /**
+     * When set to true, dependents are disabled when this preference is checked,
+     * and are enabled when it's not
+     */
+    var disableDependents = false
 
     private val dependents = ArrayList<Preference>()
 
@@ -57,7 +66,7 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
 
     private fun updateDependents() {
         for (i in dependents.indices)
-            dependents[i].enabled = checkedInternal
+            dependents[i].enabled = checkedInternal xor disableDependents
     }
 
     internal fun addDependent(dependent: Preference) {
