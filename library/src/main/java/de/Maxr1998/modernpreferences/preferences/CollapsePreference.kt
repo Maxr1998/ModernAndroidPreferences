@@ -4,11 +4,11 @@ import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.R
 
-class CollapsePreference : Preference("advanced") {
+class CollapsePreference(key: String) : Preference(key) {
     private val preferences = ArrayList<Preference>()
 
     init {
-        title = "Advanced"
+        titleRes = R.string.pref_advanced_block
         iconRes = R.drawable.ic_expand_24dp
     }
 

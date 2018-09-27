@@ -34,8 +34,8 @@ inline fun PreferenceScreen.Builder.switch(key: String, block: SwitchPreference.
     return sp
 }
 
-inline fun PreferenceScreen.Builder.collapse(block: PreferenceScreen.Builder.() -> Unit) {
-    collapseNext()
+inline fun PreferenceScreen.Builder.collapse(key: String = "advanced", block: PreferenceScreen.Builder.() -> Unit) {
+    collapseNext(key)
     block()
     collapseEnd()
 }

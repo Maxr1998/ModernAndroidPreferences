@@ -323,8 +323,8 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
             collapsePreference?.addItem(p)
         }
 
-        fun collapseNext() {
-            val collapse = CollapsePreference()
+        fun collapseNext(key: String) {
+            val collapse = CollapsePreference(key)
             addPreferenceItem(collapse)
             collapsePreference = collapse
         }
