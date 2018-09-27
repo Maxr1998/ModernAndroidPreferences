@@ -39,16 +39,18 @@ class CollapsePreference(key: String) : Preference(key) {
     private fun buildSummary(context: Context) {
         if (summary != null) return
 
-        val titles = ArrayList<String>()
-        for (i in 0..Math.min(5, preferences.size - 1)) {
-            titles += preferences[i].run {
+        val tmpSummary = StringBuilder()
+        val count = Math.min(5, preferences.size - 1)
+        for (i in 0..count) {
+            tmpSummary += preferences[i].run {
                 when {
                     titleRes != -1 -> context.getString(titleRes)
                     else -> title
                 }
             }
+            if (i < count) tmpSummary += ", "
         }
-        summary = titles.joinToString(", ")
+        summary = tmpSummary.toString()
     }
 
     override fun onClick(holder: PreferencesAdapter.ViewHolder) {
@@ -56,5 +58,11 @@ class CollapsePreference(key: String) : Preference(key) {
         for (i in preferences.indices)
             preferences[i].visible = true
         attachedScreen?.requestRebind(screenPosition, 1 + preferences.size)
+    }
+
+    // Utility method
+    @Suppress("NOTHING_TO_INLINE")
+    inline operator fun StringBuilder.plusAssign(string: String) {
+        append(string)
     }
 }
