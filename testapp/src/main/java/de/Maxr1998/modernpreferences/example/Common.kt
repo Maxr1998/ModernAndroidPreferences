@@ -48,12 +48,15 @@ object Common {
                 title = "Invisible by default"
             }
             pref("six") {
-                title = "With icon!"
+                title = "With icon"
                 iconRes = R.drawable.ic_emoji_24dp
             }
             pref("seven") {
                 title = "See summary"
                 summary = "Here we also have a summary"
+            }
+            pref("eight") {
+                title = "A long title to trigger ellipsize in collapse"
             }
         }
     }
