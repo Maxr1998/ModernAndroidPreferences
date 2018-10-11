@@ -23,6 +23,9 @@ object Common {
                 title = "A not so important sub-preference"
                 iconRes = R.drawable.ic_emoji_24dp
             }
+            checkBox("checkbox") {
+                title = "Check me!"
+            }
         }
         subScreen {
             title = "Long list"

@@ -21,6 +21,7 @@ import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.preferences.CategoryHeader
+import de.Maxr1998.modernpreferences.preferences.CheckBoxPreference
 import de.Maxr1998.modernpreferences.preferences.SwitchPreference
 import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
 
@@ -48,6 +49,12 @@ inline fun PreferenceScreen.Builder.switch(key: String, block: SwitchPreference.
     val sp = SwitchPreference(key).apply(block)
     addPreferenceItem(sp)
     return sp
+}
+
+inline fun PreferenceScreen.Builder.checkBox(key: String, block: CheckBoxPreference.() -> Unit): CheckBoxPreference {
+    val cp = CheckBoxPreference(key).apply(block)
+    addPreferenceItem(cp)
+    return cp
 }
 
 inline fun PreferenceScreen.Builder.collapse(key: String = "advanced", block: PreferenceScreen.Builder.() -> Unit) {
