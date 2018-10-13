@@ -26,6 +26,9 @@ object Common {
             checkBox("checkbox") {
                 title = "Check me!"
             }
+            addPreferenceItem(TestDialog().apply {
+                title = "Show dialog"
+            })
         }
         subScreen {
             title = "Long list"
