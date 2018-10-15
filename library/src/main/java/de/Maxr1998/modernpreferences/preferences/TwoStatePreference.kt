@@ -16,6 +16,7 @@
 
 package de.Maxr1998.modernpreferences.preferences
 
+import android.graphics.drawable.StateListDrawable
 import android.widget.CompoundButton
 import androidx.core.view.isVisible
 import de.Maxr1998.modernpreferences.Preference
@@ -77,6 +78,11 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
     }
 
     private fun updateButton(holder: PreferencesAdapter.ViewHolder) {
+        holder.icon?.drawable?.apply {
+            if (this is StateListDrawable) {
+                setState(if (checkedInternal) intArrayOf(android.R.attr.state_checked) else IntArray(0))
+            }
+        }
         (holder.widget as CompoundButton).isChecked = checkedInternal
     }
 
