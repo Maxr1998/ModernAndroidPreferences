@@ -28,6 +28,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.helpers.emptyScreen
 import de.Maxr1998.modernpreferences.preferences.CategoryHeader
+import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 import java.util.*
 
 class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>() {
@@ -79,10 +80,15 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
             return true
         currentScreen.adapter = null
         if (isInSubScreen()) { // If we're in a sub-screen...
-            screenStack.pop() // ...remove current screen from stack
+            val oldScreen = screenStack.pop() // ...remove current screen from stack
             currentScreen.adapter = this
             notifyDataSetChanged()
             onScreenChangeListener?.onScreenChanged(currentScreen, isInSubScreen())
+            for (i in 0 until oldScreen.size()) {
+                val p = oldScreen[i]
+                if (p.javaClass == CollapsePreference::class.java)
+                    (p as CollapsePreference).reset()
+            }
             return true
         }
         return false

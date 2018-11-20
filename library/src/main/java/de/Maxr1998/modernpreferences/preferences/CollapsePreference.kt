@@ -76,6 +76,13 @@ class CollapsePreference(key: String) : Preference(key) {
         attachedScreen?.requestRebind(screenPosition, 1 + preferences.size)
     }
 
+    fun reset() {
+        visible = true
+        for (i in preferences.indices)
+            preferences[i].visible = false
+        attachedScreen?.requestRebind(screenPosition, 1 + preferences.size)
+    }
+
     // Utility method
     @Suppress("NOTHING_TO_INLINE")
     inline operator fun StringBuilder.plusAssign(string: String) {

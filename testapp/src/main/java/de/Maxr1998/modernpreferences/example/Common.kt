@@ -29,6 +29,18 @@ object Common {
             addPreferenceItem(TestDialog().apply {
                 title = "Show dialog"
             })
+            collapse {
+                // Test whether collapse block resets after leaving the screen
+                pref("collapsed_one") {
+                    title = "One"
+                }
+                pref("collapsed_two") {
+                    title = "Two"
+                }
+                pref("collapsed_three") {
+                    title = "Three"
+                }
+            }
         }
         subScreen {
             title = "Long list"
