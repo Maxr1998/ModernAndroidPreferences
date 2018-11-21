@@ -30,7 +30,7 @@ https://android.googlesource.com/platform/frameworks/base/+/master/core/res/res/
 
     <TextView
         android:id="@android:id/title"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
