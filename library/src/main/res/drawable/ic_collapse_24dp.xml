@@ -6,5 +6,5 @@
     <path
         android:name="path"
         android:fillColor="#FF000000"
-        android:pathData="@string/path_ic_expand" />
+        android:pathData="@string/path_ic_collapse" />
 </vector>

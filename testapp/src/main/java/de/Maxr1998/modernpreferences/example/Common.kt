@@ -29,6 +29,11 @@ object Common {
             addPreferenceItem(TestDialog().apply {
                 title = "Show dialog"
             })
+            expandText("about") {
+                title = "About the app"
+                text = "Example implementation of ModernAndroidPreferences, check out the source " +
+                        "on https://github.com/Maxr1998/ModernAndroidPreferences"
+            }
             collapse {
                 // Test whether collapse block resets after leaving the screen
                 pref("collapsed_one") {

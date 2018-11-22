@@ -20,10 +20,7 @@ import android.content.Context
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.PreferencesAdapter
-import de.Maxr1998.modernpreferences.preferences.CategoryHeader
-import de.Maxr1998.modernpreferences.preferences.CheckBoxPreference
-import de.Maxr1998.modernpreferences.preferences.SwitchPreference
-import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
+import de.Maxr1998.modernpreferences.preferences.*
 
 inline fun screen(context: Context?, block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
     return PreferenceScreen.Builder(context).apply(block).build()
@@ -61,6 +58,12 @@ inline fun PreferenceScreen.Builder.collapse(key: String = "advanced", block: Pr
     collapseNext(key)
     block()
     collapseEnd()
+}
+
+inline fun PreferenceScreen.Builder.expandText(key: String, block: ExpandableTextPreference.() -> Unit): ExpandableTextPreference {
+    val etp = ExpandableTextPreference(key).apply(block)
+    addPreferenceItem(etp)
+    return etp
 }
 
 inline fun Preference.click(crossinline callback: (Preference) -> Boolean) {
