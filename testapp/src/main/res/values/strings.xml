@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">ModernPreferences Example</string>
-    <string name="app_name_view_model">ModernPreferences Example (with ViewModel)</string>
+    <string name="app_name_view_model">ModernPreferences Example (+VM)</string>
 </resources>
