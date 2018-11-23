@@ -46,6 +46,10 @@ object Common {
             categoryHeader("header_advanced") {
                 title = "Advanced"
             }
+            seekBar("seekbar") {
+                title = "A seekbar"
+                max = 100
+            }
             addPreferenceItem(TestDialog().apply {
                 title = "Show dialog"
                 iconRes = R.drawable.ic_info_24dp

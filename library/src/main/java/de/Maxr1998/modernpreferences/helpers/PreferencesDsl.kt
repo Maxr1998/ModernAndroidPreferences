@@ -56,6 +56,12 @@ inline fun PreferenceScreen.Builder.checkBox(key: String, block: CheckBoxPrefere
     return cbp
 }
 
+inline fun PreferenceScreen.Builder.seekBar(key: String, block: SeekBarPreference.() -> Unit): SeekBarPreference {
+    val sbp = SeekBarPreference(key).apply(block)
+    addPreferenceItem(sbp)
+    return sbp
+}
+
 inline fun PreferenceScreen.Builder.expandText(key: String, block: ExpandableTextPreference.() -> Unit): ExpandableTextPreference {
     val etp = ExpandableTextPreference(key).apply(block)
     addPreferenceItem(etp)
