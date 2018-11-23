@@ -24,8 +24,5 @@ import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.example.Common
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
-
-    val preferencesAdapter = PreferencesAdapter().apply {
-        setRootScreen(Common.createRootScreen(getApplication()))
-    }
+    val preferencesAdapter = PreferencesAdapter(Common.createRootScreen(getApplication()))
 }

@@ -31,7 +31,7 @@ import de.Maxr1998.modernpreferences.preferences.CategoryHeader
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 import java.util.*
 
-class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>() {
+class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>() {
 
     private val screenStack: Stack<PreferenceScreen> = Stack<PreferenceScreen>().apply {
         push(emptyScreen)
@@ -46,6 +46,10 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
     var onScreenChangeListener: OnScreenChangeListener? = null
 
     var secondScreenAdapter: PreferencesAdapter? = null
+
+    init {
+        root?.let(::setRootScreen)
+    }
 
     fun setRootScreen(root: PreferenceScreen) {
         currentScreen.adapter = null
