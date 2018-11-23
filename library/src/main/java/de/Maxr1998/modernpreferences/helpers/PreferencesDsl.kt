@@ -22,6 +22,7 @@ import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.preferences.*
 
+// PreferenceScreen DSL functions
 inline fun screen(context: Context?, block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
     return PreferenceScreen.Builder(context).apply(block).build()
 }
@@ -32,6 +33,7 @@ inline fun PreferenceScreen.Builder.subScreen(block: PreferenceScreen.Builder.()
     addPreferenceItem(PreferenceScreen.Builder(this).apply(block).build())
 }
 
+// Preference DSL functions
 inline fun PreferenceScreen.Builder.categoryHeader(key: String, block: Preference.() -> Unit) {
     addPreferenceItem(CategoryHeader(key).apply(block))
 }
@@ -49,15 +51,9 @@ inline fun PreferenceScreen.Builder.switch(key: String, block: SwitchPreference.
 }
 
 inline fun PreferenceScreen.Builder.checkBox(key: String, block: CheckBoxPreference.() -> Unit): CheckBoxPreference {
-    val cp = CheckBoxPreference(key).apply(block)
-    addPreferenceItem(cp)
-    return cp
-}
-
-inline fun PreferenceScreen.Builder.collapse(key: String = "advanced", block: PreferenceScreen.Builder.() -> Unit) {
-    collapseNext(key)
-    block()
-    collapseEnd()
+    val cbp = CheckBoxPreference(key).apply(block)
+    addPreferenceItem(cbp)
+    return cbp
 }
 
 inline fun PreferenceScreen.Builder.expandText(key: String, block: ExpandableTextPreference.() -> Unit): ExpandableTextPreference {
@@ -66,6 +62,19 @@ inline fun PreferenceScreen.Builder.expandText(key: String, block: ExpandableTex
     return etp
 }
 
+inline fun <reified T : Preference> PreferenceScreen.Builder.custom(key: String, block: T.() -> Unit): T {
+    val c = T::class.java.getConstructor(String::class.java).newInstance(key).apply(block)
+    addPreferenceItem(c)
+    return c
+}
+
+inline fun PreferenceScreen.Builder.collapse(key: String = "advanced", block: PreferenceScreen.Builder.() -> Unit) {
+    collapseNext(key)
+    block()
+    collapseEnd()
+}
+
+// Listener helpers
 inline fun Preference.click(crossinline callback: (Preference) -> Boolean) {
     clickListener = object : Preference.OnClickListener {
         override fun onClick(preference: Preference, holder: PreferencesAdapter.ViewHolder) =
@@ -85,10 +94,4 @@ inline fun TwoStatePreference.changed(crossinline callback: (TwoStatePreference,
         override fun onCheckedChanged(preference: TwoStatePreference, holder: PreferencesAdapter.ViewHolder?, checked: Boolean) =
                 callback(preference, holder, checked)
     }
-}
-
-inline fun <reified T : Preference> PreferenceScreen.Builder.custom(key: String, block: T.() -> Unit): T {
-    val c = T::class.java.getConstructor(String::class.java).newInstance(key).apply(block)
-    addPreferenceItem(c)
-    return c
 }
