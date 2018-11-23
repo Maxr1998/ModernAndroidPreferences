@@ -48,6 +48,7 @@ object Common {
             }
             seekBar("seekbar") {
                 title = "A seekbar"
+                min = 1
                 max = 100
             }
             addPreferenceItem(TestDialog().apply {

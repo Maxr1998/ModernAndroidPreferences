@@ -18,22 +18,25 @@ package de.Maxr1998.modernpreferences.helpers
 
 import android.widget.SeekBar
 
-internal fun SeekBar.onSeekUser(callback: (Int) -> Unit) {
+internal fun SeekBar.onSeek(callback: (Int, Boolean) -> Unit) {
     setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-        private var old = 0
-        private var new = 0
+        private var changed = false
+        private var lastValue = 0
 
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-            if (fromUser) new = progress
+            if (fromUser) {
+                changed = progress != lastValue
+                callback(progress, false)
+            }
         }
 
         override fun onStartTrackingTouch(seekBar: SeekBar) {
-            old = seekBar.progress
-            new = old
+            changed = false
+            lastValue = seekBar.progress
         }
 
         override fun onStopTrackingTouch(seekBar: SeekBar) {
-            if (old != new) callback(new)
+            if (changed) callback(lastValue, true)
         }
     })
 }
