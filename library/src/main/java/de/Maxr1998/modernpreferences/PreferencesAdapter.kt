@@ -145,6 +145,7 @@ class PreferencesAdapter : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>()
      * Common ViewHolder in [PreferencesAdapter] for every [Preference] object/every preference extending it
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val root: ViewGroup get() = itemView as ViewGroup
         val iconFrame: View = itemView.findViewById(R.id.icon_frame)
         val icon: ImageView? = itemView.findViewById(android.R.id.icon)
         val title: TextView = itemView.findViewById(android.R.id.title)
