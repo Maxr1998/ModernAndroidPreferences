@@ -1,85 +1,83 @@
 package de.Maxr1998.modernpreferences.example
 
 import android.content.Context
+import android.widget.Toast
 import de.Maxr1998.modernpreferences.helpers.*
 
 object Common {
     fun createRootScreen(context: Context) = screen(context) {
-        pref("one") {
-            title = "Important"
-            summary = "It actually is!"
-            iconRes = R.drawable.ic_important_24dp
-        }
-        pref("two") {
-            title = "Also important"
-        }
-        categoryHeader("header") {
-            title = "More"
-        }
         subScreen {
-            title = "Subscreen"
+            title = "Preference types"
+            summary = "Overview over all the different preference items, with various widgets"
+            iconRes = R.drawable.ic_apps_24dp
             centerIcon = false
-            pref("three") {
-                title = "A not so important sub-preference"
+
+            categoryHeader("header_plain") {
+                title = "Plain"
+            }
+            pref("plain") {
+                title = "A plain preference…"
+            }
+            pref("with-summary") {
+                title = "…that doesn't have a widget"
+                summary = "But a summary this time!"
+            }
+            pref("with-icon") {
+                title = "There's also icon support, yay!"
                 iconRes = R.drawable.ic_emoji_24dp
             }
+            categoryHeader("header_two_state") {
+                title = "Two state"
+            }
+            switch("switch") {
+                title = "A simple switch"
+            }
+            pref("dependent") {
+                title = "Toggle the switch above"
+                dependency = "switch"
+                clickView { _, holder ->
+                    Toast.makeText(holder.itemView.context, "Preference was clicked!", Toast.LENGTH_SHORT).show()
+                    false
+                }
+            }
             checkBox("checkbox") {
-                title = "Check me!"
+                title = "A checkbox"
+            }
+            categoryHeader("header_advanced") {
+                title = "Advanced"
             }
             addPreferenceItem(TestDialog().apply {
                 title = "Show dialog"
+                iconRes = R.drawable.ic_info_24dp
             })
-            expandText("about") {
-                title = "About the app"
-                text = "Example implementation of ModernAndroidPreferences, check out the source " +
-                        "on https://github.com/Maxr1998/ModernAndroidPreferences"
+            expandText("expand-text") {
+                title = "Expandable text"
+                text = "This is an example implementation of ModernAndroidPreferences, check out " +
+                        "the source on https://github.com/Maxr1998/ModernAndroidPreferences"
             }
             collapse {
-                // Test whether collapse block resets after leaving the screen
                 pref("collapsed_one") {
-                    title = "One"
+                    title = "Collapsed by default"
                 }
                 pref("collapsed_two") {
-                    title = "Two"
+                    title = "Another preference"
                 }
                 pref("collapsed_three") {
-                    title = "Three"
+                    title = "A longer title to trigger ellipsize"
                 }
             }
         }
         subScreen {
             title = "Long list"
+            summary = "A longer list to see how well library performs thanks to the backing RecyclerView"
+            iconRes = R.drawable.ic_list_24dp
             collapseIcon = true
-            for (i in 1..100)
+
+            for (i in 1..100) {
                 pref(i.toString()) {
                     title = "Preference item #$i"
                     summary = "Lorem ipsum …"
                 }
-        }
-        switch("four") {
-            title = "Switch"
-            summary = "This is a switch"
-            summaryOn = "Now it's checked!"
-        }
-        pref("dependent") {
-            title = "Dependent on the above"
-            summary = "Make sure the summary also gets disabled"
-            dependency = "four"
-        }
-        collapse {
-            pref("five") {
-                title = "Invisible by default"
-            }
-            pref("six") {
-                title = "With icon"
-                iconRes = R.drawable.ic_emoji_24dp
-            }
-            pref("seven") {
-                title = "See summary"
-                summary = "Here we also have a summary"
-            }
-            pref("eight") {
-                title = "A long title to trigger ellipsize in collapse"
             }
         }
     }
