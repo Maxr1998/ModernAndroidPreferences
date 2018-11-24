@@ -44,10 +44,10 @@ class ExpandableTextPreference(key: String) : Preference(key) {
         super.bindViews(holder)
         val widget = holder.widget as ImageView
         val inflater = LayoutInflater.from(widget.context)
-        val textView = (widget.tag ?: inflater.inflate(R.layout.preference_expand_text,
-                holder.itemView as ViewGroup).findViewById(android.R.id.message)) as TextView
-        widget.tag = textView
-        textView.apply {
+        val tv = (widget.tag ?: inflater.inflate(R.layout.preference_expand_text, holder.root)
+                .findViewById(android.R.id.message)) as TextView
+        widget.tag = tv
+        tv.apply {
             if (titleRes != -1) setText(textRes) else text = this@ExpandableTextPreference.text
             typeface = if (monospace) Typeface.MONOSPACE else Typeface.SANS_SERIF
             val a = context.obtainStyledAttributes(intArrayOf(R.attr.expandableTextBackgroundColor))
@@ -57,7 +57,7 @@ class ExpandableTextPreference(key: String) : Preference(key) {
         }
 
         refreshArrowState(widget)
-        refreshTextExpandState(textView)
+        refreshTextExpandState(tv)
     }
 
     override fun onClick(holder: PreferencesAdapter.ViewHolder) {
