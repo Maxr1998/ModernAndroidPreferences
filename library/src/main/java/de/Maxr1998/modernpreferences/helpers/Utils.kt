@@ -36,7 +36,7 @@ internal fun SeekBar.onSeek(callback: (Int, Boolean) -> Unit) {
         }
 
         override fun onStopTrackingTouch(seekBar: SeekBar) {
-            if (changed) callback(lastValue, true)
+            if (changed) callback(seekBar.progress, true)
         }
     })
 }

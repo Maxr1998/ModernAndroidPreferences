@@ -64,6 +64,6 @@ class SeekBarPreference(key: String) : Preference(key) {
                 if (done) commitInt(value)
             }
         }
-        tv.text = formatter(sb.progress)
+        tv.text = formatter(min + sb.progress)
     }
 }
