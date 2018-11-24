@@ -56,7 +56,8 @@ class ExpandableTextPreference(key: String) : Preference(key) {
             a.recycle()
         }
 
-        refreshArrowState(widget)
+        refreshArrowState(widget, false)
+        widget.post { refreshArrowState(widget) }
         refreshTextExpandState(tv)
     }
 
@@ -69,8 +70,8 @@ class ExpandableTextPreference(key: String) : Preference(key) {
     /**
      * Update expand/collapse arrow
      */
-    private fun refreshArrowState(widget: ImageView) {
-        val drawableState = if (expanded) intArrayOf(android.R.attr.state_checked) else IntArray(0)
+    private fun refreshArrowState(widget: ImageView, exp: Boolean = expanded) {
+        val drawableState = if (exp) intArrayOf(android.R.attr.state_checked) else IntArray(0)
         widget.setImageState(drawableState, false)
     }
 
