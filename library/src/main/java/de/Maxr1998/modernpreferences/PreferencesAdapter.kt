@@ -23,6 +23,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+import androidx.annotation.MainThread
 import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -51,6 +52,7 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
         root?.let(::setRootScreen)
     }
 
+    @MainThread
     fun setRootScreen(root: PreferenceScreen) {
         currentScreen.adapter = null
         while (screenStack.peek() != emptyScreen) {
@@ -62,6 +64,7 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
         onScreenChangeListener?.onScreenChanged(root, false)
     }
 
+    @MainThread
     private fun openScreen(screen: PreferenceScreen) {
         secondScreenAdapter?.setRootScreen(screen) ?: /* ELSE */ run {
             currentScreen.adapter = null
@@ -79,6 +82,7 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
      *
      * @return true if it returned to an earlier screen, false if we're already at the root
      */
+    @MainThread
     fun goBack(): Boolean {
         if (secondScreenAdapter?.goBack() == true) // Check if the second screen can still go back
             return true
