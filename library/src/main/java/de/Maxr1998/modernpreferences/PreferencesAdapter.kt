@@ -16,6 +16,7 @@
 
 package de.Maxr1998.modernpreferences
 
+import android.os.Parcelable
 import android.preference.Preference
 import android.view.LayoutInflater
 import android.view.View
@@ -30,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.helpers.emptyScreen
 import de.Maxr1998.modernpreferences.preferences.CategoryHeader
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>() {
@@ -180,5 +182,44 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
      */
     interface OnScreenChangeListener {
         fun onScreenChanged(screen: PreferenceScreen, subScreen: Boolean)
+    }
+
+    fun getSavedState(): SavedState {
+        val screenPath = IntArray(screenStack.size - 2)
+        for (i in 1 until screenStack.size) {
+            if (i > 1) screenPath[i - 2] = screenStack[i].screenPosition
+        }
+        return SavedState(screenPath)
+    }
+
+    /**
+     * Loads the specified state into this adapter
+     *
+     * @return whether the state could be loaded
+     */
+    @MainThread
+    fun loadSavedState(state: SavedState): Boolean {
+        if (screenStack.size != 2) return false
+        state.screenPath.forEach {
+            val screen = currentScreen[it]
+            if (screen is PreferenceScreen)
+                screenStack.push(screen)
+            else return@forEach
+        }
+        currentScreen.adapter = this
+        notifyDataSetChanged()
+        return true
+    }
+
+    @Parcelize
+    data class SavedState(val screenPath: IntArray) : Parcelable {
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            return javaClass == other?.javaClass && screenPath.contentEquals((other as SavedState).screenPath)
+        }
+
+        override fun hashCode(): Int {
+            return screenPath.contentHashCode()
+        }
     }
 }
