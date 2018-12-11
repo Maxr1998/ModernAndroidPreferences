@@ -28,7 +28,7 @@ class CollapsePreference(key: String) : Preference(key) {
 
     init {
         titleRes = R.string.pref_advanced_block
-        iconRes = R.drawable.ic_expand_24dp
+        iconRes = R.drawable.map_ic_expand_24dp
     }
 
     fun addItem(preference: Preference) {

@@ -3,18 +3,18 @@
     xmlns:aapt="http://schemas.android.com/aapt">
     <item
         android:id="@+id/collapse"
-        android:drawable="@drawable/ic_collapse_24dp"
+        android:drawable="@drawable/map_ic_collapse_24dp"
         android:state_checked="true" />
     <item
         android:id="@+id/expand"
-        android:drawable="@drawable/ic_expand_24dp" />
+        android:drawable="@drawable/map_ic_expand_24dp" />
     <transition
         android:fromId="@id/expand"
         android:reversible="true"
         android:toId="@id/collapse">
 
         <aapt:attr name="android:drawable">
-            <animated-vector android:drawable="@drawable/ic_collapse_24dp">
+            <animated-vector android:drawable="@drawable/map_ic_collapse_24dp">
                 <target android:name="path">
                     <aapt:attr name="android:animation">
                         <set>

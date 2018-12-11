@@ -5,5 +5,5 @@
     android:layout_height="wrap_content"
     android:minWidth="32dp"
     android:scaleType="center"
-    android:src="@drawable/animated_expand_vector_selector"
+    android:src="@drawable/map_animated_expand_vector_selector"
     tools:ignore="ContentDescription" />

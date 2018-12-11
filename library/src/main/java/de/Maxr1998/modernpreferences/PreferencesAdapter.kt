@@ -106,7 +106,7 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val layout = if (viewType == CategoryHeader.RESOURCE_CONST) R.layout.preference_category else R.layout.preference
+        val layout = if (viewType == CategoryHeader.RESOURCE_CONST) R.layout.map_preference_category else R.layout.map_preference
         val view = layoutInflater.inflate(layout, parent, false)
         if (viewType > 0)
             layoutInflater.inflate(viewType, view.findViewById(R.id.map_widget_frame), true)

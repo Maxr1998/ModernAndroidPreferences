@@ -38,13 +38,13 @@ class ExpandableTextPreference(key: String) : Preference(key) {
     var textRes: Int = -1
     var monospace = true
 
-    override fun getWidgetLayoutResource() = R.layout.preference_widget_expand_arrow
+    override fun getWidgetLayoutResource() = R.layout.map_preference_widget_expand_arrow
 
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
         super.bindViews(holder)
         val widget = holder.widget as ImageView
         val inflater = LayoutInflater.from(widget.context)
-        val tv = (widget.tag ?: inflater.inflate(R.layout.preference_expand_text, holder.root)
+        val tv = (widget.tag ?: inflater.inflate(R.layout.map_preference_expand_text, holder.root)
                 .findViewById(android.R.id.message)) as TextView
         widget.tag = tv
         tv.apply {
