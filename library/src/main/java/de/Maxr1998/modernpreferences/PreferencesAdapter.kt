@@ -109,7 +109,7 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
         val layout = if (viewType == CategoryHeader.RESOURCE_CONST) R.layout.preference_category else R.layout.preference
         val view = layoutInflater.inflate(layout, parent, false)
         if (viewType > 0)
-            layoutInflater.inflate(viewType, view.findViewById(R.id.widget_frame), true)
+            layoutInflater.inflate(viewType, view.findViewById(R.id.map_widget_frame), true)
         return ViewHolder(view)
     }
 
@@ -156,11 +156,11 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
      */
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val root: ViewGroup get() = itemView as ViewGroup
-        val iconFrame: View = itemView.findViewById(R.id.icon_frame)
+        val iconFrame: View = itemView.findViewById(R.id.map_icon_frame)
         val icon: ImageView? = itemView.findViewById(android.R.id.icon)
         val title: TextView = itemView.findViewById(android.R.id.title)
         val summary: TextView? = itemView.findViewById(android.R.id.summary)
-        val widget: View? = itemView.findViewById<ViewGroup>(R.id.widget_frame)?.getChildAt(0)
+        val widget: View? = itemView.findViewById<ViewGroup>(R.id.map_widget_frame)?.getChildAt(0)
 
         internal fun setEnabledState(enabled: Boolean) {
             setEnabledStateRecursive(itemView, enabled)

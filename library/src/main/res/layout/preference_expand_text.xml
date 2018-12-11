@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/message"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
@@ -14,4 +15,5 @@
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="@android:id/title"
-    app:layout_constraintTop_toBottomOf="@+id/bottom_barrier" />
+    app:layout_constraintTop_toBottomOf="@id/map_bottom_barrier"
+    tools:ignore="UnusedAttribute" />

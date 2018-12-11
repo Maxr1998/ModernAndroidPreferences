@@ -23,7 +23,7 @@ https://android.googlesource.com/platform/frameworks/base/+/master/core/res/res/
     android:paddingEnd="?android:listPreferredItemPaddingEnd">
 
     <Space
-        android:id="@+id/icon_frame"
+        android:id="@id/map_icon_frame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minWidth="56dp" />
