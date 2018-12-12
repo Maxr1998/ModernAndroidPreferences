@@ -85,7 +85,7 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
     fun isInSubScreen() = screenStack.size > 2
 
     /**
-     * If possible, return to the previous screen
+     * If possible, return to the previous screen.
      *
      * @return true if it returned to an earlier screen, false if we're already at the root
      */
@@ -138,7 +138,9 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
     override fun getItemViewType(position: Int) = currentScreen[position].getWidgetLayoutResource()
 
     /**
-     * Restores the last scroll position if needed and (re-)attaches this adapter's scroll listener
+     * Restores the last scroll position if needed and (re-)attaches this adapter's scroll listener.
+     *
+     * Should be called from [OnScreenChangeListener.onScreenChanged].
      */
     fun restoreAndObserveScrollPosition(preferenceView: RecyclerView) {
         if (currentScreen.scrollPosition != 0 || currentScreen.scrollOffset != 0) {
