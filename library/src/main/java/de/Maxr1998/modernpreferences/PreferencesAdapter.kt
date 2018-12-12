@@ -54,6 +54,11 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
         root?.let(::setRootScreen)
     }
 
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        if (recyclerView.layoutManager !is LinearLayoutManager)
+            throw UnsupportedOperationException("ModernAndroidPreferences requires a LinearLayoutManager")
+    }
+
     @MainThread
     fun setRootScreen(root: PreferenceScreen) {
         currentScreen.adapter = null
