@@ -45,8 +45,14 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
 
     /**
      * Listener which will be notified of screen change events
+     *
+     * Will dispatch the initial state when attached.
      */
     var onScreenChangeListener: OnScreenChangeListener? = null
+        set(value) {
+            field = value
+            field?.onScreenChanged(currentScreen, isInSubScreen())
+        }
 
     var secondScreenAdapter: PreferencesAdapter? = null
 
