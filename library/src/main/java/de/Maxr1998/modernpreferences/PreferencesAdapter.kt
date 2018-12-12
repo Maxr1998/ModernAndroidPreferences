@@ -141,18 +141,23 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
      * Restores the last scroll position if needed and (re-)attaches this adapter's scroll listener
      */
     fun restoreAndObserveScrollPosition(preferenceView: RecyclerView) {
-        (preferenceView.layoutManager as? LinearLayoutManager)
-                ?.scrollToPositionWithOffset(currentScreen.scrollPosition, currentScreen.scrollOffset)
+        if (currentScreen.scrollPosition != 0 || currentScreen.scrollOffset != 0) {
+            (preferenceView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                    currentScreen.scrollPosition,
+                    currentScreen.scrollOffset
+            )
+        }
+        preferenceView.removeOnScrollListener(scrollListener) // We don't want to be added twice
         preferenceView.addOnScrollListener(scrollListener)
     }
 
     private val scrollListener = object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-            val position = layoutManager.findFirstCompletelyVisibleItemPosition()
-            val top = recyclerView.findViewHolderForAdapterPosition(position)?.itemView?.top ?: 0
-            currentScreen.scrollPosition = position
-            currentScreen.scrollOffset = top
+        override fun onScrollStateChanged(r: RecyclerView, state: Int) {
+            if (state == RecyclerView.SCROLL_STATE_IDLE) currentScreen.apply {
+                scrollPosition = (r.layoutManager as LinearLayoutManager)
+                        .findFirstCompletelyVisibleItemPosition()
+                scrollOffset = r.findViewHolderForAdapterPosition(scrollPosition)?.itemView?.top ?: 0
+            }
         }
     }
 
