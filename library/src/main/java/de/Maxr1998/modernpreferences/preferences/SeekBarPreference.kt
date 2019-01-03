@@ -31,6 +31,12 @@ class SeekBarPreference(key: String) : Preference(key) {
 
     var min = 0
     var max = 0
+    var step = 1
+        set(value) {
+            if (value <= 0)
+                throw IllegalArgumentException("Stepping value must be >= 1")
+            field = value
+        }
     var formatter: (Int) -> String = Int::toString
 
     override fun getWidgetLayoutResource() = R.layout.map_preference_widget_empty
@@ -51,20 +57,20 @@ class SeekBarPreference(key: String) : Preference(key) {
         val inflater = LayoutInflater.from(widget.context)
         val sb = (widget.tag
                 ?: inflater.inflate(R.layout.map_preference_widget_seekbar, holder.root)
-                .findViewById(android.R.id.progress)) as SeekBar
+                        .findViewById(android.R.id.progress)) as SeekBar
         val tv = (sb.tag ?: holder.itemView.findViewById(R.id.progress_text)) as TextView
         widget.tag = sb
         sb.tag = tv
 
         sb.apply {
-            max = this@SeekBarPreference.max - this@SeekBarPreference.min
-            progress = getInt(0) - this@SeekBarPreference.min
+            max = (this@SeekBarPreference.max - this@SeekBarPreference.min) / step
+            progress = (getInt(0) - this@SeekBarPreference.min) / step
             onSeek { v, done ->
-                val value = this@SeekBarPreference.min + v
+                val value = this@SeekBarPreference.min + (v * step)
                 tv.text = formatter(value)
                 if (done) commitInt(value)
             }
         }
-        tv.text = formatter(min + sb.progress)
+        tv.text = formatter(min + (sb.progress * step))
     }
 }
