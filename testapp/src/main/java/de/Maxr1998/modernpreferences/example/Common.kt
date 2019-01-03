@@ -69,6 +69,12 @@ object Common {
                 min = 1
                 max = 100
             }
+            seekBar("seekbar-stepped") {
+                title = "A seekbar with steps"
+                min = 100
+                max = 1000
+                step = 25
+            }
             addPreferenceItem(TestDialog().apply {
                 title = "Show dialog"
                 iconRes = R.drawable.ic_info_24dp
