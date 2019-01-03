@@ -59,10 +59,8 @@ class SeekBarPreference(key: String) : Preference(key) {
                 ?: inflater.inflate(R.layout.map_preference_widget_seekbar, holder.root)
                         .findViewById(android.R.id.progress)) as SeekBar
         val tv = (sb.tag ?: holder.itemView.findViewById(R.id.progress_text)) as TextView
-        widget.tag = sb
-        sb.tag = tv
-
-        sb.apply {
+        widget.tag = sb.apply {
+            isEnabled = enabled
             max = (this@SeekBarPreference.max - this@SeekBarPreference.min) / step
             progress = (getInt(0) - this@SeekBarPreference.min) / step
             onSeek { v, done ->
@@ -71,6 +69,9 @@ class SeekBarPreference(key: String) : Preference(key) {
                 if (done) commitInt(value)
             }
         }
-        tv.text = formatter(min + (sb.progress * step))
+        sb.tag = tv.apply {
+            isEnabled = enabled
+            text = formatter(min + (sb.progress * step))
+        }
     }
 }
