@@ -21,7 +21,7 @@ import android.transition.ChangeBounds
 import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.CheckBox
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
@@ -42,7 +42,7 @@ class ExpandableTextPreference(key: String) : Preference(key) {
 
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
         super.bindViews(holder)
-        val widget = holder.widget as ImageView
+        val widget = holder.widget as CheckBox
         val inflater = LayoutInflater.from(widget.context)
         val tv = (widget.tag ?: inflater.inflate(R.layout.map_preference_expand_text, holder.root)
                 .findViewById(android.R.id.message)) as TextView
@@ -54,25 +54,20 @@ class ExpandableTextPreference(key: String) : Preference(key) {
             setBackgroundColor(a.getColor(0, ContextCompat.getColor(context,
                     R.color.expandableTextBackgroundColorDefault)))
             a.recycle()
+            isEnabled = enabled
         }
-
-        refreshArrowState(widget, false)
-        widget.post { refreshArrowState(widget) }
+        refreshArrowState(widget)
         refreshTextExpandState(tv)
     }
 
     override fun onClick(holder: PreferencesAdapter.ViewHolder) {
         expanded = !expanded
-        refreshArrowState(holder.widget as ImageView)
+        refreshArrowState(holder.widget as CheckBox)
         refreshTextExpandState(holder.widget.tag as TextView)
     }
 
-    /**
-     * Update expand/collapse arrow
-     */
-    private fun refreshArrowState(widget: ImageView, exp: Boolean = expanded) {
-        val drawableState = if (exp) intArrayOf(android.R.attr.state_checked) else null
-        widget.setImageState(drawableState, exp)
+    private fun refreshArrowState(widget: CheckBox) {
+        widget.isChecked = expanded
     }
 
     private fun refreshTextExpandState(text: TextView) {
