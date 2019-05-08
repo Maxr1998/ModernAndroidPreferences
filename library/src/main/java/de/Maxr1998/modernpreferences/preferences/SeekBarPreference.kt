@@ -30,16 +30,43 @@ import de.Maxr1998.modernpreferences.helpers.onSeek
 class SeekBarPreference(key: String) : Preference(key) {
 
     var min = 0
+        set(value) {
+            if (value < 0)
+                throw IllegalArgumentException("Min value must be >= 0")
+            field = value
+        }
     var max = 0
+        set(value) {
+            if (value < 0)
+                throw IllegalArgumentException("Max value must be >= 0")
+            field = value
+        }
     var step = 1
         set(value) {
             if (value <= 0)
                 throw IllegalArgumentException("Stepping value must be >= 1")
             field = value
         }
+
+    var valueInternal = 0
+    var value: Int
+        get() = min + valueInternal * step
+        set(v) {
+            if (v != valueInternal && seekListener?.onSeek(this, null, v) != false) {
+                valueInternal = v
+                commitInt(value)
+                requestRebind()
+            }
+        }
+
+    var seekListener: OnSeekListener? = null
     var formatter: (Int) -> String = Int::toString
 
     override fun getWidgetLayoutResource() = R.layout.map_preference_widget_empty
+
+    override fun onAttach() {
+        valueInternal = (getInt(min) - this@SeekBarPreference.min) / step
+    }
 
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
         super.bindViews(holder)
@@ -62,16 +89,36 @@ class SeekBarPreference(key: String) : Preference(key) {
         widget.tag = sb.apply {
             isEnabled = enabled
             max = (this@SeekBarPreference.max - this@SeekBarPreference.min) / step
-            progress = (getInt(0) - this@SeekBarPreference.min) / step
+            progress = valueInternal
             onSeek { v, done ->
-                val value = this@SeekBarPreference.min + (v * step)
+                valueInternal = v
                 tv.text = formatter(value)
-                if (done) commitInt(value)
+                if (seekListener?.onSeek(this@SeekBarPreference, null, v) != false) {
+                    if (done) commitInt(value)
+                } else {
+                    // Restore from preferences
+                    onAttach()
+                    progress = valueInternal
+                }
             }
         }
         sb.tag = tv.apply {
             isEnabled = enabled
-            text = formatter(min + (sb.progress * step))
+            text = formatter(value)
         }
+    }
+
+    interface OnSeekListener {
+        /**
+         * Notified when the [value][SeekBarPreference.value] of the connected [SeekBarPreference] changes.
+         * This is called before the change gets persisted, which can be prevented by returning false.
+         *
+         * @param holder the [ViewHolder][PreferencesAdapter.ViewHolder] with the views of the Preference instance,
+         * or null if the change didn't occur as part of a click event
+         * @param value the new state
+         *
+         * @return true to commit the new button state to [SharedPreferences][android.content.SharedPreferences]
+         */
+        fun onSeek(preference: SeekBarPreference, holder: PreferencesAdapter.ViewHolder?, value: Int): Boolean
     }
 }
