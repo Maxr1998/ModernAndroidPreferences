@@ -46,6 +46,12 @@ inline fun PreferenceScreen.Builder.pref(key: String, block: Preference.() -> Un
     return p
 }
 
+inline fun PreferenceScreen.Builder.accentButtonPref(key: String, block: Preference.() -> Unit): Preference {
+    val abp = AccentButtonPreference(key).apply(block)
+    addPreferenceItem(abp)
+    return abp
+}
+
 inline fun PreferenceScreen.Builder.switch(key: String, block: SwitchPreference.() -> Unit): SwitchPreference {
     val sp = SwitchPreference(key).apply(block)
     addPreferenceItem(sp)

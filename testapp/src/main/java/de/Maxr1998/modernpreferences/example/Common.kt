@@ -44,6 +44,9 @@ object Common {
                 title = "There's also icon support, yay!"
                 iconRes = R.drawable.ic_emoji_24dp
             }
+            accentButtonPref("accent-button") {
+                title = "Button style!"
+            }
             categoryHeader("header_two_state") {
                 title = "Two state"
             }
