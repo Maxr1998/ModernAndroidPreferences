@@ -164,7 +164,9 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
             if (state == RecyclerView.SCROLL_STATE_IDLE) currentScreen.apply {
                 scrollPosition = (r.layoutManager as LinearLayoutManager)
                         .findFirstCompletelyVisibleItemPosition()
-                scrollOffset = r.findViewHolderForAdapterPosition(scrollPosition)?.itemView?.top ?: 0
+                scrollOffset = r.findViewHolderForAdapterPosition(scrollPosition)?.run {
+                    itemView.top
+                } ?: 0
             }
         }
     }
