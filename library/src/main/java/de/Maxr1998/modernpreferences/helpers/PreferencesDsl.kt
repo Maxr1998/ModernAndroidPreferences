@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:Suppress("unused")
+
 package de.Maxr1998.modernpreferences.helpers
 
 import android.content.Context
@@ -81,23 +83,30 @@ inline fun PreferenceScreen.Builder.collapse(key: String = "advanced", block: Pr
 }
 
 // Listener helpers
-inline fun Preference.click(crossinline callback: (Preference) -> Boolean) {
+inline fun Preference.onClicked(crossinline callback: (Preference) -> Boolean) {
     clickListener = object : Preference.OnClickListener {
         override fun onClick(preference: Preference, holder: PreferencesAdapter.ViewHolder) =
                 callback(preference)
     }
 }
 
-inline fun Preference.clickView(crossinline callback: (Preference, PreferencesAdapter.ViewHolder) -> Boolean) {
+inline fun Preference.onClickView(crossinline callback: (Preference, PreferencesAdapter.ViewHolder) -> Boolean) {
     clickListener = object : Preference.OnClickListener {
         override fun onClick(preference: Preference, holder: PreferencesAdapter.ViewHolder) =
                 callback(preference, holder)
     }
 }
 
-inline fun TwoStatePreference.changed(crossinline callback: (TwoStatePreference, PreferencesAdapter.ViewHolder?, Boolean) -> Boolean) {
+inline fun TwoStatePreference.onChange(crossinline callback: (TwoStatePreference, PreferencesAdapter.ViewHolder?, Boolean) -> Boolean) {
     checkedChangeListener = object : TwoStatePreference.OnCheckedChangeListener {
         override fun onCheckedChanged(preference: TwoStatePreference, holder: PreferencesAdapter.ViewHolder?, checked: Boolean) =
                 callback(preference, holder, checked)
+    }
+}
+
+inline fun SeekBarPreference.onSeek(crossinline callback: (SeekBarPreference, PreferencesAdapter.ViewHolder?, Int) -> Boolean) {
+    seekListener = object : SeekBarPreference.OnSeekListener {
+        override fun onSeek(preference: SeekBarPreference, holder: PreferencesAdapter.ViewHolder?, value: Int) =
+                callback(preference, holder, value)
     }
 }
