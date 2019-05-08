@@ -84,6 +84,8 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     var dependency: String? = null
 
+    var preBindListener: OnPreBindListener? = null
+
     var clickListener: OnClickListener? = null
 
     internal var attachedScreen: PreferenceScreen? = null
@@ -118,6 +120,8 @@ open class Preference(key: String) : AbstractPreference(key) {
     open fun bindViews(holder: PreferencesAdapter.ViewHolder) {
         if (attachedScreen == null)
             throw IllegalStateException("Trying to bind view for a preference not attached to a screen!")
+
+        preBindListener?.onPreBind(this, holder)
 
         holder.itemView.layoutParams.height = if (visible) ViewGroup.LayoutParams.WRAP_CONTENT else 0
         if (!visible) {
@@ -218,6 +222,18 @@ open class Preference(key: String) : AbstractPreference(key) {
         attachedScreen?.prefs?.getString(key, defaultValue) ?: defaultValue
     } catch (e: ClassCastException) {
         defaultValue
+    }
+
+    /**
+     * Can be set to [Preference.preBindListener]
+     */
+    interface OnPreBindListener {
+        /**
+         * Called before [Preference.bindViews], allows you to set data right before the [Preference][preference]
+         * is bound to a view.
+         * Note that you mustn't compute any data here, as you'll block the UI thread by doing that.
+         */
+        fun onPreBind(preference: Preference, holder: PreferencesAdapter.ViewHolder)
     }
 
     interface OnClickListener {
