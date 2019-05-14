@@ -89,7 +89,8 @@ open class Preference(key: String) : AbstractPreference(key) {
     var clickListener: OnClickListener? = null
 
     internal var attachedScreen: PreferenceScreen? = null
-    internal var screenPosition: Int = 0
+    var screenPosition: Int = 0
+        internal set
 
     @LayoutRes
     open fun getWidgetLayoutResource(): Int {
