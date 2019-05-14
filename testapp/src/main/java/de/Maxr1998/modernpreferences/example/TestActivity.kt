@@ -28,12 +28,13 @@ import de.Maxr1998.modernpreferences.PreferencesAdapter
 
 class TestActivity : AppCompatActivity(), PreferencesAdapter.OnScreenChangeListener {
 
+    private lateinit var preferenceView: RecyclerView
     private val preferencesAdapter = PreferencesAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val preferenceView = RecyclerView(this)
+        preferenceView = RecyclerView(this)
         setContentView(preferenceView)
         preferenceView.layoutManager = LinearLayoutManager(this)
         preferenceView.adapter = preferencesAdapter
@@ -53,6 +54,12 @@ class TestActivity : AppCompatActivity(), PreferencesAdapter.OnScreenChangeListe
 
     override fun onScreenChanged(screen: PreferenceScreen, subScreen: Boolean) {
         supportActionBar?.setDisplayHomeAsUpEnabled(subScreen)
+        screen["25"]?.let { pref ->
+            val viewOffset = ((preferenceView.height - 64 * resources.displayMetrics.density) / 2).toInt()
+            (preferenceView.layoutManager as? LinearLayoutManager)
+                    ?.scrollToPositionWithOffset(pref.screenPosition, viewOffset)
+            pref.requestRebindAndHighlight()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
