@@ -30,6 +30,7 @@ import androidx.core.content.edit
 import androidx.core.view.isVisible
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
+import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class AbstractPreference internal constructor(val key: String) {
     // UI
@@ -91,6 +92,8 @@ open class Preference(key: String) : AbstractPreference(key) {
     internal var attachedScreen: PreferenceScreen? = null
     var screenPosition: Int = 0
         internal set
+
+    private var highlightOnNextBind = AtomicBoolean(false)
 
     @LayoutRes
     open fun getWidgetLayoutResource(): Int {
@@ -166,10 +169,25 @@ open class Preference(key: String) : AbstractPreference(key) {
             isVisible = itemVisible
         }
         holder.itemView.isVisible = true
+        if (highlightOnNextBind.getAndSet(false)) {
+            val v = holder.itemView
+            val highlightRunnable = Runnable {
+                v.background.setHotspot(v.width / 2f, v.height / 2f)
+                v.isPressed = true
+                v.isPressed = false
+            }
+            v.postDelayed(highlightRunnable, 300)
+            v.postDelayed(highlightRunnable, 600)
+        }
     }
 
     fun requestRebind() {
         attachedScreen?.requestRebind(screenPosition)
+    }
+
+    fun requestRebindAndHighlight() {
+        highlightOnNextBind.set(true)
+        requestRebind()
     }
 
     internal fun performClick(holder: PreferencesAdapter.ViewHolder) {
