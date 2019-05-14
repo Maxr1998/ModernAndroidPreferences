@@ -164,7 +164,7 @@ open class Preference(key: String) : AbstractPreference(key) {
             }
             isVisible = itemVisible
         }
-        holder.itemView.isVisible = visible
+        holder.itemView.isVisible = true
     }
 
     fun requestRebind() {
