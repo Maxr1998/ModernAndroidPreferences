@@ -46,10 +46,10 @@ class TestActivity : AppCompatActivity(), PreferencesAdapter.OnScreenChangeListe
                 ?.let(preferencesAdapter::loadSavedState)
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         // Save the adapter state as a parcelable into the Android-managed instance state
-        outState?.putParcelable("adapter", preferencesAdapter.getSavedState())
+        outState.putParcelable("adapter", preferencesAdapter.getSavedState())
     }
 
     override fun onScreenChanged(screen: PreferenceScreen, subScreen: Boolean) {
