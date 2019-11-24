@@ -1,0 +1,13 @@
+name: Build library and test app
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: "Run Gradle"
+        uses: msfjarvis/setup-android@1.0
+        with:
+          entrypoint: ./gradlew
+          args: assembleRelease
