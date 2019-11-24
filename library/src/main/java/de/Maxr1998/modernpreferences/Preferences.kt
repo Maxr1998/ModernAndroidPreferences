@@ -101,8 +101,7 @@ open class Preference(key: String) : AbstractPreference(key) {
     }
 
     internal fun attachToScreen(screen: PreferenceScreen, position: Int) {
-        if (attachedScreen != null)
-            throw IllegalStateException("Preference was already attached to a screen!")
+        check(attachedScreen == null) { "Preference was already attached to a screen!" }
         attachedScreen = screen
         screenPosition = position
         dependency?.also {

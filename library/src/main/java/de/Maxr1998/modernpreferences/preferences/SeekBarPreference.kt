@@ -31,20 +31,17 @@ class SeekBarPreference(key: String) : Preference(key) {
 
     var min = 0
         set(value) {
-            if (value < 0)
-                throw IllegalArgumentException("Min value must be >= 0")
+            require(value >= 0) { "Min value must be >= 0" }
             field = value
         }
     var max = 0
         set(value) {
-            if (value < 0)
-                throw IllegalArgumentException("Max value must be >= 0")
+            require(value >= 0) { "Max value must be >= 0" }
             field = value
         }
     var step = 1
         set(value) {
-            if (value <= 0)
-                throw IllegalArgumentException("Stepping value must be >= 1")
+            require(value > 0) { "Stepping value must be >= 1" }
             field = value
         }
 
