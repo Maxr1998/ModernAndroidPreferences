@@ -11,3 +11,7 @@ jobs:
         with:
           entrypoint: ./gradlew
           args: assembleRelease
+      - uses: actions/upload-artifact@v1
+        with:
+          name: ModernAndroidPreferences-release.aar
+          path: library/build/outputs/aar/library-release.aar
