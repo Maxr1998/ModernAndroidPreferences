@@ -59,7 +59,7 @@ class SeekBarPreference(key: String) : Preference(key) {
     var seekListener: OnSeekListener? = null
     var formatter: (Int) -> String = Int::toString
 
-    override fun getWidgetLayoutResource() = R.layout.map_preference_widget_empty
+    override fun getWidgetLayoutResource() = R.layout.map_preference_widget_seekbar_stub
 
     override fun onAttach() {
         valueInternal = (getInt(min) - this@SeekBarPreference.min) / step
