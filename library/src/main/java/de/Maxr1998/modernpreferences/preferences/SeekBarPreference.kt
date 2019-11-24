@@ -45,7 +45,7 @@ class SeekBarPreference(key: String) : Preference(key) {
             field = value
         }
 
-    var valueInternal = 0
+    private var valueInternal = 0
     var value: Int
         get() = min + valueInternal * step
         set(v) {
