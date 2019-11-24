@@ -56,7 +56,7 @@ class CollapsePreference(key: String) : Preference(key) {
         if (summary != null) return
 
         val tmpSummary = StringBuilder()
-        val count = Math.min(5, preferences.size - 1)
+        val count = (preferences.size - 1).coerceAtMost(5)
         for (i in 0..count) {
             tmpSummary += preferences[i].run {
                 when {
