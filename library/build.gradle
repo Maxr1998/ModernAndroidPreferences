@@ -5,7 +5,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 // Version
-def library_version = '0.3'
+def library_version = '0.4'
 def library_name = 'modernpreferences'
 def library_name_bintray = 'ModernAndroidPreferences'
 
