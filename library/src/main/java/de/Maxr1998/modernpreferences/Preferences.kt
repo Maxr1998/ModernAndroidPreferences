@@ -121,8 +121,9 @@ open class Preference(key: String) : AbstractPreference(key) {
      */
     @CallSuper
     open fun bindViews(holder: PreferencesAdapter.ViewHolder) {
-        if (attachedScreen == null)
-            throw IllegalStateException("Trying to bind view for a preference not attached to a screen!")
+        checkNotNull(attachedScreen) {
+            "Trying to bind view for a preference not attached to a screen!"
+        }
 
         preBindListener?.onPreBind(this, holder)
 
