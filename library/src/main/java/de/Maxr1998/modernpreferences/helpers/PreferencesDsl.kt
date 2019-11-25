@@ -64,6 +64,12 @@ inline fun PreferenceScreen.Builder.checkBox(key: String, block: CheckBoxPrefere
     return cbp
 }
 
+inline fun PreferenceScreen.Builder.image(key: String, block: ImagePreference.() -> Unit): ImagePreference {
+    val img = ImagePreference(key).apply(block)
+    addPreferenceItem(img)
+    return img
+}
+
 inline fun PreferenceScreen.Builder.seekBar(key: String, block: SeekBarPreference.() -> Unit): SeekBarPreference {
     val sbp = SeekBarPreference(key).apply(block)
     addPreferenceItem(sbp)

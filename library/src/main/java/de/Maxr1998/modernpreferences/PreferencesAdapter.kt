@@ -32,6 +32,7 @@ import de.Maxr1998.modernpreferences.helpers.emptyScreen
 import de.Maxr1998.modernpreferences.preferences.AccentButtonPreference
 import de.Maxr1998.modernpreferences.preferences.CategoryHeader
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
+import de.Maxr1998.modernpreferences.preferences.ImagePreference
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -121,6 +122,7 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
         val layout = when (viewType) {
             CategoryHeader.RESOURCE_CONST -> R.layout.map_preference_category
             AccentButtonPreference.RESOURCE_CONST -> R.layout.map_accent_button_preference
+            ImagePreference.RESOURCE_CONST -> R.layout.map_image_preference
             else -> R.layout.map_preference
         }
         val view = layoutInflater.inflate(layout, parent, false)
