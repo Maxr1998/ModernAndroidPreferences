@@ -24,6 +24,8 @@ val screen = screen(context) {
     }
 }
 ```
+*…and many other preference widgets!*
+
 
 #### Create preference adapter
 ```Kotlin
@@ -35,7 +37,14 @@ Example Activities ([with](https://github.com/Maxr1998/ModernAndroidPreferences/
 show advanced info like back handling, saving/restoring scroll position, and using the `OnScreenChangeListener`.
 
 ## Include to project
-You can get ModernAndroidPreferences through [JitPack](https://jitpack.io/#Maxr1998/ModernAndroidPreferences/-SNAPSHOT):
+ModernAndroidPreferences is on [Bintray](https://bintray.com/maxr1998/maven/ModernAndroidPreferences), so you can get it like any other dependency via JCenter:
+```gradle
+dependencies {
+    implementation 'de.Maxr1998.android:modernpreferences:0.4.1'
+}
+```
+
+Alternatively, you can get snapshot versions through [JitPack](https://jitpack.io/#Maxr1998/ModernAndroidPreferences/-SNAPSHOT):
 ```gradle
 repositories {
     maven { url 'https://jitpack.io' }
