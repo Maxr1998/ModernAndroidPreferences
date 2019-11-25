@@ -19,6 +19,7 @@
 package de.Maxr1998.modernpreferences.example
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.widget.Toast
 import de.Maxr1998.modernpreferences.helpers.*
 
@@ -66,6 +67,15 @@ object Common {
             }
             categoryHeader("header_advanced") {
                 title = "Advanced"
+            }
+            image("image-kotlin") {
+                imageRes = R.drawable.ic_kotlin
+                showScrim = false
+            }
+            image("image-earth") {
+                title = "\u00A9 2019 DigitalGlobe"
+                val imageStream = context.assets.open("earthview_6300.jpg")
+                imageDrawable = BitmapDrawable.createFromStream(imageStream, null)
             }
             seekBar("seekbar") {
                 title = "A seekbar"
