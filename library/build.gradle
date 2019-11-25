@@ -45,16 +45,28 @@ task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
 }
 
-def apiKey = null
+def bintrayKey = null
+def githubToken = null
 def propFile = project.file("key.properties")
 if (propFile.exists()) {
     Properties props = new Properties()
     props.load(new FileInputStream(propFile))
-    apiKey = props["key"]
+    bintrayKey = props["bintrayKey"]
+    githubToken = props["githubToken"]
 }
 
-// Maven & bintray config
+// Maven & Bintray config
 publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/Maxr1998/ModernAndroidPreferences")
+            credentials {
+                username = "Maxr1998"
+                password = githubToken
+            }
+        }
+    }
     publications {
         Production(MavenPublication) {
             groupId 'de.Maxr1998.android'
@@ -78,7 +90,7 @@ publishing {
 
 bintray {
     user = 'maxr1998'
-    key = apiKey
+    key = bintrayKey
     publications = ['Production']
     pkg {
         repo = 'maven'
