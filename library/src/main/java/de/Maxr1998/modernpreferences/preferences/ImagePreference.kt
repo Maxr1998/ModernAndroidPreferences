@@ -49,6 +49,8 @@ class ImagePreference(key: String) : Preference(key) {
     var imageDrawable: Drawable? = null
     var lazyImage: (() -> Drawable)? = null
 
+    var maxImageHeight = Integer.MAX_VALUE
+
     var showScrim = true
     var tint: ColorFilter? = null
 
@@ -65,9 +67,9 @@ class ImagePreference(key: String) : Preference(key) {
             lazyImage != null -> image.setImageDrawable(lazyImage?.invoke())
             else -> image.setImageDrawable(null)
         }
-        val scrim = holder.root.findViewById<ImageView>(R.id.map_image_scrim)
-        scrim.isVisible = showScrim && title.isNotBlank()
+        image.maxHeight = maxImageHeight
         image.colorFilter = tint
+        holder.root.findViewById<ImageView>(R.id.map_image_scrim).isVisible = showScrim && title.isNotBlank()
     }
 
     companion object {
