@@ -20,9 +20,8 @@ package de.Maxr1998.modernpreferences.example.view_model
 
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.PreferenceScreen
@@ -30,13 +29,12 @@ import de.Maxr1998.modernpreferences.PreferencesAdapter
 
 class ViewModelTestActivity : AppCompatActivity(), PreferencesAdapter.OnScreenChangeListener {
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels()
     private lateinit var preferenceView: RecyclerView
     private val preferencesAdapter get() = viewModel.preferencesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get<MainViewModel>()
 
         preferenceView = RecyclerView(this)
         setContentView(preferenceView)
@@ -59,8 +57,8 @@ class ViewModelTestActivity : AppCompatActivity(), PreferencesAdapter.OnScreenCh
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 true

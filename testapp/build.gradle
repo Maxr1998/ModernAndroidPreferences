@@ -20,15 +20,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "androidx.core:core-ktx:1.1.0"
+    implementation "androidx.core:core-ktx:1.2.0"
     implementation "androidx.appcompat:appcompat:1.1.0"
-    implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0"
-    kapt "androidx.lifecycle:lifecycle-compiler:2.1.0"
+    implementation "androidx.activity:activity-ktx:1.1.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:2.2.0"
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 
     implementation project(":library")
