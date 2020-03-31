@@ -35,12 +35,15 @@ import java.util.concurrent.atomic.AtomicBoolean
 abstract class AbstractPreference internal constructor(val key: String) {
     // UI
     var title: String = ""
+
     @StringRes
     var titleRes: Int = -1
     var summary: String? = null
+
     @StringRes
     var summaryRes: Int = -1
     var icon: Drawable? = null
+
     @DrawableRes
     var iconRes: Int = -1
 
@@ -83,6 +86,7 @@ open class Preference(key: String) : AbstractPreference(key) {
             field = value
             requestRebind()
         }
+
     var dependency: String? = null
 
     var preBindListener: OnPreBindListener? = null
@@ -90,8 +94,16 @@ open class Preference(key: String) : AbstractPreference(key) {
     var clickListener: OnClickListener? = null
 
     internal var attachedScreen: PreferenceScreen? = null
+
     var screenPosition: Int = 0
         internal set
+
+    private var prefs: SharedPreferences? = null
+
+    /**
+     * Whether or not to persist changes to this preference to the attached [SharedPreferences] instance
+     */
+    var persistent: Boolean = true
 
     private var highlightOnNextBind = AtomicBoolean(false)
 
@@ -104,6 +116,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         check(attachedScreen == null) { "Preference was already attached to a screen!" }
         attachedScreen = screen
         screenPosition = position
+        prefs = if (persistent) screen.prefs else null
         dependency?.also {
             val p = attachedScreen?.get(it)
             if (p != null && p is TwoStatePreference)
@@ -202,13 +215,13 @@ open class Preference(key: String) : AbstractPreference(key) {
      * Save an int for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
      */
     fun commitInt(value: Int) {
-        attachedScreen?.prefs?.edit {
+        prefs?.edit {
             putInt(key, value)
         }
     }
 
     fun getInt(defaultValue: Int) = try {
-        attachedScreen?.prefs?.getInt(key, defaultValue) ?: defaultValue
+        prefs?.getInt(key, defaultValue) ?: defaultValue
     } catch (e: ClassCastException) {
         defaultValue
     }
@@ -217,13 +230,13 @@ open class Preference(key: String) : AbstractPreference(key) {
      * Save a boolean for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
      */
     fun commitBoolean(value: Boolean) {
-        attachedScreen?.prefs?.edit {
+        prefs?.edit {
             putBoolean(key, value)
         }
     }
 
     fun getBoolean(defaultValue: Boolean) = try {
-        attachedScreen?.prefs?.getBoolean(key, defaultValue) ?: false
+        prefs?.getBoolean(key, defaultValue) ?: false
     } catch (e: ClassCastException) {
         defaultValue
     }
@@ -232,13 +245,13 @@ open class Preference(key: String) : AbstractPreference(key) {
      * Save a String for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
      */
     fun commitString(value: String) {
-        attachedScreen?.prefs?.edit {
+        prefs?.edit {
             putString(key, value)
         }
     }
 
     fun getString(defaultValue: String) = try {
-        attachedScreen?.prefs?.getString(key, defaultValue) ?: defaultValue
+        prefs?.getString(key, defaultValue) ?: defaultValue
     } catch (e: ClassCastException) {
         defaultValue
     }
@@ -271,7 +284,7 @@ open class Preference(key: String) : AbstractPreference(key) {
  * It extends the [Preference] class, but gets handled slightly differently in a few things:
  * - [PreferenceScreen]s don't have a key attached to them
  * - Every [PreferenceScreen] can be bound to a different [SharedPreferences] file
- * - Even though you can change the [enabled] state, it doesn't have any effect in this instance
+ * - Even though you can change the [enabled] or the [persistent] state, it doesn't have any effect in this instance
  */
 class PreferenceScreen private constructor(builder: Builder) : Preference("") {
     internal val prefs = builder.prefs
@@ -343,10 +356,12 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
          * The filename to use for the [SharedPreferences] of this [PreferenceScreen]
          */
         var preferenceFileName: String = (context?.packageName ?: "package") + "_preferences"
+
         /**
          * If true, the preference items in this screen will have a smaller left padding when they have no icon
          */
         var collapseIcon: Boolean = false
+
         /**
          * Center the icon inside its keylines. If false, it will be aligned with a potential back arrow in the toolbar
          */
