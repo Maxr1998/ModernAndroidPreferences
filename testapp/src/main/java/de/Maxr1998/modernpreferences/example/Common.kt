@@ -25,7 +25,7 @@ import de.Maxr1998.modernpreferences.helpers.*
 
 object Common {
     fun createRootScreen(context: Context) = screen(context) {
-        subScreen {
+        subScreen("types") {
             title = "Preference types"
             summary = "Overview over all the different preference items, with various widgets"
             iconRes = R.drawable.ic_apps_24dp
@@ -109,7 +109,7 @@ object Common {
                 }
             }
         }
-        subScreen {
+        subScreen("list") {
             title = "Long list"
             summary = "A longer list to see how well library performs thanks to the backing RecyclerView"
             iconRes = R.drawable.ic_list_24dp
