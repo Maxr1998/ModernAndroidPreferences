@@ -134,6 +134,16 @@ open class Preference(key: String) : AbstractPreference(key) {
     internal open fun onAttach() {}
 
     /**
+     * Check if this preference has a parent of the given [key]
+     *
+     * That is, somewhere in the hierarchy above this preference or screen
+     * there's a parent screen with that key.
+     */
+    fun hasParent(key: String): Boolean {
+        return generateSequence(parent, PreferenceScreen::parent).any { it.key == key }
+    }
+
+    /**
      * Binds the preference-data to its views from the [view holder][PreferencesAdapter.ViewHolder]
      * Don't call this yourself, it will get called from the [PreferencesAdapter].
      */
