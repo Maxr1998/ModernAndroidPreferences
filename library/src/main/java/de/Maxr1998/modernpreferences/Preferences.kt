@@ -28,6 +28,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.core.view.isVisible
+import de.Maxr1998.modernpreferences.helpers.KEY_ROOT_SCREEN
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
 import java.util.concurrent.atomic.AtomicBoolean
@@ -286,7 +287,7 @@ open class Preference(key: String) : AbstractPreference(key) {
  * - Every [PreferenceScreen] can be bound to a different [SharedPreferences] file
  * - Even though you can change the [enabled] or the [persistent] state, it doesn't have any effect in this instance
  */
-class PreferenceScreen private constructor(builder: Builder) : Preference("") {
+class PreferenceScreen private constructor(builder: Builder) : Preference(builder.key) {
     internal val prefs = builder.prefs
     private val keyMap: Map<String, Preference> = builder.keyMap
     private val preferences: List<Preference> = builder.preferences
@@ -349,8 +350,9 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
         adapter?.notifyItemRangeChanged(position, itemCount)
     }
 
-    class Builder(private var context: Context?) : AbstractPreference("") {
-        constructor(builder: Builder) : this(builder.context)
+    class Builder private constructor(private var context: Context?, key: String) : AbstractPreference(key) {
+        constructor(context: Context?) : this(context, KEY_ROOT_SCREEN)
+        constructor(builder: Builder, key: String = "") : this(builder.context, key)
 
         /**
          * The filename to use for the [SharedPreferences] of this [PreferenceScreen]
@@ -379,10 +381,15 @@ class PreferenceScreen private constructor(builder: Builder) : Preference("") {
          * [subScreen][de.Maxr1998.modernpreferences.helpers.subScreen] for this.
          */
         fun addPreferenceItem(p: Preference) {
+            if (p.key == KEY_ROOT_SCREEN)
+                throw UnsupportedOperationException("" +
+                        "A screen with key '$KEY_ROOT_SCREEN' cannot be added as a sub-screen! " +
+                        "If you are trying to add a sub-screen to your preferences model, " +
+                        "use the `subScreen {}` function.")
             if (p.key.isEmpty() && p !is PreferenceScreen)
                 throw UnsupportedOperationException("Preference key may not be empty!")
 
-            if (p is PreferenceScreen || keyMap.put(p.key, p) == null)
+            if (p.key.isEmpty() || keyMap.put(p.key, p) == null)
                 preferences.add(p)
             else throw UnsupportedOperationException("A preference with this key is already in the screen!")
 

@@ -18,6 +18,8 @@ package de.Maxr1998.modernpreferences.helpers
 
 import android.widget.SeekBar
 
+const val KEY_ROOT_SCREEN = "root"
+
 internal fun SeekBar.onSeek(callback: (Int, Boolean) -> Unit) {
     setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
         private var changed = false
