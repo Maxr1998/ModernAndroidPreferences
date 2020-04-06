@@ -73,14 +73,14 @@ class CollapsePreference(key: String) : Preference(key) {
         visible = false
         for (i in preferences.indices)
             preferences[i].visible = true
-        attachedScreen?.requestRebind(screenPosition, 1 + preferences.size)
+        parent?.requestRebind(screenPosition, 1 + preferences.size)
     }
 
     fun reset() {
         visible = true
         for (i in preferences.indices)
             preferences[i].visible = false
-        attachedScreen?.requestRebind(screenPosition, 1 + preferences.size)
+        parent?.requestRebind(screenPosition, 1 + preferences.size)
     }
 
     // Utility method

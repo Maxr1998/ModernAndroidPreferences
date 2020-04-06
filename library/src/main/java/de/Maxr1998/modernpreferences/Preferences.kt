@@ -94,7 +94,11 @@ open class Preference(key: String) : AbstractPreference(key) {
 
     var clickListener: OnClickListener? = null
 
-    internal var attachedScreen: PreferenceScreen? = null
+    /**
+     * The screen this Preference currently is attached to, or null
+     */
+    var parent: PreferenceScreen? = null
+        internal set
 
     var screenPosition: Int = 0
         internal set
@@ -114,12 +118,12 @@ open class Preference(key: String) : AbstractPreference(key) {
     }
 
     internal fun attachToScreen(screen: PreferenceScreen, position: Int) {
-        check(attachedScreen == null) { "Preference was already attached to a screen!" }
-        attachedScreen = screen
+        check(this.parent == null) { "Preference was already attached to a screen!" }
+        this.parent = screen
         screenPosition = position
         prefs = if (persistent) screen.prefs else null
         dependency?.also {
-            val p = attachedScreen?.get(it)
+            val p = this.parent?.get(it)
             if (p != null && p is TwoStatePreference)
                 p.addDependent(this)
             else dependency = null // Invalid
@@ -135,7 +139,7 @@ open class Preference(key: String) : AbstractPreference(key) {
      */
     @CallSuper
     open fun bindViews(holder: PreferencesAdapter.ViewHolder) {
-        checkNotNull(attachedScreen) {
+        checkNotNull(this.parent) {
             "Trying to bind view for a preference not attached to a screen!"
         }
 
@@ -162,9 +166,9 @@ open class Preference(key: String) : AbstractPreference(key) {
             }
         }
         holder.iconFrame.apply {
-            isVisible = itemVisible || !attachedScreen!!.collapseIcon
+            isVisible = itemVisible || !this@Preference.parent!!.collapseIcon
             if (isVisible && this is LinearLayout) {
-                gravity = if (attachedScreen!!.centerIcon) Gravity.CENTER else Gravity.START or Gravity.CENTER_VERTICAL
+                gravity = if (this@Preference.parent!!.centerIcon) Gravity.CENTER else Gravity.START or Gravity.CENTER_VERTICAL
             }
         }
         holder.title.apply {
@@ -196,7 +200,7 @@ open class Preference(key: String) : AbstractPreference(key) {
     }
 
     fun requestRebind() {
-        attachedScreen?.requestRebind(screenPosition)
+        this.parent?.requestRebind(screenPosition)
     }
 
     fun requestRebindAndHighlight() {

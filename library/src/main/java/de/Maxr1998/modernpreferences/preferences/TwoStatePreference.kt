@@ -101,7 +101,7 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
      */
     internal fun addDependent(dependent: Preference) {
         dependents.add(dependent)
-        if (attachedScreen != null)
+        if (parent != null)
             updateDependent(dependent)
     }
 
