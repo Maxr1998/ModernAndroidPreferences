@@ -98,10 +98,10 @@ open class Preference(key: String) : AbstractPreference(key) {
      * The screen this Preference currently is attached to, or null
      */
     var parent: PreferenceScreen? = null
-        internal set
+        private set
 
     var screenPosition: Int = 0
-        internal set
+        private set
 
     private var prefs: SharedPreferences? = null
 
