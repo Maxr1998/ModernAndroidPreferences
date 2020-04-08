@@ -39,9 +39,9 @@ class SeekBarPreference(key: String) : Preference(key) {
             require(value >= 0) { "Max value must be >= 0" }
             field = value
         }
-    var default = 0
+    var default: Int? = null
         set(value) {
-            require(value >= 0) { "Default value must be >= 0" }
+            require(value == null || value >= 0) { "Default value must be >= 0" }
             field = value
         }
     var step = 1
@@ -67,7 +67,7 @@ class SeekBarPreference(key: String) : Preference(key) {
     override fun getWidgetLayoutResource() = R.layout.map_preference_widget_seekbar_stub
 
     override fun onAttach() {
-        valueInternal = (getInt(default) - this@SeekBarPreference.min) / step
+        valueInternal = (getInt(default ?: min) - this@SeekBarPreference.min) / step
     }
 
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
