@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <SeekBar
+    <androidx.appcompat.widget.AppCompatSeekBar
         android:id="@android:id/progress"
         android:layout_width="0dp"
         android:layout_height="48dp"
