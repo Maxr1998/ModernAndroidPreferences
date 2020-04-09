@@ -17,11 +17,11 @@
 package de.Maxr1998.modernpreferences.preferences
 
 import android.view.LayoutInflater
-import android.widget.SeekBar
 import android.widget.Space
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
+import de.Maxr1998.modernpreferences.views.ModernSeekBar
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.R
@@ -49,6 +49,8 @@ class SeekBarPreference(key: String) : Preference(key) {
             require(value > 0) { "Stepping value must be >= 1" }
             field = value
         }
+
+    var showTickMarks = false
 
     private var valueInternal = 0
     var value: Int
@@ -86,12 +88,17 @@ class SeekBarPreference(key: String) : Preference(key) {
         val inflater = LayoutInflater.from(widget.context)
         val sb = (widget.tag
                 ?: inflater.inflate(R.layout.map_preference_widget_seekbar, holder.root)
-                        .findViewById(android.R.id.progress)) as SeekBar
+                        .findViewById(android.R.id.progress)) as ModernSeekBar
         val tv = (sb.tag ?: holder.itemView.findViewById(R.id.progress_text)) as TextView
         widget.tag = sb.apply {
             isEnabled = enabled
             max = (this@SeekBarPreference.max - this@SeekBarPreference.min) / step
             progress = valueInternal
+            hasTickMarks = showTickMarks
+            this@SeekBarPreference.default?.let {
+                default = (it - this@SeekBarPreference.min) / step
+            }
+
             onSeek { v, done ->
                 valueInternal = v
                 tv.text = formatter(value)
