@@ -88,6 +88,18 @@ object Common {
                 max = 1000
                 step = 25
             }
+            seekBar("seekbar-ticks") {
+                title = "A seekbar with tick marks"
+                min = 1
+                max = 10
+                showTickMarks = true
+            }
+            seekBar("seekbar-default") {
+                title = "A seekbar with a default value"
+                min = 1
+                max = 5
+                default = 3
+            }
             addPreferenceItem(TestDialog().apply {
                 title = "Show dialog"
                 iconRes = R.drawable.ic_info_24dp
