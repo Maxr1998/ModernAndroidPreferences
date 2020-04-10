@@ -35,18 +35,17 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class AbstractPreference internal constructor(val key: String) {
     // UI
+    @StringRes
+    var titleRes: Int = -1
     var title: String = ""
 
     @StringRes
-    var titleRes: Int = -1
-    var summary: String? = null
-
-    @StringRes
     var summaryRes: Int = -1
-    var icon: Drawable? = null
+    var summary: String? = null
 
     @DrawableRes
     var iconRes: Int = -1
+    var icon: Drawable? = null
 
     // State
     var visible = true
