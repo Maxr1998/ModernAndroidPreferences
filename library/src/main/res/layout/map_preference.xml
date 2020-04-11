@@ -47,14 +47,17 @@
 
     <TextView
         android:id="@android:id/title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ellipsize="marquee"
         android:singleLine="true"
         android:textAppearance="?textAppearanceListItem"
+        app:layout_constrainedWidth="true"
         app:layout_constraintBottom_toTopOf="@android:id/summary"
-        app:layout_constraintEnd_toStartOf="@id/map_widget_frame"
+        app:layout_constraintEnd_toStartOf="@id/map_badge"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@id/map_icon_frame"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_goneMarginBottom="16dp"
@@ -71,10 +74,30 @@
         android:textColor="?android:textColorSecondary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/map_bottom_barrier"
-        app:layout_constraintEnd_toEndOf="@android:id/title"
+        app:layout_constraintEnd_toStartOf="@id/map_widget_frame"
         app:layout_constraintStart_toStartOf="@android:id/title"
         app:layout_constraintTop_toBottomOf="@android:id/title"
         tools:text="Summary" />
+
+    <TextView
+        android:id="@+id/map_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/map_badge_background"
+        android:fontFamily="sans-serif-condensed-medium"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:textAllCaps="true"
+        android:textColor="?colorAccent"
+        android:textSize="10sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@android:id/title"
+        app:layout_constraintEnd_toStartOf="@id/map_widget_frame"
+        app:layout_constraintStart_toEndOf="@android:id/title"
+        app:layout_constraintTop_toTopOf="@android:id/title"
+        tools:ignore="SmallSp"
+        tools:text="pro" />
 
     <LinearLayout
         android:id="@id/map_widget_frame"

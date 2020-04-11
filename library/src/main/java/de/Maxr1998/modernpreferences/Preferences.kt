@@ -47,6 +47,10 @@ abstract class AbstractPreference internal constructor(val key: String) {
     var iconRes: Int = -1
     var icon: Drawable? = null
 
+    @StringRes
+    var badgeRes: Int = -1
+    var badge: String? = null
+
     // State
     var visible = true
 
@@ -188,6 +192,18 @@ open class Preference(key: String) : AbstractPreference(key) {
             when {
                 summaryRes != -1 -> setText(summaryRes)
                 summary != null -> text = summary
+                else -> {
+                    text = null
+                    itemVisible = false
+                }
+            }
+            isVisible = itemVisible
+        }
+        holder.badge?.apply {
+            itemVisible = true
+            when {
+                badgeRes != -1 -> setText(badgeRes)
+                badge != null -> text = badge
                 else -> {
                     text = null
                     itemVisible = false

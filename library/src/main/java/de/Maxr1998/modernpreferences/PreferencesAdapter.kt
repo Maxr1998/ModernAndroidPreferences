@@ -187,6 +187,7 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
         val icon: ImageView? = itemView.findViewById(android.R.id.icon)
         val title: TextView = itemView.findViewById(android.R.id.title)
         val summary: TextView? = itemView.findViewById(android.R.id.summary)
+        val badge: TextView? = itemView.findViewById(R.id.map_badge)
         val widget: View? = itemView.findViewById<ViewGroup>(R.id.map_widget_frame)?.getChildAt(0)
 
         internal fun setEnabledState(enabled: Boolean) {
