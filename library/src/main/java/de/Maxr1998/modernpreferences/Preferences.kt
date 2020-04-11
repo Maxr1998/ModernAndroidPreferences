@@ -211,6 +211,9 @@ open class Preference(key: String) : AbstractPreference(key) {
             }
             isVisible = itemVisible
         }
+        holder.widgetFrame?.apply {
+            isVisible = childCount > 0
+        }
         holder.itemView.isVisible = true
         if (highlightOnNextBind.getAndSet(false)) {
             val v = holder.itemView
