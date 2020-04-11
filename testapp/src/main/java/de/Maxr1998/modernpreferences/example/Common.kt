@@ -22,6 +22,7 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.widget.Toast
 import de.Maxr1998.modernpreferences.helpers.*
+import java.util.*
 
 object Common {
     fun createRootScreen(context: Context) = screen(context) {
@@ -45,8 +46,12 @@ object Common {
                 title = "There's also icon support, yay!"
                 iconRes = R.drawable.ic_emoji_24dp
             }
+            pref("with-badge") {
+                title = "And badges!"
+                badge = "pro"
+            }
             accentButtonPref("accent-button") {
-                title = "Button style!"
+                title = "Button style".toUpperCase(Locale.getDefault())
             }
             categoryHeader("header_two_state") {
                 title = "Two state"
