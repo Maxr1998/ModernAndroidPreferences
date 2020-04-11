@@ -17,7 +17,6 @@
 package de.Maxr1998.modernpreferences
 
 import android.os.Parcelable
-import android.preference.Preference
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

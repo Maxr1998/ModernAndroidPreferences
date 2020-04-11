@@ -85,7 +85,7 @@ class ModernSeekBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     }
 
     private val helper: Any = AppCompatSeekBar::class.java.getDeclaredField("mAppCompatSeekBarHelper")
-            .apply { isAccessible = true }.get(this)
+            .apply { isAccessible = true }.get(this)!!
     private val getTickMarkMethod: Method = helper::class.java.getDeclaredMethod("getTickMark")
             .apply { isAccessible = true }
     private val setTickMarkMethod: Method = helper::class.java.getDeclaredMethod("setTickMark", Drawable::class.java)
