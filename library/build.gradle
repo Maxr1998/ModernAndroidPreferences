@@ -12,10 +12,10 @@ def library_name = 'modernpreferences'
 def library_name_bintray = 'ModernAndroidPreferences'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName library_version
     }
