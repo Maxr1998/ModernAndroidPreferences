@@ -30,6 +30,7 @@ import androidx.core.content.edit
 import androidx.core.view.isVisible
 import de.Maxr1998.modernpreferences.helpers.KEY_ROOT_SCREEN
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
+import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
 import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
 import java.util.concurrent.atomic.AtomicBoolean
 
@@ -212,7 +213,7 @@ open class Preference(key: String) : AbstractPreference(key) {
             isVisible = itemVisible
         }
         holder.widgetFrame?.apply {
-            isVisible = childCount > 0
+            isVisible = childCount > 0 && this@Preference !is SeekBarPreference
         }
         holder.itemView.isVisible = true
         if (highlightOnNextBind.getAndSet(false)) {
