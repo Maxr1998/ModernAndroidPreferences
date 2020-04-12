@@ -21,11 +21,11 @@ import android.widget.Space
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
-import de.Maxr1998.modernpreferences.views.ModernSeekBar
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.R
 import de.Maxr1998.modernpreferences.helpers.onSeek
+import de.Maxr1998.modernpreferences.views.ModernSeekBar
 
 class SeekBarPreference(key: String) : Preference(key) {
 
@@ -77,6 +77,10 @@ class SeekBarPreference(key: String) : Preference(key) {
         holder.root.apply {
             background = null
             clipChildren = false
+        }
+        holder.iconFrame.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+            bottomMargin = (40 * holder.itemView.resources.displayMetrics.density).toInt()
         }
         holder.title.updateLayoutParams<ConstraintLayout.LayoutParams> {
             goneBottomMargin = 0
