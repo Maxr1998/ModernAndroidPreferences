@@ -53,7 +53,7 @@ class CollapsePreference(key: String) : Preference(key) {
     }
 
     private fun buildSummary(context: Context) {
-        if (summary != null) return
+        if (summaryRes != -1 || summary != null) return
 
         val tmpSummary = StringBuilder()
         val count = (preferences.size - 1).coerceAtMost(5)
