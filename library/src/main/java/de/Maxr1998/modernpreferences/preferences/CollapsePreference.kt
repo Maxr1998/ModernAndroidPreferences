@@ -24,7 +24,13 @@ import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.R
 
-class CollapsePreference(internal val screen: PreferenceScreen.Builder, key: String) : Preference(key), PreferenceScreen.Appendable {
+/**
+ * IMPORTANT: If you're using this independently from the helper DSLs,
+ * make sure to call [clearContext] after you have completed with all [addPreferenceItem] operations,
+ * to not leak the context supplied in [screen].
+ */
+class CollapsePreference(screen: PreferenceScreen.Builder, key: String) : Preference(key), PreferenceScreen.Appendable {
+    internal var screen: PreferenceScreen.Builder? = screen
     private val preferences = ArrayList<Preference>()
 
     init {
@@ -33,8 +39,15 @@ class CollapsePreference(internal val screen: PreferenceScreen.Builder, key: Str
     }
 
     override fun addPreferenceItem(p: Preference) {
-        screen.addPreferenceItem(p)
+        checkNotNull(screen) {
+            "Don't call clearContext before you've finished all addPreferenceItem operations!"
+        }
+        screen!!.addPreferenceItem(p)
         preferences.add(p.apply { visible = false })
+    }
+
+    fun clearContext() {
+        screen = null
     }
 
     /*

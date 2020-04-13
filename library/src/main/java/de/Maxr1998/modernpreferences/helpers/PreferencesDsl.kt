@@ -73,7 +73,10 @@ inline fun <reified T : Preference> PreferenceScreen.Appendable.custom(key: Stri
 }
 
 inline fun PreferenceScreen.Builder.collapse(key: String = "advanced", block: CollapsePreference.() -> Unit): CollapsePreference {
-    return CollapsePreference(this, key).also(::addPreferenceItem).apply(block)
+    return CollapsePreference(this, key).also(::addPreferenceItem).apply {
+        block()
+        clearContext()
+    }
 }
 
 inline fun CollapsePreference.subScreen(key: String = "", block: PreferenceScreen.Builder.() -> Unit) {
