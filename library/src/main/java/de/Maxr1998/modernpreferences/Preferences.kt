@@ -116,6 +116,8 @@ open class Preference(key: String) : AbstractPreference(key) {
 
     private var highlightOnNextBind = AtomicBoolean(false)
 
+    var includeInCollapseSummary = true
+
     @LayoutRes
     open fun getWidgetLayoutResource(): Int {
         return -1

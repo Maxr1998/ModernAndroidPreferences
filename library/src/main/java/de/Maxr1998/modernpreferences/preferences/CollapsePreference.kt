@@ -55,20 +55,15 @@ class CollapsePreference(internal val screen: PreferenceScreen.Builder, key: Str
     }
 
     private fun buildSummary(context: Context) {
-        if (summaryRes != -1 || summary != null) return
+        if (summaryRes != -1 || summary != null)
+            return
 
-        val tmpSummary = StringBuilder()
-        val count = (preferences.size - 1).coerceAtMost(5)
-        for (i in 0..count) {
-            tmpSummary += preferences[i].run {
-                when {
-                    titleRes != -1 -> context.getString(titleRes)
-                    else -> title
-                }
+        summary = preferences.asSequence().filter(Preference::includeInCollapseSummary).take(5).joinToString { p ->
+            when {
+                p.titleRes != -1 -> context.getString(p.titleRes)
+                else -> p.title
             }
-            if (i < count) tmpSummary += ", "
         }
-        summary = tmpSummary.toString()
     }
 
     override fun onClick(holder: PreferencesAdapter.ViewHolder) {
