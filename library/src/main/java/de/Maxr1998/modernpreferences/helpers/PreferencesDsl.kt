@@ -41,51 +41,35 @@ inline fun PreferenceScreen.Appendable.categoryHeader(key: String, block: Prefer
 }
 
 inline fun PreferenceScreen.Appendable.pref(key: String, block: Preference.() -> Unit): Preference {
-    val p = Preference(key).apply(block)
-    addPreferenceItem(p)
-    return p
+    return Preference(key).apply(block).also(::addPreferenceItem)
 }
 
 inline fun PreferenceScreen.Appendable.accentButtonPref(key: String, block: Preference.() -> Unit): Preference {
-    val abp = AccentButtonPreference(key).apply(block)
-    addPreferenceItem(abp)
-    return abp
+    return AccentButtonPreference(key).apply(block).also(::addPreferenceItem)
 }
 
 inline fun PreferenceScreen.Appendable.switch(key: String, block: SwitchPreference.() -> Unit): SwitchPreference {
-    val sp = SwitchPreference(key).apply(block)
-    addPreferenceItem(sp)
-    return sp
+    return SwitchPreference(key).apply(block).also(::addPreferenceItem)
 }
 
 inline fun PreferenceScreen.Appendable.checkBox(key: String, block: CheckBoxPreference.() -> Unit): CheckBoxPreference {
-    val cbp = CheckBoxPreference(key).apply(block)
-    addPreferenceItem(cbp)
-    return cbp
+    return CheckBoxPreference(key).apply(block).also(::addPreferenceItem)
 }
 
 inline fun PreferenceScreen.Appendable.image(key: String, block: ImagePreference.() -> Unit): ImagePreference {
-    val img = ImagePreference(key).apply(block)
-    addPreferenceItem(img)
-    return img
+    return ImagePreference(key).apply(block).also(::addPreferenceItem)
 }
 
 inline fun PreferenceScreen.Appendable.seekBar(key: String, block: SeekBarPreference.() -> Unit): SeekBarPreference {
-    val sbp = SeekBarPreference(key).apply(block)
-    addPreferenceItem(sbp)
-    return sbp
+    return SeekBarPreference(key).apply(block).also(::addPreferenceItem)
 }
 
 inline fun PreferenceScreen.Appendable.expandText(key: String, block: ExpandableTextPreference.() -> Unit): ExpandableTextPreference {
-    val etp = ExpandableTextPreference(key).apply(block)
-    addPreferenceItem(etp)
-    return etp
+    return ExpandableTextPreference(key).apply(block).also(::addPreferenceItem)
 }
 
 inline fun <reified T : Preference> PreferenceScreen.Appendable.custom(key: String, block: T.() -> Unit): T {
-    val c = T::class.java.getConstructor(String::class.java).newInstance(key).apply(block)
-    addPreferenceItem(c)
-    return c
+    return T::class.java.getConstructor(String::class.java).newInstance(key).apply(block).also(::addPreferenceItem)
 }
 
 inline fun PreferenceScreen.Builder.collapse(key: String = "advanced", block: CollapsePreference.() -> Unit): CollapsePreference {
