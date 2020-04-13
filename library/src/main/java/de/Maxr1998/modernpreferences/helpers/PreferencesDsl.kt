@@ -36,62 +36,64 @@ inline fun PreferenceScreen.Builder.subScreen(key: String = "", block: Preferenc
 }
 
 // Preference DSL functions
-inline fun PreferenceScreen.Builder.categoryHeader(key: String, block: Preference.() -> Unit) {
+inline fun PreferenceScreen.Appendable.categoryHeader(key: String, block: Preference.() -> Unit) {
     addPreferenceItem(CategoryHeader(key).apply(block))
 }
 
-inline fun PreferenceScreen.Builder.pref(key: String, block: Preference.() -> Unit): Preference {
+inline fun PreferenceScreen.Appendable.pref(key: String, block: Preference.() -> Unit): Preference {
     val p = Preference(key).apply(block)
     addPreferenceItem(p)
     return p
 }
 
-inline fun PreferenceScreen.Builder.accentButtonPref(key: String, block: Preference.() -> Unit): Preference {
+inline fun PreferenceScreen.Appendable.accentButtonPref(key: String, block: Preference.() -> Unit): Preference {
     val abp = AccentButtonPreference(key).apply(block)
     addPreferenceItem(abp)
     return abp
 }
 
-inline fun PreferenceScreen.Builder.switch(key: String, block: SwitchPreference.() -> Unit): SwitchPreference {
+inline fun PreferenceScreen.Appendable.switch(key: String, block: SwitchPreference.() -> Unit): SwitchPreference {
     val sp = SwitchPreference(key).apply(block)
     addPreferenceItem(sp)
     return sp
 }
 
-inline fun PreferenceScreen.Builder.checkBox(key: String, block: CheckBoxPreference.() -> Unit): CheckBoxPreference {
+inline fun PreferenceScreen.Appendable.checkBox(key: String, block: CheckBoxPreference.() -> Unit): CheckBoxPreference {
     val cbp = CheckBoxPreference(key).apply(block)
     addPreferenceItem(cbp)
     return cbp
 }
 
-inline fun PreferenceScreen.Builder.image(key: String, block: ImagePreference.() -> Unit): ImagePreference {
+inline fun PreferenceScreen.Appendable.image(key: String, block: ImagePreference.() -> Unit): ImagePreference {
     val img = ImagePreference(key).apply(block)
     addPreferenceItem(img)
     return img
 }
 
-inline fun PreferenceScreen.Builder.seekBar(key: String, block: SeekBarPreference.() -> Unit): SeekBarPreference {
+inline fun PreferenceScreen.Appendable.seekBar(key: String, block: SeekBarPreference.() -> Unit): SeekBarPreference {
     val sbp = SeekBarPreference(key).apply(block)
     addPreferenceItem(sbp)
     return sbp
 }
 
-inline fun PreferenceScreen.Builder.expandText(key: String, block: ExpandableTextPreference.() -> Unit): ExpandableTextPreference {
+inline fun PreferenceScreen.Appendable.expandText(key: String, block: ExpandableTextPreference.() -> Unit): ExpandableTextPreference {
     val etp = ExpandableTextPreference(key).apply(block)
     addPreferenceItem(etp)
     return etp
 }
 
-inline fun <reified T : Preference> PreferenceScreen.Builder.custom(key: String, block: T.() -> Unit): T {
+inline fun <reified T : Preference> PreferenceScreen.Appendable.custom(key: String, block: T.() -> Unit): T {
     val c = T::class.java.getConstructor(String::class.java).newInstance(key).apply(block)
     addPreferenceItem(c)
     return c
 }
 
-inline fun PreferenceScreen.Builder.collapse(key: String = "advanced", block: PreferenceScreen.Builder.() -> Unit) {
-    collapseNext(key)
-    block()
-    collapseEnd()
+inline fun PreferenceScreen.Builder.collapse(key: String = "advanced", block: CollapsePreference.() -> Unit): CollapsePreference {
+    return CollapsePreference(this, key).also(::addPreferenceItem).apply(block)
+}
+
+inline fun CollapsePreference.subScreen(key: String = "", block: PreferenceScreen.Builder.() -> Unit) {
+    addPreferenceItem(PreferenceScreen.Builder(this, key).apply(block).build())
 }
 
 // Listener helpers

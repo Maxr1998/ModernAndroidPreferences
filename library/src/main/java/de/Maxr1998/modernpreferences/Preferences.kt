@@ -383,9 +383,10 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
         adapter?.notifyItemRangeChanged(position, itemCount)
     }
 
-    class Builder private constructor(private var context: Context?, key: String) : AbstractPreference(key) {
+    class Builder private constructor(private var context: Context?, key: String) : AbstractPreference(key), Appendable {
         constructor(context: Context?) : this(context, KEY_ROOT_SCREEN)
         constructor(builder: Builder, key: String = "") : this(builder.context, key)
+        constructor(collapse: CollapsePreference, key: String = "") : this(collapse.screen.context, key)
 
         /**
          * The filename to use for the [SharedPreferences] of this [PreferenceScreen]
@@ -405,15 +406,13 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
         internal val keyMap = HashMap<String, Preference>()
         internal val preferences = ArrayList<Preference>()
 
-        private var collapsePreference: CollapsePreference? = null
-
         /**
          * Add the specified preference to this screen - it doesn't make sense to call this directly,
          * use the dsl helper methods like [pref][de.Maxr1998.modernpreferences.helpers.pref],
          * [switch][de.Maxr1998.modernpreferences.helpers.switch] and
          * [subScreen][de.Maxr1998.modernpreferences.helpers.subScreen] for this.
          */
-        fun addPreferenceItem(p: Preference) {
+        override fun addPreferenceItem(p: Preference) {
             if (p.key == KEY_ROOT_SCREEN)
                 throw UnsupportedOperationException("" +
                         "A screen with key '$KEY_ROOT_SCREEN' cannot be added as a sub-screen! " +
@@ -425,18 +424,6 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
             if (p.key.isEmpty() || keyMap.put(p.key, p) == null)
                 preferences.add(p)
             else throw UnsupportedOperationException("A preference with this key is already in the screen!")
-
-            collapsePreference?.addItem(p)
-        }
-
-        fun collapseNext(key: String) {
-            val collapse = CollapsePreference(key)
-            addPreferenceItem(collapse)
-            collapsePreference = collapse
-        }
-
-        fun collapseEnd() {
-            collapsePreference = null
         }
 
         fun build(): PreferenceScreen {
@@ -444,5 +431,9 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
             context = null
             return PreferenceScreen(this)
         }
+    }
+
+    interface Appendable {
+        fun addPreferenceItem(p: Preference)
     }
 }

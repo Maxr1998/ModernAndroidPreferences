@@ -20,10 +20,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.text.TextUtils
 import de.Maxr1998.modernpreferences.Preference
+import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.R
 
-class CollapsePreference(key: String) : Preference(key) {
+class CollapsePreference(internal val screen: PreferenceScreen.Builder, key: String) : Preference(key), PreferenceScreen.Appendable {
     private val preferences = ArrayList<Preference>()
 
     init {
@@ -31,8 +32,9 @@ class CollapsePreference(key: String) : Preference(key) {
         iconRes = R.drawable.map_ic_expand_24dp
     }
 
-    fun addItem(preference: Preference) {
-        preferences.add(preference.apply { visible = false })
+    override fun addPreferenceItem(p: Preference) {
+        screen.addPreferenceItem(p)
+        preferences.add(p.apply { visible = false })
     }
 
     /*
