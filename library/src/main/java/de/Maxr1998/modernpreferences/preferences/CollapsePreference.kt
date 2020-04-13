@@ -85,7 +85,7 @@ class CollapsePreference(key: String) : Preference(key) {
 
     // Utility method
     @Suppress("NOTHING_TO_INLINE")
-    inline operator fun StringBuilder.plusAssign(string: String) {
+    private inline operator fun StringBuilder.plusAssign(string: String) {
         append(string)
     }
 }
