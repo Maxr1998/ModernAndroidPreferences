@@ -45,16 +45,17 @@ class ExpandableTextPreference(key: String) : Preference(key) {
         super.bindViews(holder)
         val widget = holder.widget as CheckBox
         val inflater = LayoutInflater.from(widget.context)
-        val tv = (widget.tag ?: inflater.inflate(R.layout.map_preference_expand_text, holder.root)
-                .findViewById(android.R.id.message)) as TextView
+        val tv: TextView = (widget.tag ?: run {
+            inflater.inflate(R.layout.map_preference_expand_text, holder.root).findViewById<TextView>(android.R.id.message)
+        }) as TextView
         widget.tag = tv
         tv.apply {
             if (textRes != -1) setText(textRes) else text = this@ExpandableTextPreference.text
             typeface = if (monospace) Typeface.MONOSPACE else Typeface.SANS_SERIF
-            val a = context.obtainStyledAttributes(intArrayOf(R.attr.expandableTextBackgroundColor))
-            setBackgroundColor(a.getColor(0, ContextCompat.getColor(context,
-                    R.color.expandableTextBackgroundColorDefault)))
-            a.recycle()
+            with(context.obtainStyledAttributes(intArrayOf(R.attr.expandableTextBackgroundColor))) {
+                setBackgroundColor(getColor(0, ContextCompat.getColor(context, R.color.expandableTextBackgroundColorDefault)))
+                recycle()
+            }
             isEnabled = enabled
         }
         refreshArrowState(widget)
