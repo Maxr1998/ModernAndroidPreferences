@@ -49,7 +49,7 @@ class ExpandableTextPreference(key: String) : Preference(key) {
                 .findViewById(android.R.id.message)) as TextView
         widget.tag = tv
         tv.apply {
-            if (titleRes != -1) setText(textRes) else text = this@ExpandableTextPreference.text
+            if (textRes != -1) setText(textRes) else text = this@ExpandableTextPreference.text
             typeface = if (monospace) Typeface.MONOSPACE else Typeface.SANS_SERIF
             val a = context.obtainStyledAttributes(intArrayOf(R.attr.expandableTextBackgroundColor))
             setBackgroundColor(a.getColor(0, ContextCompat.getColor(context,
