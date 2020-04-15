@@ -33,9 +33,10 @@ import de.Maxr1998.modernpreferences.R
 class ExpandableTextPreference(key: String) : Preference(key) {
     private var expanded = false
 
-    var text: String? = null
     @StringRes
     var textRes: Int = -1
+    var text: CharSequence? = null
+
     var monospace = true
 
     override fun getWidgetLayoutResource() = R.layout.map_preference_widget_expand_arrow

@@ -38,11 +38,11 @@ abstract class AbstractPreference internal constructor(val key: String) {
     // UI
     @StringRes
     var titleRes: Int = -1
-    var title: String = ""
+    var title: CharSequence = ""
 
     @StringRes
     var summaryRes: Int = -1
-    var summary: String? = null
+    var summary: CharSequence? = null
 
     @DrawableRes
     var iconRes: Int = -1
@@ -50,7 +50,7 @@ abstract class AbstractPreference internal constructor(val key: String) {
 
     @StringRes
     var badgeRes: Int = -1
-    var badge: String? = null
+    var badge: CharSequence? = null
 
     // State
     var visible = true
