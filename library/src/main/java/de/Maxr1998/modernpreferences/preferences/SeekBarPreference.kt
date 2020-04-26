@@ -30,20 +30,8 @@ import de.Maxr1998.modernpreferences.views.ModernSeekBar
 class SeekBarPreference(key: String) : Preference(key) {
 
     var min = 0
-        set(value) {
-            require(value >= 0) { "Min value must be >= 0" }
-            field = value
-        }
     var max = 0
-        set(value) {
-            require(value >= 0) { "Max value must be >= 0" }
-            field = value
-        }
     var default: Int? = null
-        set(value) {
-            require(value == null || value >= 0) { "Default value must be >= 0" }
-            field = value
-        }
     var step = 1
         set(value) {
             require(value > 0) { "Stepping value must be >= 1" }
@@ -52,9 +40,12 @@ class SeekBarPreference(key: String) : Preference(key) {
 
     var showTickMarks = false
 
+    /**
+     * The internal backing field of [value]
+     */
     private var valueInternal = 0
     var value: Int
-        get() = min + valueInternal * step
+        get() = valueInternal
         set(v) {
             if (v != valueInternal && seekListener?.onSeek(this, null, v) != false) {
                 valueInternal = v
@@ -69,7 +60,7 @@ class SeekBarPreference(key: String) : Preference(key) {
     override fun getWidgetLayoutResource() = R.layout.map_preference_widget_seekbar_stub
 
     override fun onAttach() {
-        valueInternal = (getInt(default ?: min) - this@SeekBarPreference.min) / step
+        valueInternal = getInt(default ?: min)
     }
 
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
@@ -96,41 +87,49 @@ class SeekBarPreference(key: String) : Preference(key) {
         val tv = (sb.tag ?: holder.itemView.findViewById(R.id.progress_text)) as TextView
         widget.tag = sb.apply {
             isEnabled = enabled
-            max = (this@SeekBarPreference.max - this@SeekBarPreference.min) / step
-            progress = valueInternal
+            max = calcRaw(this@SeekBarPreference.max)
+            progress = calcRaw(valueInternal)
             hasTickMarks = showTickMarks
-            this@SeekBarPreference.default?.let {
-                default = (it - this@SeekBarPreference.min) / step
-            }
+            this@SeekBarPreference.default?.let { default = calcRaw(it) }
 
             onSeek { v, done ->
-                valueInternal = v
-                tv.text = formatter(value)
-                if (seekListener?.onSeek(this@SeekBarPreference, null, v) != false) {
-                    if (done) commitInt(value)
+                if (done) {
+                    // Commit the last selected value
+                    commitInt(valueInternal)
                 } else {
-                    // Restore from preferences
-                    onAttach()
-                    progress = valueInternal
+                    val next = calcValue(v)
+                    // Check if listener allows the value change
+                    if (seekListener?.onSeek(this@SeekBarPreference, holder, next) != false) {
+                        // Update internal value
+                        valueInternal = next
+                    } else {
+                        // Restore previous value
+                        progress = calcRaw(valueInternal)
+                    }
+                    // Update preview text
+                    tv.text = formatter(valueInternal)
                 }
             }
         }
         sb.tag = tv.apply {
             isEnabled = enabled
-            text = formatter(value)
+            text = formatter(valueInternal)
         }
     }
+
+    private fun calcRaw(value: Int) = (value - min) / step
+    private fun calcValue(raw: Int) = min + raw * step
 
     interface OnSeekListener {
         /**
          * Notified when the [value][SeekBarPreference.value] of the connected [SeekBarPreference] changes.
-         * This is called before the change gets persisted, which can be prevented by returning false.
+         * This is called *before* the change gets persisted, which can be prevented by returning false.
          *
          * @param holder the [ViewHolder][PreferencesAdapter.ViewHolder] with the views of the Preference instance,
          * or null if the change didn't occur as part of a click event
          * @param value the new state
          *
-         * @return true to commit the new button state to [SharedPreferences][android.content.SharedPreferences]
+         * @return true to commit the new slider value to [SharedPreferences][android.content.SharedPreferences]
          */
         fun onSeek(preference: SeekBarPreference, holder: PreferencesAdapter.ViewHolder?, value: Int): Boolean
     }

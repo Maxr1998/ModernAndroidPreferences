@@ -20,6 +20,7 @@ package de.Maxr1998.modernpreferences.example
 
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
+import android.util.Log
 import android.widget.Toast
 import de.Maxr1998.modernpreferences.helpers.*
 import java.util.*
@@ -89,9 +90,9 @@ object Common {
             }
             seekBar("seekbar-stepped") {
                 title = "A seekbar with steps"
-                min = 100
-                max = 1000
-                step = 25
+                min = -100
+                step = 10
+                max = 100
             }
             seekBar("seekbar-ticks") {
                 title = "A seekbar with tick marks"
@@ -104,6 +105,12 @@ object Common {
                 min = 1
                 max = 5
                 default = 3
+
+                // Callback listener
+                onSeek { _, _, i ->
+                    Log.d("Preferences", "SeekBar changed to $i")
+                    true
+                }
             }
             addPreferenceItem(TestDialog().apply {
                 title = "Show dialog"

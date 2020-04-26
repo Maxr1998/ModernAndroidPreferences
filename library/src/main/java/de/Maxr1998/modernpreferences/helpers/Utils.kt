@@ -22,23 +22,14 @@ const val KEY_ROOT_SCREEN = "root"
 
 internal fun SeekBar.onSeek(callback: (Int, Boolean) -> Unit) {
     setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-        private var changed = false
-        private var lastValue = 0
+        override fun onStartTrackingTouch(seekBar: SeekBar) {}
 
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-            if (fromUser) {
-                changed = progress != lastValue
-                callback(progress, false)
-            }
-        }
-
-        override fun onStartTrackingTouch(seekBar: SeekBar) {
-            changed = false
-            lastValue = seekBar.progress
+            if (fromUser) callback(progress, false)
         }
 
         override fun onStopTrackingTouch(seekBar: SeekBar) {
-            if (changed) callback(seekBar.progress, true)
+            callback(seekBar.progress, true)
         }
     })
 }
