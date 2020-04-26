@@ -60,6 +60,10 @@ class SeekBarPreference(key: String) : Preference(key) {
     override fun getWidgetLayoutResource() = R.layout.map_preference_widget_seekbar_stub
 
     override fun onAttach() {
+        check(min <= max) { "Minimum value can't be greater than maximum!" }
+        default?.let { default ->
+            check(default in min..max) { "Default value must be in between min and max!" }
+        }
         valueInternal = getInt(default ?: min)
     }
 
