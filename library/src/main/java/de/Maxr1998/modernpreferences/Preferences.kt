@@ -62,6 +62,8 @@ abstract class AbstractPreference internal constructor(val key: String) {
         summaryRes = other.summaryRes
         icon = other.icon
         iconRes = other.iconRes
+        badge = other.badge
+        badgeRes = other.badgeRes
 
         visible = other.visible
     }
