@@ -126,12 +126,12 @@ open class Preference(key: String) : AbstractPreference(key) {
     }
 
     internal fun attachToScreen(screen: PreferenceScreen, position: Int) {
-        check(this.parent == null) { "Preference was already attached to a screen!" }
-        this.parent = screen
+        check(parent == null) { "Preference was already attached to a screen!" }
+        parent = screen
         screenPosition = position
         prefs = if (persistent) screen.prefs else null
         dependency?.also {
-            val p = this.parent?.get(it)
+            val p = parent?.get(it)
             if (p != null && p is TwoStatePreference)
                 p.addDependent(this)
             else dependency = null // Invalid
@@ -157,7 +157,7 @@ open class Preference(key: String) : AbstractPreference(key) {
      */
     @CallSuper
     open fun bindViews(holder: PreferencesAdapter.ViewHolder) {
-        checkNotNull(this.parent) {
+        checkNotNull(parent) {
             "Trying to bind view for a preference not attached to a screen!"
         }
 
@@ -233,7 +233,7 @@ open class Preference(key: String) : AbstractPreference(key) {
     }
 
     fun requestRebind() {
-        this.parent?.requestRebind(screenPosition)
+        parent?.requestRebind(screenPosition)
     }
 
     fun requestRebindAndHighlight() {
