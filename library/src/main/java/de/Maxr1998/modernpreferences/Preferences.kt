@@ -274,7 +274,7 @@ open class Preference(key: String) : AbstractPreference(key) {
     }
 
     fun getBoolean(defaultValue: Boolean) = try {
-        prefs?.getBoolean(key, defaultValue) ?: false
+        prefs?.getBoolean(key, defaultValue) ?: defaultValue
     } catch (e: ClassCastException) {
         defaultValue
     }
