@@ -6,6 +6,8 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("android.extensions")
+    id("de.mannodermaus.android-junit5")
+    id("com.adarshr.test-logger") version "2.0.0"
     id("maven-publish")
     id("com.jfrog.bintray")
     id("com.github.ben-manes.versions") version "0.28.0"
@@ -50,7 +52,12 @@ dependencies {
     implementation(Dependencies.UI.recyclerView)
 
     // Testing
-    testImplementation(Dependencies.Testing.junit)
+    testImplementation(Dependencies.Testing.junit5)
+    testRuntimeOnly(Dependencies.Testing.junit5Engine)
+    testImplementation(Dependencies.Testing.kotestAssertions)
+    testImplementation(Dependencies.Testing.kotestProperty)
+    testImplementation(Dependencies.Testing.kotestRunner)
+    testImplementation(Dependencies.Testing.mockk)
 }
 
 val sourcesJar by tasks.registering(Jar::class) {

@@ -16,6 +16,9 @@ object Dependencies {
 
         // Testing
         const val junit = "4.13"
+        const val junit5 = "5.6.1"
+        const val kotest = "4.0.5"
+        const val mockk = "1.10.0"
         const val androidXRunner = "1.2.0"
         const val androidXEspresso = "3.2.0"
 
@@ -46,6 +49,12 @@ object Dependencies {
      */
     object Testing {
         const val junit = "junit:junit:${Versions.junit}"
+        const val junit5 = "org.junit.jupiter:junit-jupiter-api:${Versions.junit5}"
+        const val junit5Engine = "org.junit.jupiter:junit-jupiter-engine:${Versions.junit5}"
+        const val kotestAssertions = "io.kotest:kotest-assertions-core-jvm:${Versions.kotest}"
+        const val kotestProperty = "io.kotest:kotest-property-jvm:${Versions.kotest}"
+        const val kotestRunner = "io.kotest:kotest-runner-junit5-jvm:${Versions.kotest}"
+        const val mockk = "io.mockk:mockk:${Versions.mockk}"
         const val androidXRunner = "androidx.test:runner:${Versions.androidXRunner}"
         const val androidXEspresso = "androidx.test.espresso:espresso-core:${Versions.androidXEspresso}"
     }
