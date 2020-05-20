@@ -27,9 +27,13 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
     var checked: Boolean
         get() = checkedInternal
         set(value) {
+            checkNotNull(parent) {
+                "Setting the checked value before the preference was attached isn't supported. Consider using `defaultValue` instead."
+            }
             if (value != checkedInternal)
                 updateState(null, value)
         }
+
     /**
      * The default value of this preference, when nothing was committed to storage yet
      */
