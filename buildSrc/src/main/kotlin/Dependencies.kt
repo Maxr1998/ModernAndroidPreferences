@@ -8,7 +8,7 @@ object Dependencies {
         const val activityKtx = "1.1.0"
 
         // UI
-        const val constraintLayout = "2.0.0-beta4"
+        const val constraintLayout = "2.0.0-beta6"
         const val recyclerView = "1.1.0"
 
         // Lifecycle
