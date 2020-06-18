@@ -22,6 +22,7 @@ import androidx.core.view.isVisible
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 
+@Suppress("MemberVisibilityCanBePrivate")
 abstract class TwoStatePreference(key: String) : Preference(key) {
     private var checkedInternal = false
     var checked: Boolean

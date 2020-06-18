@@ -35,6 +35,7 @@ import de.Maxr1998.modernpreferences.preferences.ImagePreference
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
+@Suppress("MemberVisibilityCanBePrivate")
 class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>() {
 
     private val screenStack: Stack<PreferenceScreen> = Stack<PreferenceScreen>().apply {
