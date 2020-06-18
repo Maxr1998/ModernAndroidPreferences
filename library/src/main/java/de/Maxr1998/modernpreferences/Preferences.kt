@@ -392,6 +392,11 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
         constructor(builder: Builder, key: String = "") : this(builder.context, key)
         constructor(collapse: CollapsePreference, key: String = "") : this(collapse.screen?.context, key)
 
+        // Internal structures
+        internal var prefs: SharedPreferences? = null
+        internal val keyMap = HashMap<String, Preference>()
+        internal val preferences = ArrayList<Preference>()
+
         /**
          * The filename to use for the [SharedPreferences] of this [PreferenceScreen]
          */
@@ -406,9 +411,6 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
          * Center the icon inside its keylines. If false, it will be aligned with a potential back arrow in the toolbar
          */
         var centerIcon: Boolean = true
-        internal var prefs: SharedPreferences? = null
-        internal val keyMap = HashMap<String, Preference>()
-        internal val preferences = ArrayList<Preference>()
 
         /**
          * Add the specified preference to this screen - it doesn't make sense to call this directly,
