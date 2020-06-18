@@ -361,18 +361,17 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
      * @return the index or -1 if it wasn't found
      */
     fun indexOf(key: String): Int {
-        if (!contains(key))
-            return -1
-        for (i in preferences.indices) {
-            if (key == preferences[i].key)
-                return i
+        if (key in this) {
+            for (i in preferences.indices) {
+                if (key == preferences[i].key) return i
+            }
         }
-        throw IllegalStateException("Preference not found although it's in the keyMap, how could this happen??")
+        return -1
     }
 
     fun size() = preferences.size
 
-    fun contains(key: String) = keyMap.containsKey(key)
+    operator fun contains(key: String) = keyMap.containsKey(key)
 
     /**
      * Request rebind of the Preference in this screen with the specified [key]
@@ -428,9 +427,9 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
             if (p.key.isEmpty() && p !is PreferenceScreen)
                 throw UnsupportedOperationException("Preference key may not be empty!")
 
-            if (p.key.isEmpty() || keyMap.put(p.key, p) == null)
+            if (p.key.isEmpty() || keyMap.put(p.key, p) == null) {
                 preferences.add(p)
-            else throw UnsupportedOperationException("A preference with this key is already in the screen!")
+            } else throw UnsupportedOperationException("A preference with this key is already in the screen!")
         }
 
         fun build(): PreferenceScreen {
