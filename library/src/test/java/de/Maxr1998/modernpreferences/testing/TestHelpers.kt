@@ -1,3 +1,8 @@
 package de.Maxr1998.modernpreferences.testing
 
-const val DEFAULT_KEY = "default"
+val uniqueKeySequence = iterator {
+    var i = 0
+    while (true) {
+        yield("key_${i++}")
+    }
+}
