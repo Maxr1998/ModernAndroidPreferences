@@ -40,7 +40,7 @@ abstract class TwoStatePreference(key: String) : StatefulPreference(key) {
     var defaultValue = false
     var checkedChangeListener: OnCheckedChangeListener? = null
 
-    var summaryOn: String? = null
+    var summaryOn: CharSequence? = null
     var summaryOnRes: Int = -1
 
     /**
