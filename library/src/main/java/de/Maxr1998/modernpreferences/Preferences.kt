@@ -44,6 +44,10 @@ abstract class AbstractPreference internal constructor(val key: String) {
     var summaryRes: Int = -1
     var summary: CharSequence? = null
 
+    @StringRes
+    var summaryDisabledRes: Int = -1
+    var summaryDisabled: CharSequence? = null
+
     @DrawableRes
     var iconRes: Int = -1
     var icon: Drawable? = null
@@ -60,6 +64,8 @@ abstract class AbstractPreference internal constructor(val key: String) {
         titleRes = other.titleRes
         summary = other.summary
         summaryRes = other.summaryRes
+        summaryDisabled = other.summaryDisabled
+        summaryDisabledRes = other.summaryDisabledRes
         icon = other.icon
         iconRes = other.iconRes
         badge = other.badge
@@ -146,6 +152,14 @@ open class Preference(key: String) : AbstractPreference(key) {
         return generateSequence(parent, PreferenceScreen::parent).any { it.key == key }
     }
 
+    protected open fun resolveSummary(context: Context): CharSequence? = when {
+        !enabled && summaryDisabledRes != -1 -> context.resources.getText(summaryDisabledRes)
+        !enabled && summaryDisabled != null -> summaryDisabled
+        summaryRes != -1 -> context.resources.getText(summaryRes)
+        summary != null -> summary
+        else -> null
+    }
+
     /**
      * Binds the preference-data to its views from the [view holder][PreferencesAdapter.ViewHolder]
      * Don't call this yourself, it will get called from the [PreferencesAdapter].
@@ -188,16 +202,9 @@ open class Preference(key: String) : AbstractPreference(key) {
             if (titleRes != -1) setText(titleRes) else text = title
         }
         holder.summary?.apply {
-            itemVisible = true
-            when {
-                summaryRes != -1 -> setText(summaryRes)
-                summary != null -> text = summary
-                else -> {
-                    text = null
-                    itemVisible = false
-                }
-            }
-            isVisible = itemVisible
+            val summary = resolveSummary(context)
+            text = summary
+            isVisible = summary != null
         }
         holder.badge?.apply {
             itemVisible = true

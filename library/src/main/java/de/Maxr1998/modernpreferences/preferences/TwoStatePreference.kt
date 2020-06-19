@@ -16,9 +16,9 @@
 
 package de.Maxr1998.modernpreferences.preferences
 
+import android.content.Context
 import android.graphics.drawable.StateListDrawable
 import android.widget.CompoundButton
-import androidx.core.view.isVisible
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 
 @Suppress("MemberVisibilityCanBePrivate")
@@ -56,15 +56,14 @@ abstract class TwoStatePreference(key: String) : StatefulPreference(key) {
         super.onAttach()
     }
 
+    override fun resolveSummary(context: Context) = when {
+        checkedInternal && summaryOnRes != -1 -> context.resources.getText(summaryOnRes)
+        checkedInternal && summaryOn != null -> summaryOn
+        else -> super.resolveSummary(context)
+    }
+
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
         super.bindViews(holder)
-        holder.summary?.apply {
-            when {
-                !isVisible || !checkedInternal -> return@apply
-                summaryOnRes != -1 -> setText(summaryOnRes)
-                summaryOn != null -> text = summaryOn
-            }
-        }
         updateButton(holder)
     }
 
