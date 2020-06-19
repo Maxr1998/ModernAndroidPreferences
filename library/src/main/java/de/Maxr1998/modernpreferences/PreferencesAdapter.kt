@@ -136,12 +136,9 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
         pref.bindViews(holder)
 
         holder.itemView.setOnClickListener {
-            // Item was clicked, check enabled state (not for PreferenceScreens) and send click event
             if (pref is PreferenceScreen) {
-                openScreen(pref)
-            } else if (!pref.enabled) return@setOnClickListener
-
-            pref.performClick(holder)
+                openScreen(pref) // Navigate to sub screen
+            } else pref.performClick(holder)
         }
     }
 
