@@ -19,11 +19,10 @@ package de.Maxr1998.modernpreferences.preferences
 import android.graphics.drawable.StateListDrawable
 import android.widget.CompoundButton
 import androidx.core.view.isVisible
-import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class TwoStatePreference(key: String) : Preference(key) {
+abstract class TwoStatePreference(key: String) : StatefulPreference(key) {
     private var checkedInternal = false
     var checked: Boolean
         get() = checkedInternal
@@ -50,11 +49,11 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
      */
     var disableDependents = false
 
-    private val dependents = ArrayList<Preference>()
+    override val state: Boolean get() = checkedInternal xor disableDependents
 
     override fun onAttach() {
         checkedInternal = getBoolean(defaultValue)
-        updateDependents()
+        super.onAttach()
     }
 
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
@@ -78,7 +77,7 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
                     bindViews(holder)
                 } else updateButton(holder)
             } else requestRebind()
-            updateDependents()
+            publishState()
         }
     }
 
@@ -89,25 +88,6 @@ abstract class TwoStatePreference(key: String) : Preference(key) {
             }
         }
         (holder.widget as CompoundButton).isChecked = checkedInternal
-    }
-
-    private fun updateDependent(dependent: Preference) {
-        dependent.enabled = checkedInternal xor disableDependents
-    }
-
-    private fun updateDependents() {
-        for (i in dependents.indices)
-            updateDependent(dependents[i])
-    }
-
-    /**
-     * Called from attachToScreen - If we were attached first, we need to update the new dependent here,
-     * otherwise, we'll update all once we get attached ourselves
-     */
-    internal fun addDependent(dependent: Preference) {
-        dependents.add(dependent)
-        if (parent != null)
-            updateDependent(dependent)
     }
 
     override fun onClick(holder: PreferencesAdapter.ViewHolder) {

@@ -28,10 +28,10 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.core.view.isVisible
+import de.Maxr1998.modernpreferences.helpers.DependencyManager
 import de.Maxr1998.modernpreferences.helpers.KEY_ROOT_SCREEN
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
-import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
 import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class AbstractPreference internal constructor(val key: String) {
@@ -130,12 +130,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         parent = screen
         screenPosition = position
         prefs = if (persistent) screen.prefs else null
-        dependency?.also {
-            val p = parent?.get(it)
-            if (p != null && p is TwoStatePreference)
-                p.addDependent(this)
-            else dependency = null // Invalid
-        }
+        DependencyManager.register(this)
         onAttach()
     }
 
