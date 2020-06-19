@@ -1,9 +1,8 @@
 package de.Maxr1998.modernpreferences.testing
 
 import android.content.Context
-import android.content.SharedPreferences
+import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import de.Maxr1998.modernpreferences.Preference
-import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.preferences.SwitchPreference
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
@@ -20,20 +19,14 @@ import org.junit.jupiter.api.TestInstance
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class PreferencesTests {
 
-    private val prefsMock = mockk<SharedPreferences>()
-    private val prefsEditorMock = mockk<SharedPreferences.Editor>()
-    private lateinit var testScreen: PreferenceScreen
+    private val contextMock: Context = mockk()
 
     @BeforeAll
     fun setup() {
         // Setup mocks for SharedPreferences
-        every { prefsMock.edit() } returns prefsEditorMock
-        val contextMock = mockk<Context>()
+        val sharedPreferences = SPMockBuilder().createSharedPreferences()
         every { contextMock.packageName } returns "package"
-        every { contextMock.getSharedPreferences(any(), any()) } returns prefsMock
-
-        // Create PreferenceScreen for tests
-        testScreen = PreferenceScreen.Builder(contextMock).build()
+        every { contextMock.getSharedPreferences(any(), any()) } returns sharedPreferences
     }
 
     @Test
@@ -43,7 +36,7 @@ class PreferencesTests {
             checkAll<Int>(10) { value ->
                 pref.getInt(value) shouldBe value
             }
-            checkAll(Exhaustive.boolean()) { value ->
+            checkAll(2, Exhaustive.boolean()) { value ->
                 pref.getBoolean(value) shouldBe value
             }
             checkAll<String>(10) { value ->

@@ -19,6 +19,7 @@ object Dependencies {
         const val junit5 = "5.6.1"
         const val kotest = "4.0.5"
         const val mockk = "1.10.0"
+        const val sharedPreferencesMock = "1.0"
         const val androidXRunner = "1.2.0"
         const val androidXEspresso = "3.2.0"
 
@@ -55,6 +56,7 @@ object Dependencies {
         const val kotestProperty = "io.kotest:kotest-property-jvm:${Versions.kotest}"
         const val kotestRunner = "io.kotest:kotest-runner-junit5-jvm:${Versions.kotest}"
         const val mockk = "io.mockk:mockk:${Versions.mockk}"
+        const val sharedPreferencesMock = "com.github.IvanShafran:shared-preferences-mock:${Versions.sharedPreferencesMock}"
         const val androidXRunner = "androidx.test:runner:${Versions.androidXRunner}"
         const val androidXEspresso = "androidx.test.espresso:espresso-core:${Versions.androidXEspresso}"
     }
