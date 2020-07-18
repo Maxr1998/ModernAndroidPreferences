@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         val kotlinVersion: String by project
-        classpath("com.android.tools.build:gradle:4.0.0")
+        classpath("com.android.tools.build:gradle:4.0.1")
         classpath(kotlin("gradle-plugin", kotlinVersion))
         classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
         classpath("de.mannodermaus.gradle.plugins:android-junit5:1.3.2.0")
@@ -20,6 +20,10 @@ allprojects {
         jcenter()
         maven { setUrl("https://jitpack.io") }
     }
+}
+
+tasks.wrapper {
+    distributionType = Wrapper.DistributionType.ALL
 }
 
 tasks.create<Delete>("clean") {
