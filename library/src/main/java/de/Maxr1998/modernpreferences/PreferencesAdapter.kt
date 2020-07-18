@@ -59,6 +59,7 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
     var secondScreenAdapter: PreferencesAdapter? = null
 
     init {
+        setHasStableIds(true)
         root?.let(::setRootScreen)
     }
 
@@ -74,8 +75,8 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
             screenStack.pop()
         }
         screenStack.push(root)
-        currentScreen.adapter = this
         notifyDataSetChanged()
+        currentScreen.adapter = this
         onScreenChangeListener?.onScreenChanged(root, false)
     }
 
@@ -84,8 +85,8 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
         secondScreenAdapter?.setRootScreen(screen) ?: /* ELSE */ run {
             currentScreen.adapter = null
             screenStack.push(screen)
-            currentScreen.adapter = this
             notifyDataSetChanged()
+            currentScreen.adapter = this
         }
         onScreenChangeListener?.onScreenChanged(screen, true)
     }
@@ -101,11 +102,11 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
     fun goBack(): Boolean {
         if (secondScreenAdapter?.goBack() == true) // Check if the second screen can still go back
             return true
-        currentScreen.adapter = null
         if (isInSubScreen()) { // If we're in a sub-screen...
+            currentScreen.adapter = null
             val oldScreen = screenStack.pop() // ...remove current screen from stack
-            currentScreen.adapter = this
             notifyDataSetChanged()
+            currentScreen.adapter = this
             onScreenChangeListener?.onScreenChanged(currentScreen, isInSubScreen())
             for (i in 0 until oldScreen.size()) {
                 val p = oldScreen[i]
@@ -143,6 +144,8 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
     }
 
     override fun getItemCount() = currentScreen.size()
+
+    override fun getItemId(position: Int) = currentScreen[position].hashCode().toLong()
 
     @LayoutRes
     override fun getItemViewType(position: Int) = currentScreen[position].getWidgetLayoutResource()
