@@ -74,13 +74,11 @@ abstract class AbstractPreference internal constructor(val key: String) {
         visible = other.visible
     }
 
-    override fun equals(other: Any?): Boolean {
-        return when {
-            other == null -> false
-            this === other -> true
-            this::class.java == other::class.java && key == (other as AbstractPreference).key -> true
-            else -> false
-        }
+    override fun equals(other: Any?): Boolean = when {
+        other == null -> false
+        this === other -> true
+        this::class.java == other::class.java && key == (other as AbstractPreference).key -> true
+        else -> false
     }
 
     override fun hashCode() = key.hashCode()
@@ -388,6 +386,17 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
     internal fun requestRebind(position: Int, itemCount: Int = 1) {
         adapter?.notifyItemRangeChanged(position, itemCount)
     }
+
+    override fun equals(other: Any?): Boolean = when {
+        other == null -> false
+        this === other -> true
+        this::class.java == other::class.java
+                && key == (other as PreferenceScreen).key
+                && preferences == other.preferences -> true
+        else -> false
+    }
+
+    override fun hashCode() = (31 * key.hashCode()) + preferences.hashCode()
 
     class Builder private constructor(private var context: Context?, key: String) : AbstractPreference(key), Appendable {
         constructor(context: Context?) : this(context, KEY_ROOT_SCREEN)
