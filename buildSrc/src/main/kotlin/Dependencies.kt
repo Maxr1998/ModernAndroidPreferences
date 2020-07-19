@@ -4,7 +4,7 @@ object Dependencies {
     object Versions {
         // Core
         const val appCompat = "1.1.0"
-        const val coreKtx = "1.2.0"
+        const val coreKtx = "1.3.0"
         const val activityKtx = "1.1.0"
 
         // UI
