@@ -53,6 +53,8 @@ dependencies {
     testImplementation(Dependencies.Testing.junit)
     androidTestImplementation(Dependencies.Testing.androidXRunner)
     androidTestImplementation(Dependencies.Testing.androidXEspresso)
+
+    debugImplementation(Dependencies.Testing.leakCanary)
 }
 
 tasks.withType<DependencyUpdatesTask> {

@@ -23,6 +23,9 @@ object Dependencies {
         const val androidXRunner = "1.2.0"
         const val androidXEspresso = "3.2.0"
 
+        // Debug
+        const val leakCanary = "2.4"
+
         fun isStable(version: String): Boolean {
             return listOf("alpha", "beta", "dev", "rc", "m").none { version.toLowerCase(Locale.ROOT).contains(it) }
         }
@@ -59,6 +62,9 @@ object Dependencies {
         const val sharedPreferencesMock = "com.github.IvanShafran:shared-preferences-mock:${Versions.sharedPreferencesMock}"
         const val androidXRunner = "androidx.test:runner:${Versions.androidXRunner}"
         const val androidXEspresso = "androidx.test.espresso:espresso-core:${Versions.androidXEspresso}"
+
+        // Debug
+        const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
     }
 
     // Helpers
