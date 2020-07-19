@@ -19,66 +19,26 @@
 package de.Maxr1998.modernpreferences.example
 
 import android.os.Bundle
-import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 
-class TestActivity : AppCompatActivity(), PreferencesAdapter.OnScreenChangeListener {
+class TestActivity : BaseActivity() {
 
-    private lateinit var preferenceView: RecyclerView
-    private val preferencesAdapter = PreferencesAdapter()
+    override val preferencesAdapter = PreferencesAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        preferenceView = RecyclerView(this)
-        setContentView(preferenceView)
-        preferenceView.layoutManager = LinearLayoutManager(this)
-        preferenceView.adapter = preferencesAdapter
-
         preferencesAdapter.setRootScreen(Common.createRootScreen(this))
-        preferencesAdapter.onScreenChangeListener = this
+
         // Restore adapter state from saved state
         savedInstanceState?.getParcelable<PreferencesAdapter.SavedState>("adapter")
                 ?.let(preferencesAdapter::loadSavedState)
+        preferencesAdapter.onScreenChangeListener = this
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         // Save the adapter state as a parcelable into the Android-managed instance state
         outState.putParcelable("adapter", preferencesAdapter.getSavedState())
-    }
-
-    override fun onScreenChanged(screen: PreferenceScreen, subScreen: Boolean) {
-        supportActionBar?.setDisplayHomeAsUpEnabled(subScreen)
-        screen["25"]?.let { pref ->
-            val viewOffset = ((preferenceView.height - 64 * resources.displayMetrics.density) / 2).toInt()
-            (preferenceView.layoutManager as? LinearLayoutManager)
-                    ?.scrollToPositionWithOffset(pref.screenPosition, viewOffset)
-            pref.requestRebindAndHighlight()
-        }
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onBackPressed() {
-        if (!preferencesAdapter.goBack())
-            super.onBackPressed()
-    }
-
-    override fun onDestroy() {
-        preferencesAdapter.onScreenChangeListener = null
-        super.onDestroy()
     }
 }
