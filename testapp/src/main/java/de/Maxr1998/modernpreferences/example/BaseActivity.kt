@@ -53,6 +53,7 @@ abstract class BaseActivity : AppCompatActivity(), PreferencesAdapter.OnScreenCh
 
     override fun onDestroy() {
         preferencesAdapter.onScreenChangeListener = null
+        preferencesView.adapter = null
         super.onDestroy()
     }
 }
