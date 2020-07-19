@@ -13,14 +13,14 @@ abstract class BaseActivity : AppCompatActivity(), PreferencesAdapter.OnScreenCh
 
     protected lateinit var preferencesView: RecyclerView
     protected abstract val preferencesAdapter: PreferencesAdapter
+    private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        layoutManager = LinearLayoutManager(this)
         preferencesView = RecyclerView(this).apply {
             setContentView(this)
-            layoutManager = object : LinearLayoutManager(this@BaseActivity) {
-                override fun supportsPredictiveItemAnimations() = true
-            }
+            layoutManager = this@BaseActivity.layoutManager
             adapter = preferencesAdapter
             layoutAnimation = AnimationUtils.loadLayoutAnimation(this@BaseActivity, R.anim.preference_layout_fall_down)
         }
@@ -31,8 +31,7 @@ abstract class BaseActivity : AppCompatActivity(), PreferencesAdapter.OnScreenCh
         preferencesView.scheduleLayoutAnimation()
         screen["25"]?.let { pref ->
             val viewOffset = ((preferencesView.height - 64 * resources.displayMetrics.density) / 2).toInt()
-            (preferencesView.layoutManager as? LinearLayoutManager)
-                    ?.scrollToPositionWithOffset(pref.screenPosition, viewOffset)
+            layoutManager.scrollToPositionWithOffset(pref.screenPosition, viewOffset)
             pref.requestRebindAndHighlight()
         }
     }
