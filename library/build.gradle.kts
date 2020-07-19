@@ -1,4 +1,5 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import com.github.benmanes.gradle.versions.updates.gradle.GradleReleaseChannel
 import java.io.FileInputStream
 import java.util.*
 
@@ -10,7 +11,7 @@ plugins {
     id("com.adarshr.test-logger") version "2.0.0"
     id("maven-publish")
     id("com.jfrog.bintray")
-    id("com.github.ben-manes.versions") version "0.28.0"
+    id("com.github.ben-manes.versions") version "0.29.0"
 }
 
 // Versions
@@ -123,6 +124,7 @@ bintray {
 }
 
 tasks.withType<DependencyUpdatesTask> {
+    gradleReleaseChannel = GradleReleaseChannel.CURRENT.id
     rejectVersionIf {
         !Dependencies.Versions.isStable(candidate.version) && Dependencies.Versions.isStable(currentVersion)
     }

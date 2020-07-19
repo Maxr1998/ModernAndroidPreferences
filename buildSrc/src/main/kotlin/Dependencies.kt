@@ -24,7 +24,7 @@ object Dependencies {
         const val androidXEspresso = "3.2.0"
 
         fun isStable(version: String): Boolean {
-            return listOf("alpha", "beta", "dev", "rc").none { version.toLowerCase(Locale.ROOT).contains(it) }
+            return listOf("alpha", "beta", "dev", "rc", "m").none { version.toLowerCase(Locale.ROOT).contains(it) }
         }
     }
 

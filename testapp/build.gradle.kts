@@ -1,10 +1,11 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import com.github.benmanes.gradle.versions.updates.gradle.GradleReleaseChannel
 
 plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("android.extensions")
-    id("com.github.ben-manes.versions") version "0.28.0"
+    id("com.github.ben-manes.versions") version "0.29.0"
 }
 
 android {
@@ -55,6 +56,7 @@ dependencies {
 }
 
 tasks.withType<DependencyUpdatesTask> {
+    gradleReleaseChannel = GradleReleaseChannel.CURRENT.id
     rejectVersionIf {
         !Dependencies.Versions.isStable(candidate.version) && Dependencies.Versions.isStable(currentVersion)
     }
