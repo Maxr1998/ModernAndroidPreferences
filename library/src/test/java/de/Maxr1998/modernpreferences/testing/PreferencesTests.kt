@@ -65,11 +65,11 @@ class PreferencesTests {
     fun `TwoStatePreference should respect checked and disableDependents for state`() {
         runBlocking {
             forAll(
-                    // Basically a XOR, but written out for testing
-                    row(a = false, b = false, c = false),
-                    row(a = true, b = false, c = true),
-                    row(a = false, b = true, c = true),
-                    row(a = true, b = true, c = false)
+                // Basically a XOR, but written out for testing
+                row(a = false, b = false, c = false),
+                row(a = true, b = false, c = true),
+                row(a = false, b = true, c = true),
+                row(a = true, b = true, c = false)
             ) { checked: Boolean, disableDependents: Boolean, state: Boolean ->
                 lateinit var pref: TwoStatePreference
                 screen(contextMock) {

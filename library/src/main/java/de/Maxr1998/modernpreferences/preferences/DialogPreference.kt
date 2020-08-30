@@ -35,6 +35,7 @@ import de.Maxr1998.modernpreferences.PreferencesAdapter
 abstract class DialogPreference(key: String) : Preference(key), LifecycleObserver {
 
     private var dialog: Dialog? = null
+
     /**
      * This flag tells the preference whether to recreate the dialog after a configuration change
      */
