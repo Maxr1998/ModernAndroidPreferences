@@ -124,7 +124,7 @@ class SeekBarPreference(key: String) : Preference(key) {
     private fun calcRaw(value: Int) = (value - min) / step
     private fun calcValue(raw: Int) = min + raw * step
 
-    interface OnSeekListener {
+    fun interface OnSeekListener {
         /**
          * Notified when the [value][SeekBarPreference.value] of the connected [SeekBarPreference] changes.
          * This is called *before* the change gets persisted, which can be prevented by returning false.

@@ -21,7 +21,6 @@ package de.Maxr1998.modernpreferences.helpers
 import android.content.Context
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferenceScreen
-import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.preferences.*
 
 // PreferenceScreen DSL functions
@@ -84,30 +83,43 @@ inline fun CollapsePreference.subScreen(key: String = "", block: PreferenceScree
 }
 
 // Listener helpers
+@Deprecated(
+    "Helper callback function was replaced by native SAM-interface support since Kotlin 1.4.\n" +
+            "Directly assign callback to clickListener instead."
+)
 inline fun Preference.onClicked(crossinline callback: (Preference) -> Boolean) {
-    clickListener = object : Preference.OnClickListener {
-        override fun onClick(preference: Preference, holder: PreferencesAdapter.ViewHolder) =
-                callback(preference)
-    }
+    clickListener = Preference.OnClickListener { preference, _ -> callback(preference) }
 }
 
-inline fun Preference.onClickView(crossinline callback: (Preference, PreferencesAdapter.ViewHolder) -> Boolean) {
-    clickListener = object : Preference.OnClickListener {
-        override fun onClick(preference: Preference, holder: PreferencesAdapter.ViewHolder) =
-                callback(preference, holder)
-    }
+@Deprecated(
+    "Helper callback function was replaced by native SAM-interface support since Kotlin 1.4",
+    ReplaceWith(
+        "clickListener = Preference.OnClickListener(callback)",
+        "de.Maxr1998.modernpreferences.Preference"
+    )
+)
+fun Preference.onClickView(callback: Preference.OnClickListener) {
+    clickListener = callback
 }
 
-inline fun TwoStatePreference.onChange(crossinline callback: (TwoStatePreference, PreferencesAdapter.ViewHolder?, Boolean) -> Boolean) {
-    checkedChangeListener = object : TwoStatePreference.OnCheckedChangeListener {
-        override fun onCheckedChanged(preference: TwoStatePreference, holder: PreferencesAdapter.ViewHolder?, checked: Boolean) =
-                callback(preference, holder, checked)
-    }
+@Deprecated(
+    "Helper callback function was replaced by native SAM-interface support since Kotlin 1.4",
+    ReplaceWith(
+        "checkedChangeListener = TwoStatePreference.OnCheckedChangeListener(callback)",
+        "de.Maxr1998.modernpreferences.preferences.TwoStatePreference"
+    )
+)
+fun TwoStatePreference.onChange(callback: TwoStatePreference.OnCheckedChangeListener) {
+    checkedChangeListener = callback
 }
 
-inline fun SeekBarPreference.onSeek(crossinline callback: (SeekBarPreference, PreferencesAdapter.ViewHolder?, Int) -> Boolean) {
-    seekListener = object : SeekBarPreference.OnSeekListener {
-        override fun onSeek(preference: SeekBarPreference, holder: PreferencesAdapter.ViewHolder?, value: Int) =
-                callback(preference, holder, value)
-    }
+@Deprecated(
+    "Helper callback function was replaced by native SAM-interface support since Kotlin 1.4",
+    ReplaceWith(
+        "seekListener = SeekBarPreference.OnSeekListener(callback)",
+        "de.Maxr1998.modernpreferences.preferences.SeekBarPreference"
+    )
+)
+fun SeekBarPreference.onSeek(callback: SeekBarPreference.OnSeekListener) {
+    seekListener = callback
 }

@@ -297,7 +297,7 @@ open class Preference(key: String) : AbstractPreference(key) {
     /**
      * Can be set to [Preference.preBindListener]
      */
-    interface OnPreBindListener {
+    fun interface OnPreBindListener {
         /**
          * Called before [Preference.bindViews], allows you to set data right before the [Preference][preference]
          * is bound to a view.
@@ -306,7 +306,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         fun onPreBind(preference: Preference, holder: PreferencesAdapter.ViewHolder)
     }
 
-    interface OnClickListener {
+    fun interface OnClickListener {
         /**
          * Notified when the connected [Preference] is clicked
          *
@@ -450,7 +450,7 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
         }
     }
 
-    interface Appendable {
+    fun interface Appendable {
         fun addPreferenceItem(p: Preference)
     }
 }

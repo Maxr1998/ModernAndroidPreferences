@@ -93,7 +93,7 @@ abstract class TwoStatePreference(key: String) : StatefulPreference(key) {
         updateState(holder, !checkedInternal)
     }
 
-    interface OnCheckedChangeListener {
+    fun interface OnCheckedChangeListener {
         /**
          * Notified when the [checked][TwoStatePreference.checked] state of the connected [TwoStatePreference] changes.
          * This is called before the change gets persisted and can be prevented by returning false.

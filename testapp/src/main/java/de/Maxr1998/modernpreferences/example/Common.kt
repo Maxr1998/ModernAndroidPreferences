@@ -22,7 +22,9 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.widget.Toast
+import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.helpers.*
+import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
 import java.util.*
 
 object Common {
@@ -63,7 +65,7 @@ object Common {
             pref("dependent") {
                 title = "Toggle the switch above"
                 dependency = "switch"
-                onClickView { _, holder ->
+                clickListener = Preference.OnClickListener { _, holder ->
                     Toast.makeText(holder.itemView.context, "Preference was clicked!", Toast.LENGTH_SHORT).show()
                     false
                 }
@@ -107,7 +109,7 @@ object Common {
                 default = 3
 
                 // Callback listener
-                onSeek { _, _, i ->
+                seekListener = SeekBarPreference.OnSeekListener { _, _, i ->
                     Log.d("Preferences", "SeekBar changed to $i")
                     true
                 }
