@@ -11,7 +11,7 @@ plugins {
     id("com.adarshr.test-logger") version "2.0.0"
     id("maven-publish")
     id("com.jfrog.bintray")
-    id("com.github.ben-manes.versions") version "0.29.0"
+    id("com.github.ben-manes.versions") version Dependencies.Versions.dependencyUpdates
 }
 
 // Versions

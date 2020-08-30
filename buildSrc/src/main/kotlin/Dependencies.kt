@@ -2,6 +2,9 @@ import java.util.*
 
 object Dependencies {
     object Versions {
+        // Plugins
+        const val dependencyUpdates = "0.29.0"
+
         // Core
         const val appCompat = "1.1.0"
         const val coreKtx = "1.3.0"
@@ -27,7 +30,9 @@ object Dependencies {
         const val leakCanary = "2.4"
 
         fun isStable(version: String): Boolean {
-            return listOf("alpha", "beta", "dev", "rc", "m").none { version.toLowerCase(Locale.ROOT).contains(it) }
+            return listOf("alpha", "beta", "dev", "rc", "m").none {
+                version.toLowerCase(Locale.ROOT).contains(it)
+            }
         }
     }
 
@@ -38,7 +43,8 @@ object Dependencies {
     }
 
     object UI {
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
+        const val constraintLayout =
+            "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
         const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
     }
 
@@ -59,14 +65,17 @@ object Dependencies {
         const val kotestProperty = "io.kotest:kotest-property-jvm:${Versions.kotest}"
         const val kotestRunner = "io.kotest:kotest-runner-junit5-jvm:${Versions.kotest}"
         const val mockk = "io.mockk:mockk:${Versions.mockk}"
-        const val sharedPreferencesMock = "com.github.IvanShafran:shared-preferences-mock:${Versions.sharedPreferencesMock}"
+        const val sharedPreferencesMock =
+            "com.github.IvanShafran:shared-preferences-mock:${Versions.sharedPreferencesMock}"
         const val androidXRunner = "androidx.test:runner:${Versions.androidXRunner}"
-        const val androidXEspresso = "androidx.test.espresso:espresso-core:${Versions.androidXEspresso}"
+        const val androidXEspresso =
+            "androidx.test.espresso:espresso-core:${Versions.androidXEspresso}"
 
         // Debug
         const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"
     }
 
     // Helpers
-    private fun lifecycleX(module: String) = "androidx.lifecycle:lifecycle-$module:${Versions.lifecycleExtensions}"
+    private fun lifecycleX(module: String) =
+        "androidx.lifecycle:lifecycle-$module:${Versions.lifecycleExtensions}"
 }

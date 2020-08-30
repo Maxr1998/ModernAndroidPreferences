@@ -5,7 +5,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("android.extensions")
-    id("com.github.ben-manes.versions") version "0.29.0"
+    id("com.github.ben-manes.versions") version Dependencies.Versions.dependencyUpdates
 }
 
 android {
