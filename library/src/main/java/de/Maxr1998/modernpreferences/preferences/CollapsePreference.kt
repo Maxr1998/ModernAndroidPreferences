@@ -39,11 +39,11 @@ class CollapsePreference(screen: PreferenceScreen.Builder, key: String) : Prefer
     }
 
     override fun addPreferenceItem(p: Preference) {
-        checkNotNull(screen) {
+        val screen = checkNotNull(screen) {
             "Don't call clearContext before you've finished all addPreferenceItem operations!"
         }
-        screen!!.addPreferenceItem(p)
-        preferences.add(p.apply { visible = false })
+        screen += p
+        preferences += p.apply { visible = false }
     }
 
     fun clearContext() {

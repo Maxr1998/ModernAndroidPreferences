@@ -457,5 +457,14 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
 
     fun interface Appendable {
         fun addPreferenceItem(p: Preference)
+
+        operator fun plusAssign(p: Preference) {
+            addPreferenceItem(p)
+        }
+
+        operator fun <T : Preference> T.unaryPlus(): T {
+            addPreferenceItem(this)
+            return this
+        }
     }
 }

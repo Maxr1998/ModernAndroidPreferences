@@ -114,10 +114,10 @@ object Common {
                     true
                 }
             }
-            addPreferenceItem(TestDialog().apply {
+            +TestDialog().apply {
                 title = "Show dialog"
                 iconRes = R.drawable.ic_info_24dp
-            })
+            }
             expandText("expand-text") {
                 title = "Expandable text"
                 text = "This is an example implementation of ModernAndroidPreferences, check out " +
