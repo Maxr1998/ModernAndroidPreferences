@@ -430,17 +430,22 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
          * [subScreen][de.Maxr1998.modernpreferences.helpers.subScreen] for this.
          */
         override fun addPreferenceItem(p: Preference) {
-            if (p.key == KEY_ROOT_SCREEN)
-                throw UnsupportedOperationException("" +
-                        "A screen with key '$KEY_ROOT_SCREEN' cannot be added as a sub-screen! " +
-                        "If you are trying to add a sub-screen to your preferences model, " +
-                        "use the `subScreen {}` function.")
+            if (p.key == KEY_ROOT_SCREEN) {
+                val message by lazy {
+                    """
+                    A screen with key '$KEY_ROOT_SCREEN' cannot be added as a sub-screen!
+                    If you are trying to add a sub-screen to your preferences model,
+                    use the `subScreen {}` function.
+                    """.trimIndent()
+                }
+                throw UnsupportedOperationException(message)
+            }
             if (p.key.isEmpty() && p !is PreferenceScreen)
                 throw UnsupportedOperationException("Preference key may not be empty!")
+            if (p.key.isNotEmpty() && keyMap.put(p.key, p) != null)
+                throw UnsupportedOperationException("A preference with this key is already in the screen!")
 
-            if (p.key.isEmpty() || keyMap.put(p.key, p) == null) {
-                preferences.add(p)
-            } else throw UnsupportedOperationException("A preference with this key is already in the screen!")
+            preferences.add(p)
         }
 
         fun build(): PreferenceScreen {
