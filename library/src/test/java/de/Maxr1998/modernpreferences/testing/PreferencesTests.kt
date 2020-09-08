@@ -37,7 +37,7 @@ class PreferencesTests {
     }
 
     @Test
-    fun `Non-persistent preferences should return default value for all get operations`() {
+    fun `Non-persistent preferences should return default value or null for all get operations`() {
         runBlocking {
             val pref = Preference(uniqueKeySequence.next()).apply { persistent = false }
             checkAll<Int>(10) { value ->
@@ -46,9 +46,7 @@ class PreferencesTests {
             checkAll(2, Exhaustive.boolean()) { value ->
                 pref.getBoolean(value) shouldBe value
             }
-            checkAll<String>(10) { value ->
-                pref.getString(value) shouldBe value
-            }
+            pref.getString() shouldBe null
         }
     }
 

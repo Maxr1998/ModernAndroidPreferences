@@ -282,8 +282,15 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    fun getString(defaultValue: String): String =
-        prefs?.getString(key, defaultValue) ?: defaultValue
+    fun getString(): String? = prefs?.getString(key, null)
+
+    @Deprecated(
+        "Passing a default value is not supported anymore, " +
+                "use the nullable replacement getString() and an elvis operator",
+        ReplaceWith("getString() ?: defaultValue"),
+        DeprecationLevel.ERROR
+    )
+    fun getString(defaultValue: String): String = throw UnsupportedOperationException("Not implemented")
 
     /**
      * Can be set to [Preference.preBindListener]
