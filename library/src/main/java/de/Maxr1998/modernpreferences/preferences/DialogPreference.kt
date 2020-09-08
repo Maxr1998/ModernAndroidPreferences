@@ -18,6 +18,7 @@ package de.Maxr1998.modernpreferences.preferences
 
 import android.app.Dialog
 import android.content.Context
+import androidx.annotation.CallSuper
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -75,8 +76,9 @@ abstract class DialogPreference(key: String) : Preference(key), LifecycleObserve
     /**
      * Used internally to react to lifecycle changes
      */
+    @CallSuper
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun stop() {
+    open fun onStop() {
         dialog?.apply {
             recreateDialog = isShowing
             dismiss()
