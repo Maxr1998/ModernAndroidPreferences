@@ -47,6 +47,7 @@ class PreferencesTests {
                 pref.getBoolean(value) shouldBe value
             }
             pref.getString() shouldBe null
+            pref.getStringSet() shouldBe null
         }
     }
 

@@ -292,6 +292,14 @@ open class Preference(key: String) : AbstractPreference(key) {
     )
     fun getString(defaultValue: String): String = throw UnsupportedOperationException("Not implemented")
 
+    fun commitStringSet(values: Set<String>) {
+        prefs?.edit {
+            putStringSet(key, values)
+        }
+    }
+
+    fun getStringSet(): Set<String>? = prefs?.getStringSet(key, null)
+
     /**
      * Can be set to [Preference.preBindListener]
      */
