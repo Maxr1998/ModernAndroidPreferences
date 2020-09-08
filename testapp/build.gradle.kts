@@ -16,7 +16,6 @@ android {
         targetSdkVersion(29)
         versionCode = 1
         versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         getByName("release") {
@@ -48,11 +47,6 @@ dependencies {
 
     // Preferences library
     implementation(project(":library"))
-
-    // Testing
-    testImplementation(Dependencies.Testing.junit)
-    androidTestImplementation(Dependencies.Testing.androidXRunner)
-    androidTestImplementation(Dependencies.Testing.androidXEspresso)
 
     debugImplementation(Dependencies.Testing.leakCanary)
 }
