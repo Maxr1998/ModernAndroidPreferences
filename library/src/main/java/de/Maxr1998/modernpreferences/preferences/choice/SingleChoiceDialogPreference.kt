@@ -40,7 +40,7 @@ class SingleChoiceDialogPreference(key: String, items: List<SelectionItem>) : Ab
         val selection = currentSelection
         return when {
             selection == null -> super.resolveSummary(context)
-            selection.titleRes != -1 -> context.resources.getText(titleRes)
+            selection.titleRes != -1 -> context.resources.getText(selection.titleRes)
             else -> selection.title
         }
     }
