@@ -53,8 +53,8 @@ dependencies {
     implementation(Dependencies.UI.recyclerView)
 
     // Testing
-    testImplementation(Dependencies.Testing.junit5)
-    testRuntimeOnly(Dependencies.Testing.junit5Engine)
+    testImplementation(Dependencies.Testing.junit)
+    testRuntimeOnly(Dependencies.Testing.junitEngine)
     testImplementation(Dependencies.Testing.kotestAssertions)
     testImplementation(Dependencies.Testing.kotestProperty)
     testImplementation(Dependencies.Testing.kotestRunner)
