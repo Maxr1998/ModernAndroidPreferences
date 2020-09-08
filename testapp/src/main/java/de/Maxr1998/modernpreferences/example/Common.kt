@@ -25,9 +25,7 @@ import android.widget.Toast
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.helpers.*
 import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
-import de.Maxr1998.modernpreferences.preferences.choice.MultiChoiceDialogPreference
 import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
-import de.Maxr1998.modernpreferences.preferences.choice.SingleChoiceDialogPreference
 import java.util.*
 
 object Common {
@@ -126,10 +124,10 @@ object Common {
                 SelectionItem("key_1", "Option 2", "Second option"),
                 SelectionItem("key_2", "Option 3", "You can put anything you want into this summary!"),
             )
-            +SingleChoiceDialogPreference("single-choice-dialog", selectableItems).apply {
+            singleChoice("single-choice-dialog", selectableItems) {
                 title = "Single choice selection dialog"
             }
-            +MultiChoiceDialogPreference("multi-choice-dialog", selectableItems).apply {
+            multiChoice("multi-choice-dialog", selectableItems) {
                 title = "Multi choice selection dialog"
             }
             expandText("expand-text") {

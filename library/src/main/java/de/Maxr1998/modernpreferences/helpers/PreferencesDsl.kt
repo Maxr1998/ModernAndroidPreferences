@@ -22,6 +22,9 @@ import android.content.Context
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.preferences.*
+import de.Maxr1998.modernpreferences.preferences.choice.MultiChoiceDialogPreference
+import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
+import de.Maxr1998.modernpreferences.preferences.choice.SingleChoiceDialogPreference
 
 // PreferenceScreen DSL functions
 inline fun screen(context: Context?, block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
@@ -65,6 +68,14 @@ inline fun PreferenceScreen.Appendable.seekBar(key: String, block: SeekBarPrefer
 
 inline fun PreferenceScreen.Appendable.expandText(key: String, block: ExpandableTextPreference.() -> Unit): ExpandableTextPreference {
     return ExpandableTextPreference(key).apply(block).also(::addPreferenceItem)
+}
+
+inline fun PreferenceScreen.Appendable.singleChoice(key: String, items: List<SelectionItem>, block: SingleChoiceDialogPreference.() -> Unit): SingleChoiceDialogPreference {
+    return SingleChoiceDialogPreference(key, items).apply(block).also(::addPreferenceItem)
+}
+
+inline fun PreferenceScreen.Appendable.multiChoice(key: String, items: List<SelectionItem>, block: MultiChoiceDialogPreference.() -> Unit): MultiChoiceDialogPreference {
+    return MultiChoiceDialogPreference(key, items).apply(block).also(::addPreferenceItem)
 }
 
 inline fun <reified T : Preference> PreferenceScreen.Appendable.custom(key: String, block: T.() -> Unit): T {
