@@ -258,11 +258,8 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    fun getInt(defaultValue: Int) = try {
+    fun getInt(defaultValue: Int): Int =
         prefs?.getInt(key, defaultValue) ?: defaultValue
-    } catch (e: ClassCastException) {
-        defaultValue
-    }
 
     /**
      * Save a boolean for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
@@ -273,11 +270,8 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    fun getBoolean(defaultValue: Boolean) = try {
+    fun getBoolean(defaultValue: Boolean): Boolean =
         prefs?.getBoolean(key, defaultValue) ?: defaultValue
-    } catch (e: ClassCastException) {
-        defaultValue
-    }
 
     /**
      * Save a String for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
@@ -288,11 +282,8 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    fun getString(defaultValue: String) = try {
+    fun getString(defaultValue: String): String =
         prefs?.getString(key, defaultValue) ?: defaultValue
-    } catch (e: ClassCastException) {
-        defaultValue
-    }
 
     /**
      * Can be set to [Preference.preBindListener]
