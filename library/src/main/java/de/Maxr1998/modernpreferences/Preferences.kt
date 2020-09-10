@@ -30,6 +30,7 @@ import androidx.core.content.edit
 import androidx.core.view.isVisible
 import de.Maxr1998.modernpreferences.helpers.DependencyManager
 import de.Maxr1998.modernpreferences.helpers.KEY_ROOT_SCREEN
+import de.Maxr1998.modernpreferences.helpers.PreferenceMarker
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
 import java.util.concurrent.atomic.AtomicBoolean
@@ -90,6 +91,7 @@ abstract class AbstractPreference internal constructor(val key: String) {
  * [category header][de.Maxr1998.modernpreferences.preferences.CategoryHeader] or
  * [sub-screen][PreferenceScreen].
  */
+@PreferenceMarker
 open class Preference(key: String) : AbstractPreference(key) {
     // State
     var enabled = true
@@ -404,6 +406,7 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
 
     override fun hashCode() = (31 * key.hashCode()) + preferences.hashCode()
 
+    @PreferenceMarker
     class Builder private constructor(private var context: Context?, key: String) : AbstractPreference(key), Appendable {
         constructor(context: Context?) : this(context, KEY_ROOT_SCREEN)
         constructor(builder: Builder, key: String = "") : this(builder.context, key)

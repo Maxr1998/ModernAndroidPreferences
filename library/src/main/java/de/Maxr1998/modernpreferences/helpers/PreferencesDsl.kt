@@ -26,6 +26,11 @@ import de.Maxr1998.modernpreferences.preferences.choice.MultiChoiceDialogPrefere
 import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
 import de.Maxr1998.modernpreferences.preferences.choice.SingleChoiceDialogPreference
 
+// DSL marker
+@DslMarker
+@Retention(AnnotationRetention.SOURCE)
+annotation class PreferenceMarker
+
 // PreferenceScreen DSL functions
 inline fun screen(context: Context?, block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
     return PreferenceScreen.Builder(context).apply(block).build()
