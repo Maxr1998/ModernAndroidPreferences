@@ -10,7 +10,7 @@ buildscript {
         classpath("com.android.tools.build:gradle:4.0.1")
         classpath(kotlin("gradle-plugin", kotlinVersion))
         classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
-        classpath("de.mannodermaus.gradle.plugins:android-junit5:1.3.2.0")
+        classpath("de.mannodermaus.gradle.plugins:android-junit5:1.6.2.0")
     }
 }
 
