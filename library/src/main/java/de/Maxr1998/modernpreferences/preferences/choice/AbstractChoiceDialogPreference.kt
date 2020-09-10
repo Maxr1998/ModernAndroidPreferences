@@ -14,11 +14,11 @@ abstract class AbstractChoiceDialogPreference(
     private val allowMultiSelect: Boolean,
 ) : DialogPreference(key) {
 
+    internal var selectionAdapter: SelectionAdapter? = null
+
     init {
         require(items.isNotEmpty()) { "Supplied list of items may not be empty!" }
     }
-
-    internal var selectionAdapter: SelectionAdapter? = null
 
     override fun createDialog(context: Context): Dialog = AlertDialog.Builder(context).apply {
         if (titleRes != -1) setTitle(titleRes) else setTitle(title)

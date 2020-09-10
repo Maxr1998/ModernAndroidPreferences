@@ -15,6 +15,8 @@ class MultiChoiceDialogPreference(key: String, items: List<SelectionItem>) : Abs
     val currentSelections: Set<SelectionItem>
         get() = HashSet(selections)
 
+    var selectionChangeListener: OnSelectionChangeListener? = null
+
     override fun onAttach() {
         super.onAttach()
         if (selections.isEmpty())
@@ -33,7 +35,8 @@ class MultiChoiceDialogPreference(key: String, items: List<SelectionItem>) : Abs
     override fun persistSelection() {
         val resultSet = HashSet<String>()
         selections.mapTo(resultSet, SelectionItem::key)
-        commitStringSet(resultSet)
+        if (selectionChangeListener?.onSelectionChange(this, HashSet(resultSet)) != false)
+            commitStringSet(resultSet)
     }
 
     override fun resetSelection() {
@@ -48,5 +51,18 @@ class MultiChoiceDialogPreference(key: String, items: List<SelectionItem>) : Abs
             selection.titleRes != -1 -> context.resources.getText(selection.titleRes)
             else -> selection.title
         }
+    }
+
+    fun interface OnSelectionChangeListener {
+        /**
+         * Notified when the selection of the connected [MultiChoiceDialogPreference] changes,
+         * meaning after the user closes the dialog by pressing "ok".
+         * This is called before the change gets persisted and can be prevented by returning false.
+         *
+         * @param selection the new selection
+         *
+         * @return true to commit the new selection to [SharedPreferences][android.content.SharedPreferences]
+         */
+        fun onSelectionChange(preference: MultiChoiceDialogPreference, selection: Set<String>): Boolean
     }
 }
