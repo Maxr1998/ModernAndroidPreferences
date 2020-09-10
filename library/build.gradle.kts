@@ -15,7 +15,7 @@ plugins {
 }
 
 // Versions
-val libraryVersion = "1.1.0-alpha2"
+val libraryVersion = "1.1.0-alpha3"
 val libraryName = "modernpreferences"
 val bintrayLibraryName = "ModernAndroidPreferences"
 
