@@ -153,6 +153,50 @@ inline fun TwoStatePreference.defaultOnCheckedChange(crossinline callback: (Bool
     }
 }
 
+/**
+ * [SingleChoiceDialogPreference.OnSelectionChangeListener] shorthand.
+ * Supplies the changed selection, return value determines whether that state should be persisted
+ * to [SharedPreferences][android.content.SharedPreferences].
+ */
+inline fun SingleChoiceDialogPreference.onSelectionChange(crossinline callback: (String) -> Boolean) {
+    selectionChangeListener = SingleChoiceDialogPreference.OnSelectionChangeListener { _, selection ->
+        callback(selection)
+    }
+}
+
+/**
+ * [SingleChoiceDialogPreference.OnSelectionChangeListener] shorthand.
+ * Always persists the change to [SharedPreferences][android.content.SharedPreferences].
+ */
+inline fun SingleChoiceDialogPreference.defaultOnSelectionChange(crossinline callback: (String) -> Unit) {
+    selectionChangeListener = SingleChoiceDialogPreference.OnSelectionChangeListener { _, selection ->
+        callback(selection)
+        true
+    }
+}
+
+/**
+ * [MultiChoiceDialogPreference.OnSelectionChangeListener] shorthand.
+ * Supplies the changed selections, return value determines whether that state should be persisted
+ * to [SharedPreferences][android.content.SharedPreferences].
+ */
+inline fun MultiChoiceDialogPreference.onSelectionChange(crossinline callback: (Set<String>) -> Boolean) {
+    selectionChangeListener = MultiChoiceDialogPreference.OnSelectionChangeListener { _, selection ->
+        callback(selection)
+    }
+}
+
+/**
+ * [MultiChoiceDialogPreference.OnSelectionChangeListener] shorthand.
+ * Always persists the change to [SharedPreferences][android.content.SharedPreferences].
+ */
+inline fun MultiChoiceDialogPreference.defaultOnSelectionChange(crossinline callback: (Set<String>) -> Unit) {
+    selectionChangeListener = MultiChoiceDialogPreference.OnSelectionChangeListener { _, selection ->
+        callback(selection)
+        true
+    }
+}
+
 // Deprecated listener helpers
 
 @Deprecated(
