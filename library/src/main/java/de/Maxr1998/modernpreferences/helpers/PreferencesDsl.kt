@@ -19,6 +19,7 @@
 package de.Maxr1998.modernpreferences.helpers
 
 import android.content.Context
+import android.view.View
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.preferences.*
@@ -99,9 +100,65 @@ inline fun CollapsePreference.subScreen(key: String = "", block: PreferenceScree
 }
 
 // Listener helpers
+
+/**
+ * [Preference.OnClickListener] shorthand without parameters.
+ * Callback return value determines whether the Preference changed/requires a rebind.
+ */
+inline fun Preference.onClick(crossinline callback: () -> Boolean) {
+    clickListener = Preference.OnClickListener { _, _ -> callback() }
+}
+
+/**
+ * [Preference.OnClickListener] shorthand without parameters that returns false by default,
+ * meaning the Preference didn't get changed and doesn't require a rebind/redraw.
+ */
+inline fun Preference.defaultOnClick(crossinline callback: () -> Unit) {
+    clickListener = Preference.OnClickListener { _, _ ->
+        callback()
+        false
+    }
+}
+
+/**
+ * [Preference.OnClickListener] shorthand that only passes the view of the clicked item and returns false by default,
+ * meaning the Preference didn't get changed and doesn't require a rebind/redraw.
+ */
+inline fun Preference.onClickView(crossinline callback: (View) -> Unit) {
+    clickListener = Preference.OnClickListener { _, holder ->
+        callback(holder.itemView)
+        false
+    }
+}
+
+/**
+ * [TwoStatePreference.OnCheckedChangeListener] shorthand.
+ * Supplies the changed state, return value determines whether that state should be persisted
+ * to [SharedPreferences][android.content.SharedPreferences].
+ */
+inline fun TwoStatePreference.onCheckedChange(crossinline callback: (Boolean) -> Boolean) {
+    checkedChangeListener = TwoStatePreference.OnCheckedChangeListener { _, _, checked ->
+        callback(checked)
+    }
+}
+
+/**
+ * [TwoStatePreference.OnCheckedChangeListener] shorthand.
+ * Always persists the change to [SharedPreferences][android.content.SharedPreferences].
+ */
+inline fun TwoStatePreference.defaultOnCheckedChange(crossinline callback: (Boolean) -> Unit) {
+    checkedChangeListener = TwoStatePreference.OnCheckedChangeListener { _, _, checked ->
+        callback(checked)
+        true
+    }
+}
+
+// Deprecated listener helpers
+
 @Deprecated(
-    "Helper callback function was replaced by native SAM-interface support since Kotlin 1.4.\n" +
-            "Directly assign callback to clickListener instead."
+    message = "Helper callback function was replaced by native SAM-interface support since Kotlin 1.4.\n" +
+            "Directly assign callback to clickListener instead.",
+    level = DeprecationLevel.ERROR
 )
 inline fun Preference.onClicked(crossinline callback: (Preference) -> Boolean) {
     clickListener = Preference.OnClickListener { preference, _ -> callback(preference) }
@@ -109,10 +166,8 @@ inline fun Preference.onClicked(crossinline callback: (Preference) -> Boolean) {
 
 @Deprecated(
     "Helper callback function was replaced by native SAM-interface support since Kotlin 1.4",
-    ReplaceWith(
-        "clickListener = Preference.OnClickListener(callback)",
-        "de.Maxr1998.modernpreferences.Preference"
-    )
+    ReplaceWith("clickListener = Preference.OnClickListener(callback)", "de.Maxr1998.modernpreferences.Preference"),
+    DeprecationLevel.ERROR
 )
 fun Preference.onClickView(callback: Preference.OnClickListener) {
     clickListener = callback
@@ -123,7 +178,8 @@ fun Preference.onClickView(callback: Preference.OnClickListener) {
     ReplaceWith(
         "checkedChangeListener = TwoStatePreference.OnCheckedChangeListener(callback)",
         "de.Maxr1998.modernpreferences.preferences.TwoStatePreference"
-    )
+    ),
+    DeprecationLevel.ERROR
 )
 fun TwoStatePreference.onChange(callback: TwoStatePreference.OnCheckedChangeListener) {
     checkedChangeListener = callback
@@ -134,7 +190,8 @@ fun TwoStatePreference.onChange(callback: TwoStatePreference.OnCheckedChangeList
     ReplaceWith(
         "seekListener = SeekBarPreference.OnSeekListener(callback)",
         "de.Maxr1998.modernpreferences.preferences.SeekBarPreference"
-    )
+    ),
+    DeprecationLevel.ERROR
 )
 fun SeekBarPreference.onSeek(callback: SeekBarPreference.OnSeekListener) {
     seekListener = callback
