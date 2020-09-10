@@ -8,39 +8,42 @@ class MultiChoiceDialogPreference(key: String, items: List<SelectionItem>) : Abs
      * The initial selections if no choice has been made yet and no value
      * was persisted to [SharedPreferences][android.content.SharedPreferences]
      */
-    val initialSelections: Set<String> = HashSet()
+    var initialSelections: Set<String>? = null
 
-    val currentSelections: MutableSet<SelectionItem> = HashSet()
+    private val selections: MutableSet<SelectionItem> = HashSet()
+
+    val currentSelections: Set<SelectionItem>
+        get() = HashSet(selections)
 
     override fun onAttach() {
         super.onAttach()
-        if (currentSelections.isEmpty())
+        if (selections.isEmpty())
             resetSelection()
     }
 
     override fun select(item: SelectionItem) {
-        if (!currentSelections.add(item)) {
-            currentSelections.remove(item)
+        if (!selections.add(item)) {
+            selections.remove(item)
         }
         selectionAdapter?.notifySelectionChanged()
     }
 
-    override fun isSelected(item: SelectionItem): Boolean = item in currentSelections
+    override fun isSelected(item: SelectionItem): Boolean = item in selections
 
     override fun persistSelection() {
         val resultSet = HashSet<String>()
-        currentSelections.mapTo(resultSet, SelectionItem::key)
+        selections.mapTo(resultSet, SelectionItem::key)
         commitStringSet(resultSet)
     }
 
     override fun resetSelection() {
-        val persisted = getStringSet() ?: initialSelections
-        currentSelections.clear()
-        currentSelections += persisted.mapNotNull { key -> items.find { item -> item.key == key } }
+        val persisted = getStringSet() ?: initialSelections?.toList() ?: emptyList()
+        selections.clear()
+        selections += persisted.mapNotNull { key -> items.find { item -> item.key == key } }
         selectionAdapter?.notifySelectionChanged()
     }
 
-    override fun resolveSummary(context: Context): CharSequence? = currentSelections.joinToString(limit = 3, truncated = "…") { selection ->
+    override fun resolveSummary(context: Context): CharSequence? = selections.joinToString(limit = 3, truncated = "…") { selection ->
         when {
             selection.titleRes != -1 -> context.resources.getText(selection.titleRes)
             else -> selection.title
