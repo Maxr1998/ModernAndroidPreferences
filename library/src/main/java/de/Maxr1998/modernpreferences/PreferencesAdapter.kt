@@ -24,6 +24,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
+import androidx.annotation.VisibleForTesting
 import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,7 +38,10 @@ import java.util.*
 import kotlin.math.max
 
 @Suppress("MemberVisibilityCanBePrivate")
-class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>() {
+class PreferencesAdapter @VisibleForTesting constructor(
+    root: PreferenceScreen? = null, hasStableIds: Boolean
+) : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>() {
+    constructor(root: PreferenceScreen? = null) : this(root, true)
 
     private val screenStack: Stack<PreferenceScreen> = Stack<PreferenceScreen>().apply {
         push(emptyScreen)
@@ -60,7 +64,9 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
     var secondScreenAdapter: PreferencesAdapter? = null
 
     init {
-        setHasStableIds(true)
+        // Necessary for testing, because setHasStableIds calls into an (in the stubbed android.jar)
+        // uninitialized observer list which causes a NPE
+        if (hasStableIds) setHasStableIds(true)
         root?.let(::setRootScreen)
     }
 

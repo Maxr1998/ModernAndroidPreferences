@@ -178,4 +178,10 @@ class PreferencesTests {
             }
         }
     }
+
+    @Test
+    fun `Saved state should be empty for adapter without content`() {
+        val adapter = createPreferenceAdapter()
+        adapter.getSavedState().screenPath.size shouldBe 0
+    }
 }
