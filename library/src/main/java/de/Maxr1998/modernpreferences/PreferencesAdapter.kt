@@ -34,6 +34,7 @@ import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 import de.Maxr1998.modernpreferences.preferences.ImagePreference
 import kotlinx.android.parcel.Parcelize
 import java.util.*
+import kotlin.math.max
 
 @Suppress("MemberVisibilityCanBePrivate")
 class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>() {
@@ -212,7 +213,7 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
     }
 
     fun getSavedState(): SavedState {
-        val screenPath = IntArray(screenStack.size - 2)
+        val screenPath = IntArray(max(0, screenStack.size - 2))
         for (i in 2 until screenStack.size) {
             screenPath[i - 2] = screenStack[i].screenPosition
         }
