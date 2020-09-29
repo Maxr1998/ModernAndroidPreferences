@@ -1,6 +1,7 @@
 package de.Maxr1998.modernpreferences.testing
 
 import de.Maxr1998.modernpreferences.PreferencesAdapter
+import io.mockk.every
 import io.mockk.spyk
 
 val uniqueKeySequence = iterator {
@@ -10,4 +11,6 @@ val uniqueKeySequence = iterator {
     }
 }
 
-fun createPreferenceAdapter(): PreferencesAdapter = spyk(PreferencesAdapter(hasStableIds = false))
+fun createPreferenceAdapter(): PreferencesAdapter = spyk(PreferencesAdapter(hasStableIds = false)) {
+    every { notifyDataSetChanged() } returns Unit
+}

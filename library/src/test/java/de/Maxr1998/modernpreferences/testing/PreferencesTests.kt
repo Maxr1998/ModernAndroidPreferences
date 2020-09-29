@@ -3,6 +3,8 @@ package de.Maxr1998.modernpreferences.testing
 import android.content.Context
 import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import de.Maxr1998.modernpreferences.Preference
+import de.Maxr1998.modernpreferences.PreferenceScreen
+import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.helpers.pref
 import de.Maxr1998.modernpreferences.helpers.screen
 import de.Maxr1998.modernpreferences.helpers.subScreen
@@ -18,6 +20,8 @@ import io.kotest.property.checkAll
 import io.kotest.property.exhaustive.boolean
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.spyk
+import io.mockk.verify
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -177,6 +181,27 @@ class PreferencesTests {
                 check(dependent, dependency)
             }
         }
+    }
+
+    @Test
+    fun `Screen changes should call onScreenChangeListener`() {
+        val adapter = createPreferenceAdapter()
+
+        // Setup screens
+        lateinit var subScreen: PreferenceScreen
+        val rootScreen = screen(contextMock) {
+            subScreen = +PreferenceScreen.Builder(this, "").build()
+        }
+        adapter.setRootScreen(rootScreen)
+
+        // Initial state dispatch
+        val listener: PreferencesAdapter.OnScreenChangeListener = spyk()
+        adapter.onScreenChangeListener = listener
+        verify(exactly = 1) { listener.onScreenChanged(rootScreen, false) }
+
+        // Dispatch on screen change
+        adapter.openScreen(subScreen)
+        verify(exactly = 1) { listener.onScreenChanged(subScreen, true) }
     }
 
     @Test

@@ -87,8 +87,9 @@ class PreferencesAdapter @VisibleForTesting constructor(
         onScreenChangeListener?.onScreenChanged(root, false)
     }
 
+    @VisibleForTesting
     @MainThread
-    private fun openScreen(screen: PreferenceScreen) {
+    internal fun openScreen(screen: PreferenceScreen) {
         secondScreenAdapter?.setRootScreen(screen) ?: /* ELSE */ run {
             currentScreen.adapter = null
             screenStack.push(screen)
