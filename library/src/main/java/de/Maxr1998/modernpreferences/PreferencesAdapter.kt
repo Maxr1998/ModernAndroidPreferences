@@ -156,11 +156,11 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
      * Should be called from [OnScreenChangeListener.onScreenChanged].
      */
     fun restoreAndObserveScrollPosition(preferenceView: RecyclerView) {
-        if (currentScreen.scrollPosition != 0 || currentScreen.scrollOffset != 0) {
-            (preferenceView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
-                    currentScreen.scrollPosition,
-                    currentScreen.scrollOffset
-            )
+        with(currentScreen) {
+            if (scrollPosition != 0 || scrollOffset != 0) {
+                val layoutManager = preferenceView.layoutManager as LinearLayoutManager
+                layoutManager.scrollToPositionWithOffset(scrollPosition, scrollOffset)
+            }
         }
         preferenceView.removeOnScrollListener(scrollListener) // We don't want to be added twice
         preferenceView.addOnScrollListener(scrollListener)
@@ -169,11 +169,9 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
     private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(r: RecyclerView, state: Int) {
             if (state == RecyclerView.SCROLL_STATE_IDLE) currentScreen.apply {
-                scrollPosition = (r.layoutManager as LinearLayoutManager)
-                        .findFirstCompletelyVisibleItemPosition()
-                scrollOffset = r.findViewHolderForAdapterPosition(scrollPosition)?.run {
-                    itemView.top
-                } ?: 0
+                val layoutManager = r.layoutManager as LinearLayoutManager
+                scrollPosition = layoutManager.findFirstCompletelyVisibleItemPosition()
+                scrollOffset = r.findViewHolderForAdapterPosition(scrollPosition)?.run { itemView.top } ?: 0
             }
         }
     }
@@ -215,8 +213,8 @@ class PreferencesAdapter(root: PreferenceScreen? = null) : RecyclerView.Adapter<
 
     fun getSavedState(): SavedState {
         val screenPath = IntArray(screenStack.size - 2)
-        for (i in 1 until screenStack.size) {
-            if (i > 1) screenPath[i - 2] = screenStack[i].screenPosition
+        for (i in 2 until screenStack.size) {
+            screenPath[i - 2] = screenStack[i].screenPosition
         }
         return SavedState(screenPath)
     }
