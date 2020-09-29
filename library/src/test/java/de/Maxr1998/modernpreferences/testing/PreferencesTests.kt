@@ -14,6 +14,7 @@ import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.data.blocking.forAll
 import io.kotest.data.row
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 import io.kotest.property.Exhaustive
 import io.kotest.property.checkAll
@@ -208,5 +209,40 @@ class PreferencesTests {
     fun `Saved state should be empty for adapter without content`() {
         val adapter = createPreferenceAdapter()
         adapter.getSavedState().screenPath.size shouldBe 0
+    }
+
+    @Test
+    fun `Saved state should be empty on root screen`() {
+        val adapter = createPreferenceAdapter()
+        adapter.setRootScreen(screen(contextMock) {})
+        adapter.getSavedState().screenPath.size shouldBe 0
+    }
+
+    @Test
+    fun `Saved state should save and restore properly`() {
+        val adapter = createPreferenceAdapter()
+
+        // Setup screens
+        lateinit var subScreen: PreferenceScreen
+        val rootScreen = screen(contextMock) {
+            subScreen = +PreferenceScreen.Builder(this, "").build()
+        }
+        adapter.setRootScreen(rootScreen)
+        adapter.openScreen(subScreen)
+
+        // Save state and assert correct size and content
+        val savedState = adapter.getSavedState()
+        savedState.screenPath.size shouldBe 1
+        savedState.screenPath[0] shouldBe 0
+
+        // Go back to root
+        @Suppress("ControlFlowWithEmptyBody")
+        while (adapter.goBack());
+
+        // Restore state
+        adapter.loadSavedState(savedState).shouldBeTrue()
+
+        // Assert current screen
+        adapter.currentScreen shouldBe subScreen
     }
 }
