@@ -51,6 +51,11 @@ class PreferencesAdapter @VisibleForTesting constructor(
         get() = screenStack.peek()
 
     /**
+     * Listener which will be notified before screen change events
+     */
+    var beforeScreenChangeListener: BeforeScreenChangeListener? = null
+
+    /**
      * Listener which will be notified of screen change events
      *
      * Will dispatch the initial state when attached.
@@ -91,12 +96,14 @@ class PreferencesAdapter @VisibleForTesting constructor(
     @MainThread
     internal fun openScreen(screen: PreferenceScreen) {
         secondScreenAdapter?.setRootScreen(screen) ?: /* ELSE */ run {
+            if (beforeScreenChangeListener?.beforeScreenChange(screen) == false)
+                return
             currentScreen.adapter = null
             screenStack.push(screen)
             notifyDataSetChanged()
             currentScreen.adapter = this
+            onScreenChangeListener?.onScreenChanged(screen, true)
         }
-        onScreenChangeListener?.onScreenChanged(screen, true)
     }
 
     fun isInSubScreen() = screenStack.size > 2
@@ -107,10 +114,15 @@ class PreferencesAdapter @VisibleForTesting constructor(
      * @return true if it returned to an earlier screen, false if we're already at the root
      */
     @MainThread
-    fun goBack(): Boolean {
-        if (secondScreenAdapter?.goBack() == true) // Check if the second screen can still go back
-            return true
-        if (isInSubScreen()) { // If we're in a sub-screen...
+    fun goBack(): Boolean = when {
+        // Check if the second screen can still go back
+        secondScreenAdapter?.goBack() == true -> true
+        // Can't go back when not in a subscreen
+        !isInSubScreen() -> false
+        // Callback may disallow screen change
+        beforeScreenChangeListener?.beforeScreenChange(screenStack[screenStack.size - 2]) == false -> true
+        // Change screens!
+        else -> {
             currentScreen.adapter = null
             val oldScreen = screenStack.pop() // ...remove current screen from stack
             notifyDataSetChanged()
@@ -121,9 +133,8 @@ class PreferencesAdapter @VisibleForTesting constructor(
                 if (p.javaClass == CollapsePreference::class.java)
                     (p as CollapsePreference).reset()
             }
-            return true
+            true
         }
-        return false
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -212,10 +223,23 @@ class PreferencesAdapter @VisibleForTesting constructor(
     }
 
     /**
+     * An interface to notify observers in [PreferencesAdapter] before screen change events,
+     * even allows to prevent the screen change
+     */
+    fun interface BeforeScreenChangeListener {
+        /**
+         * Called when the user attempts to switch screens by pressing on a subscreen item or going back
+         *
+         * @return false to prevent the change from happening
+         */
+        fun beforeScreenChange(screen: PreferenceScreen): Boolean
+    }
+
+    /**
      * An interface to notify observers in [PreferencesAdapter] of screen change events,
      * when a sub-screen was opened or closed
      */
-    interface OnScreenChangeListener {
+    fun interface OnScreenChangeListener {
         fun onScreenChanged(screen: PreferenceScreen, subScreen: Boolean)
     }
 

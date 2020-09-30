@@ -185,7 +185,7 @@ class PreferencesTests {
     }
 
     @Test
-    fun `Screen changes should call onScreenChangeListener`() {
+    fun `Screen changes should call screen change listeners`() {
         val adapter = createPreferenceAdapter()
 
         // Setup screens
@@ -195,14 +195,57 @@ class PreferencesTests {
         }
         adapter.setRootScreen(rootScreen)
 
+        // Setup listeners
+        val beforeChangeListener = spyk(PreferencesAdapter.BeforeScreenChangeListener {
+            true
+        })
+        adapter.beforeScreenChangeListener = beforeChangeListener
+        val onChangeListener: PreferencesAdapter.OnScreenChangeListener = spyk()
+        adapter.onScreenChangeListener = onChangeListener
+
         // Initial state dispatch
-        val listener: PreferencesAdapter.OnScreenChangeListener = spyk()
-        adapter.onScreenChangeListener = listener
-        verify(exactly = 1) { listener.onScreenChanged(rootScreen, false) }
+        verify(exactly = 1) { onChangeListener.onScreenChanged(rootScreen, false) }
 
         // Dispatch on screen change
         adapter.openScreen(subScreen)
-        verify(exactly = 1) { listener.onScreenChanged(subScreen, true) }
+        verify(exactly = 1) { beforeChangeListener.beforeScreenChange(subScreen) }
+        verify(exactly = 1) { onChangeListener.onScreenChanged(subScreen, true) }
+
+        // Dispatch when returning
+        adapter.goBack()
+        verify(exactly = 1) { beforeChangeListener.beforeScreenChange(rootScreen) }
+        verify(exactly = 2) { onChangeListener.onScreenChanged(rootScreen, false) }
+    }
+
+
+    @Test
+    fun `beforeScreenChangeListener can prevent screen changes`() {
+        val adapter = createPreferenceAdapter()
+
+        // Setup screens
+        lateinit var subScreen: PreferenceScreen
+        val rootScreen = screen(contextMock) {
+            subScreen = +PreferenceScreen.Builder(this, "").build()
+        }
+        adapter.setRootScreen(rootScreen)
+
+        val beforeChangeListener = spyk(PreferencesAdapter.BeforeScreenChangeListener { false })
+        adapter.beforeScreenChangeListener = beforeChangeListener
+
+        // Listener should prevent changes
+        adapter.openScreen(subScreen)
+        verify(exactly = 1) { beforeChangeListener.beforeScreenChange(subScreen) }
+        adapter.currentScreen shouldBe rootScreen // Ensure screen didn't change
+
+        // Temporarily remove listener to change screen
+        adapter.beforeScreenChangeListener = null
+        adapter.openScreen(subScreen)
+        adapter.beforeScreenChangeListener = beforeChangeListener
+
+        // Dispatch when returning
+        adapter.goBack()
+        verify(exactly = 1) { beforeChangeListener.beforeScreenChange(rootScreen) }
+        adapter.currentScreen shouldBe subScreen // Ensure screen didn't change
     }
 
     @Test
