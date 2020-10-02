@@ -39,8 +39,8 @@ inline fun screen(context: Context?, block: PreferenceScreen.Builder.() -> Unit)
 
 val emptyScreen: PreferenceScreen by lazy { screen(null) {} }
 
-inline fun PreferenceScreen.Builder.subScreen(key: String = "", block: PreferenceScreen.Builder.() -> Unit) {
-    addPreferenceItem(PreferenceScreen.Builder(this, key).apply(block).build())
+inline fun PreferenceScreen.Builder.subScreen(key: String = "", block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
+    return PreferenceScreen.Builder(this, key).apply(block).build().also(::addPreferenceItem)
 }
 
 // Preference DSL functions
