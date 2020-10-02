@@ -29,10 +29,7 @@ import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.helpers.emptyScreen
-import de.Maxr1998.modernpreferences.preferences.AccentButtonPreference
-import de.Maxr1998.modernpreferences.preferences.CategoryHeader
-import de.Maxr1998.modernpreferences.preferences.CollapsePreference
-import de.Maxr1998.modernpreferences.preferences.ImagePreference
+import de.Maxr1998.modernpreferences.preferences.*
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 import kotlin.math.max
@@ -154,6 +151,10 @@ class PreferencesAdapter @VisibleForTesting constructor(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pref = currentScreen[position]
         pref.bindViews(holder)
+
+        // Category header and seek bar shouldn't be clickable
+        if (pref is CategoryHeader || pref is SeekBarPreference)
+            return
 
         holder.itemView.setOnClickListener {
             if (pref is PreferenceScreen) {
