@@ -16,6 +16,7 @@
 
 package de.Maxr1998.modernpreferences
 
+import android.animation.StateListAnimator
 import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
@@ -62,6 +63,13 @@ class PreferencesAdapter @VisibleForTesting constructor(
             field = value
             field?.onScreenChanged(currentScreen, isInSubScreen())
         }
+
+    /**
+     * A [StateListAnimator] that will be applied to all Preference item views
+     *
+     * *Attention*: This animator will be cloned using [Object.clone] before getting applied.
+     */
+    var stateListAnimator: StateListAnimator? = null
 
     var secondScreenAdapter: PreferencesAdapter? = null
 
@@ -143,6 +151,7 @@ class PreferencesAdapter @VisibleForTesting constructor(
             else -> R.layout.map_preference
         }
         val view = layoutInflater.inflate(layout, parent, false)
+        view.stateListAnimator = stateListAnimator?.clone()
         if (viewType > 0)
             layoutInflater.inflate(viewType, view.findViewById(R.id.map_widget_frame), true)
         return ViewHolder(view)
