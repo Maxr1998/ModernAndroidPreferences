@@ -151,7 +151,13 @@ class PreferencesAdapter @VisibleForTesting constructor(
             else -> R.layout.map_preference
         }
         val view = layoutInflater.inflate(layout, parent, false)
-        view.stateListAnimator = stateListAnimator?.clone()
+        view.stateListAnimator = try {
+            stateListAnimator?.clone()
+        } catch (e: NoSuchMethodError) {
+            // Some awful Android 5 devices apparently don't implement the clone method,
+            // although it's part of the Android SDK since API 21. Thus, we catch it and return null instead.
+            null
+        }
         if (viewType > 0)
             layoutInflater.inflate(viewType, view.findViewById(R.id.map_widget_frame), true)
         return ViewHolder(view)
