@@ -166,7 +166,7 @@ open class Preference(key: String) : AbstractPreference(key) {
      */
     @CallSuper
     open fun bindViews(holder: PreferencesAdapter.ViewHolder) {
-        checkNotNull(parent) {
+        val preferenceParent = checkNotNull(parent) {
             "Trying to bind view for a preference not attached to a screen!"
         }
 
@@ -193,9 +193,9 @@ open class Preference(key: String) : AbstractPreference(key) {
             }
         }
         holder.iconFrame.apply {
-            isVisible = itemVisible || !this@Preference.parent!!.collapseIcon
+            isVisible = itemVisible || !preferenceParent.collapseIcon
             if (isVisible && this is LinearLayout) {
-                gravity = if (this@Preference.parent!!.centerIcon) Gravity.CENTER else Gravity.START or Gravity.CENTER_VERTICAL
+                gravity = if (preferenceParent.centerIcon) Gravity.CENTER else Gravity.START or Gravity.CENTER_VERTICAL
             }
         }
         holder.title.apply {
