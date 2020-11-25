@@ -6,7 +6,7 @@ import java.util.*
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("android.extensions")
+    id("kotlin-parcelize")
     id("de.mannodermaus.android-junit5")
     id("com.adarshr.test-logger") version "2.0.0"
     id("maven-publish")
