@@ -7,8 +7,9 @@
 Android Preferences defined through Kotlin DSL, shown in a RecyclerView.  
 _No XML, no awful PreferenceManager, Fragments or styling problems, no more ListView._ :tada:
 
-#### Syntax example
+#### Code example
 ```Kotlin
+// Setup a preference screen
 val screen = screen(context) {
     pref("first") {
         title = "A preference"
@@ -27,14 +28,14 @@ val screen = screen(context) {
     switch("toggle_feature") {
         title = "Also supports switches"
     }
+    // and many other preference widgets!
 }
-```
-*…and many other preference widgets!*
 
-
-#### Create preference adapter
-```Kotlin
+// Wrap the created screen in a preference adapter…
 val preferencesAdapter = PreferencesAdapter(screen)
+
+// …that can be attached to a RecyclerView
+recyclerView.adapter = preferencesAdapter
 ```
 
 #### View the example app
@@ -45,20 +46,7 @@ show advanced info like back handling, saving/restoring scroll position, and usi
 ModernAndroidPreferences is on [Bintray](https://bintray.com/maxr1998/maven/ModernAndroidPreferences), so you can get it like any other dependency via JCenter:
 ```gradle
 dependencies {
-    implementation 'de.Maxr1998.android:modernpreferences:0.5.6'
-}
-```
-
-Alternatively, you can get snapshot versions through [JitPack](https://jitpack.io/#Maxr1998/ModernAndroidPreferences/-SNAPSHOT):
-```gradle
-repositories {
-    maven { url 'https://jitpack.io' }
-}
-
-…
-
-dependencies {
-    implementation 'com.github.Maxr1998:ModernAndroidPreferences:-SNAPSHOT'
+    implementation 'de.Maxr1998.android:modernpreferences:1.0'
 }
 ```
 
