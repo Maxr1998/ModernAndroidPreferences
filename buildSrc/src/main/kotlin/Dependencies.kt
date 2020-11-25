@@ -3,11 +3,11 @@ import java.util.*
 object Dependencies {
     object Versions {
         // Plugins
-        const val dependencyUpdates = "0.29.0"
+        const val dependencyUpdates = "0.36.0"
 
         // Core
-        const val appCompat = "1.1.0"
-        const val coreKtx = "1.3.0"
+        const val appCompat = "1.2.0"
+        const val coreKtx = "1.3.2"
         const val activityKtx = "1.1.0"
 
         // UI
@@ -18,13 +18,13 @@ object Dependencies {
         const val lifecycleExtensions = "2.2.0"
 
         // Testing
-        const val junit = "5.6.1"
-        const val kotest = "4.2.2"
-        const val mockk = "1.10.0"
+        const val junit = "5.7.0"
+        const val kotest = "4.3.1"
+        const val mockk = "1.10.2"
         const val sharedPreferencesMock = "1.0"
 
         // Debug
-        const val leakCanary = "2.4"
+        const val leakCanary = "2.5"
 
         fun isStable(version: String): Boolean {
             return listOf("alpha", "beta", "dev", "rc", "m").none {
