@@ -90,6 +90,8 @@ abstract class AbstractPreference internal constructor(val key: String) {
  * if [switch][de.Maxr1998.modernpreferences.preferences.SwitchPreference],
  * [category header][de.Maxr1998.modernpreferences.preferences.CategoryHeader] or
  * [sub-screen][PreferenceScreen].
+ *
+ * Further (global) configuration options can be found in [Preference.Config].
  */
 @PreferenceMarker
 open class Preference(key: String) : AbstractPreference(key) {
@@ -200,10 +202,12 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
         holder.title.apply {
             if (titleRes != -1) setText(titleRes) else text = title
+            maxLines = Config.titleMaxLines
         }
         holder.summary?.apply {
             val summary = resolveSummary(context)
             text = summary
+            maxLines = Config.summaryMaxLines
             isVisible = summary != null
         }
         holder.badge?.apply {
@@ -321,6 +325,33 @@ open class Preference(key: String) : AbstractPreference(key) {
          * @return true if the preference changed and needs to update its views
          */
         fun onClick(preference: Preference, holder: PreferencesAdapter.ViewHolder): Boolean
+    }
+
+    /**
+     * Global configuration object that allows to apply settings to *all* [Preference] instances
+     */
+    object Config {
+        /**
+         * Override the maximum allowed number of lines for the title text.
+         *
+         * 1 by default, allowed values are 1 to 3.
+         */
+        var titleMaxLines: Int = 1
+            set(value) {
+                require(value in 1..3) { "titleMaxLines must be within [1,3]" }
+                field = value
+            }
+
+        /**
+         * Override the maximum allowed number of lines for the summary text.
+         *
+         * 3 by default, allowed values are 1 to 5.
+         */
+        var summaryMaxLines: Int = 3
+            set(value) {
+                require(value in 1..5) { "subtitleMaxLines must be within [1,5]" }
+                field = value
+            }
     }
 }
 
