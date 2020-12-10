@@ -46,11 +46,14 @@ class MultiChoiceDialogPreference(key: String, items: List<SelectionItem>) : Abs
         selectionAdapter?.notifySelectionChanged()
     }
 
-    override fun resolveSummary(context: Context): CharSequence? = selections.joinToString(limit = 3, truncated = "…") { selection ->
-        when {
-            selection.titleRes != -1 -> context.resources.getText(selection.titleRes)
-            else -> selection.title
+    override fun resolveSummary(context: Context): CharSequence? = when {
+        selections.isNotEmpty() -> selections.joinToString(limit = 3, truncated = "…") { selection ->
+            when {
+                selection.titleRes != -1 -> context.resources.getText(selection.titleRes)
+                else -> selection.title
+            }
         }
+        else -> super.resolveSummary(context)
     }
 
     fun interface OnSelectionChangeListener {
