@@ -46,7 +46,7 @@ show advanced info like back handling, saving/restoring scroll position, and usi
 ModernAndroidPreferences is on [Bintray](https://bintray.com/maxr1998/maven/ModernAndroidPreferences), so you can get it like any other dependency via JCenter:
 ```gradle
 dependencies {
-    implementation 'de.Maxr1998.android:modernpreferences:1.0'
+    implementation 'de.Maxr1998.android:modernpreferences:1.1.0'
 }
 ```
 
