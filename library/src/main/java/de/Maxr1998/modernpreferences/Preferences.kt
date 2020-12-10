@@ -33,6 +33,8 @@ import de.Maxr1998.modernpreferences.helpers.KEY_ROOT_SCREEN
 import de.Maxr1998.modernpreferences.helpers.PreferenceMarker
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
+import de.Maxr1998.modernpreferences.storage.SharedPreferencesStorage
+import de.Maxr1998.modernpreferences.storage.Storage
 import java.util.concurrent.atomic.AtomicBoolean
 
 abstract class AbstractPreference internal constructor(val key: String) {
@@ -117,7 +119,7 @@ open class Preference(key: String) : AbstractPreference(key) {
     var screenPosition: Int = 0
         private set
 
-    private var prefs: SharedPreferences? = null
+    private var storage: Storage? = null
 
     /**
      * Whether or not to persist changes to this preference to the attached [SharedPreferences] instance
@@ -137,7 +139,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         check(parent == null) { "Preference was already attached to a screen!" }
         parent = screen
         screenPosition = position
-        prefs = if (persistent) screen.prefs else null
+        storage = if (persistent) screen.storage else null
         DependencyManager.register(this)
         onAttach()
     }
@@ -259,36 +261,30 @@ open class Preference(key: String) : AbstractPreference(key) {
      * Save an int for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
      */
     fun commitInt(value: Int) {
-        prefs?.edit {
-            putInt(key, value)
-        }
+        storage?.setInt(key, value)
     }
 
     fun getInt(defaultValue: Int): Int =
-        prefs?.getInt(key, defaultValue) ?: defaultValue
+        storage?.getInt(key, defaultValue) ?: defaultValue
 
     /**
      * Save a boolean for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
      */
     fun commitBoolean(value: Boolean) {
-        prefs?.edit {
-            putBoolean(key, value)
-        }
+        storage?.setBoolean(key, value)
     }
 
     fun getBoolean(defaultValue: Boolean): Boolean =
-        prefs?.getBoolean(key, defaultValue) ?: defaultValue
+        storage?.getBoolean(key, defaultValue) ?: defaultValue
 
     /**
      * Save a String for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
      */
     fun commitString(value: String) {
-        prefs?.edit {
-            putString(key, value)
-        }
+        storage?.setString(key, value)
     }
 
-    fun getString(): String? = prefs?.getString(key, null)
+    fun getString(): String? = storage?.getString(key, null)
 
     @Deprecated(
         "Passing a default value is not supported anymore, " +
@@ -299,12 +295,10 @@ open class Preference(key: String) : AbstractPreference(key) {
     fun getString(defaultValue: String): String = throw UnsupportedOperationException("Not implemented")
 
     fun commitStringSet(values: Set<String>) {
-        prefs?.edit {
-            putStringSet(key, values)
-        }
+        storage?.setStringSet(key, values)
     }
 
-    fun getStringSet(): Set<String>? = prefs?.getStringSet(key, null)
+    fun getStringSet(): Set<String>? = storage?.getStringSet(key, null)
 
     /**
      * Can be set to [Preference.preBindListener]
@@ -365,7 +359,7 @@ open class Preference(key: String) : AbstractPreference(key) {
  */
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class PreferenceScreen private constructor(builder: Builder) : Preference(builder.key) {
-    internal val prefs = builder.prefs
+    internal val storage = builder.storage
     private val keyMap: Map<String, Preference> = builder.keyMap
     private val preferences: List<Preference> = builder.preferences
     internal val collapseIcon: Boolean = builder.collapseIcon
@@ -438,20 +432,14 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
     override fun hashCode() = (31 * key.hashCode()) + preferences.hashCode()
 
     @PreferenceMarker
-    class Builder private constructor(private var context: Context?, key: String) : AbstractPreference(key), Appendable {
-        constructor(context: Context?) : this(context, KEY_ROOT_SCREEN)
-        constructor(builder: Builder, key: String = "") : this(builder.context, key)
-        constructor(collapse: CollapsePreference, key: String = "") : this(collapse.screen?.context, key)
+    class Builder private constructor(private var context: Context?, internal val storage: Storage?, key: String) : AbstractPreference(key), Appendable {
+        constructor(context: Context?, storage: Storage?) : this(context, storage, KEY_ROOT_SCREEN)
+        constructor(builder: Builder, key: String = "") : this(builder.context, builder.storage, key)
+        constructor(collapse: CollapsePreference, key: String = "") : this(collapse.screen?.context, collapse.screen?.storage, key)
 
         // Internal structures
-        internal var prefs: SharedPreferences? = null
         internal val keyMap = HashMap<String, Preference>()
         internal val preferences = ArrayList<Preference>()
-
-        /**
-         * The filename to use for the [SharedPreferences] of this [PreferenceScreen]
-         */
-        var preferenceFileName: String = (context?.packageName ?: "package") + "_preferences"
 
         /**
          * If true, the preference items in this screen will have a smaller left padding when they have no icon
@@ -489,7 +477,6 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
         }
 
         fun build(): PreferenceScreen {
-            prefs = context?.getSharedPreferences(preferenceFileName, Context.MODE_PRIVATE)
             context = null
             return PreferenceScreen(this)
         }

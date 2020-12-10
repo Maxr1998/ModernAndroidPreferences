@@ -3,6 +3,7 @@ package de.Maxr1998.modernpreferences.helpers
 import android.content.SharedPreferences
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.preferences.StatefulPreference
+import de.Maxr1998.modernpreferences.storage.Storage
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.collections.HashMap
@@ -22,7 +23,7 @@ internal object DependencyManager {
         val screen = preference.parent
         check(screen != null) { "Preference must be attached to a screen first" }
         val dependency = preference.dependency ?: return
-        val key = PreferenceKey(screen.prefs, dependency)
+        val key = PreferenceKey(screen.storage, dependency)
         preferences.getOrPut(key) { LinkedList() }.add(WeakReference(preference))
         stateCache[key]?.let { state -> preference.enabled = state }
     }
@@ -33,11 +34,11 @@ internal object DependencyManager {
     fun publishState(preference: StatefulPreference) {
         val screen = preference.parent
         check(screen != null) { "Preference must be attached to a screen first" }
-        val key = PreferenceKey(screen.prefs, preference.key)
+        val key = PreferenceKey(screen.storage, preference.key)
         val state = preference.state // Cache state so that every dependent gets the same value
         stateCache[key] = state
         preferences[key]?.forEach { it.get()?.enabled = state }
     }
 
-    private data class PreferenceKey(val preferenceStore: SharedPreferences?, val key: String)
+    private data class PreferenceKey(val storage: Storage?, val key: String)
 }
