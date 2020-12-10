@@ -2,10 +2,10 @@ package de.Maxr1998.modernpreferences.storage
 
 import android.content.Context
 import android.content.SharedPreferences
-import de.Maxr1998.modernpreferences.PreferenceScreen
 
 class SharedPreferencesStorage(
     context: Context,
+    preferenceFileName: String = (context.packageName ?: "package") + "_preferences",
     private val mode: Mode = Mode.Apply
 ) : Storage {
 
@@ -14,16 +14,8 @@ class SharedPreferencesStorage(
         Apply
     }
 
-    private val prefs: SharedPreferences
-
-    /**
-     * The filename to use for the [SharedPreferences] of this [PreferenceScreen]
-     */
-    var preferenceFileName: String = (context.packageName ?: "package") + "_preferences"
-
-    init {
-        prefs = context.getSharedPreferences(preferenceFileName, Context.MODE_PRIVATE)
-    }
+    private val prefs: SharedPreferences =
+        context.getSharedPreferences(preferenceFileName, Context.MODE_PRIVATE)
 
     override fun setInt(key: String, value: Int) = edit {
         putInt(key, value)
