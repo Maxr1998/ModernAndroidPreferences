@@ -1,6 +1,5 @@
 package de.Maxr1998.modernpreferences.helpers
 
-import android.content.SharedPreferences
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.preferences.StatefulPreference
 import de.Maxr1998.modernpreferences.storage.Storage

@@ -17,7 +17,6 @@
 package de.Maxr1998.modernpreferences
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.view.Gravity
 import android.view.ViewGroup
@@ -27,7 +26,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.edit
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -38,7 +36,6 @@ import de.Maxr1998.modernpreferences.helpers.KEY_ROOT_SCREEN
 import de.Maxr1998.modernpreferences.helpers.PreferenceMarker
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
-import de.Maxr1998.modernpreferences.storage.SharedPreferencesStorage
 import de.Maxr1998.modernpreferences.storage.Storage
 import java.util.concurrent.atomic.AtomicBoolean
 
