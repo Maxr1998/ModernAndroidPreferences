@@ -4,8 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class SharedPreferencesStorage(
-    context: Context,
-    preferenceFileName: String = (context.packageName ?: "package") + "_preferences",
+    private val prefs: SharedPreferences,
     private val mode: Mode = Mode.Apply
 ) : Storage {
 
@@ -14,8 +13,11 @@ class SharedPreferencesStorage(
         Apply
     }
 
-    private val prefs: SharedPreferences =
-        context.getSharedPreferences(preferenceFileName, Context.MODE_PRIVATE)
+    constructor(
+        context: Context,
+        preferenceFileName: String = (context.packageName ?: "package") + "_preferences",
+        mode: Mode = Mode.Apply
+    ) : this(context.getSharedPreferences(preferenceFileName, Context.MODE_PRIVATE), mode)
 
     override fun setInt(key: String, value: Int) = edit {
         putInt(key, value)
