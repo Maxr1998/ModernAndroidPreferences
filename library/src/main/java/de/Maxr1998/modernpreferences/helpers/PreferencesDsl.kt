@@ -84,6 +84,10 @@ inline fun PreferenceScreen.Appendable.multiChoice(key: String, items: List<Sele
     return MultiChoiceDialogPreference(key, items).apply(block).also(::addPreferenceItem)
 }
 
+inline fun PreferenceScreen.Appendable.editText(key: String, block: EditTextPreference.() -> Unit): EditTextPreference {
+    return EditTextPreference(key).apply(block).also(::addPreferenceItem)
+}
+
 inline fun <reified T : Preference> PreferenceScreen.Appendable.custom(key: String, block: T.() -> Unit): T {
     return T::class.java.getConstructor(String::class.java).newInstance(key).apply(block).also(::addPreferenceItem)
 }

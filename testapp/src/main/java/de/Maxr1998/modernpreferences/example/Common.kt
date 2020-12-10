@@ -130,6 +130,10 @@ object Common {
             multiChoice("multi-choice-dialog", selectableItems) {
                 title = "Multi choice selection dialog"
             }
+            editText("edit-text") {
+                title = "Text input"
+                textInputHint = "Enter whatever you want!"
+            }
             expandText("expand-text") {
                 title = "Expandable text"
                 text = "This is an example implementation of ModernAndroidPreferences, check out " +
