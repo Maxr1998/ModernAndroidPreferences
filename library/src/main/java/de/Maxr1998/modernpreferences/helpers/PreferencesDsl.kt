@@ -35,10 +35,12 @@ import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
 import de.Maxr1998.modernpreferences.preferences.choice.MultiChoiceDialogPreference
 import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
 import de.Maxr1998.modernpreferences.preferences.choice.SingleChoiceDialogPreference
+import de.Maxr1998.modernpreferences.storage.SharedPreferencesStorage
+import de.Maxr1998.modernpreferences.storage.Storage
 
 // PreferenceScreen DSL functions
-inline fun screen(context: Context?, block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
-    return PreferenceScreen.Builder(context).apply(block).build()
+inline fun screen(context: Context?, storage: Storage? = context?.let { SharedPreferencesStorage(it) }, block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
+    return PreferenceScreen.Builder(context, storage).apply(block).build()
 }
 
 inline fun PreferenceScreen.Builder.subScreen(key: String = "", block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
