@@ -18,9 +18,9 @@
 
 package de.Maxr1998.modernpreferences.example
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import androidx.appcompat.app.AlertDialog
 import de.Maxr1998.modernpreferences.preferences.DialogPreference
 
 class TestDialog : DialogPreference("dialog") {

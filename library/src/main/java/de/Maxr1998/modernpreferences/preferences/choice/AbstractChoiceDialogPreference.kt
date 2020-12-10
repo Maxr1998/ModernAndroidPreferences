@@ -1,8 +1,8 @@
 package de.Maxr1998.modernpreferences.preferences.choice
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.preferences.DialogPreference
