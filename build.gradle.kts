@@ -9,7 +9,6 @@ buildscript {
         val kotlinVersion: String by project
         classpath("com.android.tools.build:gradle:4.1.2")
         classpath(kotlin("gradle-plugin", kotlinVersion))
-        classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4")
         classpath("de.mannodermaus.gradle.plugins:android-junit5:1.6.2.0")
     }
 }

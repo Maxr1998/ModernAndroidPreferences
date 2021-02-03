@@ -10,14 +10,13 @@ plugins {
     id("de.mannodermaus.android-junit5")
     id("com.adarshr.test-logger") version Dependencies.Versions.testLogger
     id("maven-publish")
-    id("com.jfrog.bintray")
     id("com.github.ben-manes.versions") version Dependencies.Versions.dependencyUpdates
 }
 
 // Versions
 val libraryVersion = "1.2.0-alpha1"
 val libraryName = "modernpreferences"
-val bintrayLibraryName = "ModernAndroidPreferences"
+val prettyLibraryName = "ModernAndroidPreferences"
 
 android {
     compileSdkVersion(30)
@@ -66,17 +65,15 @@ val sourcesJar by tasks.registering(Jar::class) {
     from(android.sourceSets.getByName("main").java.srcDirs)
 }
 
-var bintrayKey: String? = null
 var githubToken: String? = null
 val propFile = project.file("key.properties")
 if (propFile.exists()) {
     val props = Properties()
     props.load(FileInputStream(propFile))
-    bintrayKey = props["bintrayKey"] as? String
     githubToken = props["githubToken"] as? String
 }
 
-// Maven & Bintray config
+// Maven publishing config
 val publicationName = "production"
 publishing {
     repositories {
@@ -107,18 +104,6 @@ publishing {
                 }
             }
         }
-    }
-}
-
-bintray {
-    user = "maxr1998"
-    key = bintrayKey
-    setPublications(publicationName)
-    pkg.apply {
-        repo = "maven"
-        name = bintrayLibraryName
-        version.name = libraryVersion
-        publish = true
     }
 }
 
