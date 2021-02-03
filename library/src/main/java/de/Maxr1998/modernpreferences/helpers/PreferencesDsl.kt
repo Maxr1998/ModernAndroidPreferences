@@ -26,6 +26,8 @@ import de.Maxr1998.modernpreferences.preferences.*
 import de.Maxr1998.modernpreferences.preferences.choice.MultiChoiceDialogPreference
 import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
 import de.Maxr1998.modernpreferences.preferences.choice.SingleChoiceDialogPreference
+import de.Maxr1998.modernpreferences.storage.SharedPreferencesStorage
+import de.Maxr1998.modernpreferences.storage.Storage
 
 // DSL marker
 @DslMarker
@@ -33,8 +35,8 @@ import de.Maxr1998.modernpreferences.preferences.choice.SingleChoiceDialogPrefer
 annotation class PreferenceMarker
 
 // PreferenceScreen DSL functions
-inline fun screen(context: Context?, block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
-    return PreferenceScreen.Builder(context).apply(block).build()
+inline fun screen(context: Context?, storage: Storage? = context?.let { SharedPreferencesStorage(it) }, block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
+    return PreferenceScreen.Builder(context, storage).apply(block).build()
 }
 
 val emptyScreen: PreferenceScreen by lazy { screen(null) {} }

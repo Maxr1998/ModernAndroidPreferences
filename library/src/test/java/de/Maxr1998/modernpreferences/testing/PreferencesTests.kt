@@ -11,6 +11,8 @@ import de.Maxr1998.modernpreferences.helpers.subScreen
 import de.Maxr1998.modernpreferences.helpers.switch
 import de.Maxr1998.modernpreferences.preferences.SwitchPreference
 import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
+import de.Maxr1998.modernpreferences.storage.SharedPreferencesStorage
+import de.Maxr1998.modernpreferences.storage.Storage
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.data.blocking.forAll
 import io.kotest.data.row
@@ -32,11 +34,13 @@ import org.junit.jupiter.api.TestInstance
 class PreferencesTests {
 
     private val contextMock: Context = mockk()
+    private lateinit var storageMock: Storage
 
     @BeforeAll
     fun setup() {
         // Setup mocks for SharedPreferences
         val sharedPreferences = SPMockBuilder().createSharedPreferences()
+        storageMock = SharedPreferencesStorage(sharedPreferences)
         every { contextMock.packageName } returns "package"
         every { contextMock.getSharedPreferences(any(), any()) } returns sharedPreferences
     }
@@ -76,7 +80,7 @@ class PreferencesTests {
                 row(a = true, b = true, c = false)
             ) { checked: Boolean, disableDependents: Boolean, state: Boolean ->
                 lateinit var pref: TwoStatePreference
-                screen(contextMock) {
+                screen(contextMock, storageMock) {
                     pref = switch(uniqueKeySequence.next()) {
                         this.disableDependents = disableDependents
                     }
@@ -105,7 +109,7 @@ class PreferencesTests {
 
         runBlocking {
             checkAll(2, Exhaustive.boolean()) { disableDependents ->
-                screen(contextMock) {
+                screen(contextMock, storageMock) {
                     val dependencyKey = uniqueKeySequence.next()
                     dependent = pref(uniqueKeySequence.next()) {
                         this.dependency = dependencyKey
@@ -117,7 +121,7 @@ class PreferencesTests {
                 check(dependent, dependency)
 
                 // With inverted order of dependent and dependency
-                screen(contextMock) {
+                screen(contextMock, storageMock) {
                     val dependencyKey = uniqueKeySequence.next()
                     dependency = switch(dependencyKey) {
                         this.disableDependents = disableDependents
@@ -129,7 +133,7 @@ class PreferencesTests {
                 check(dependent, dependency)
 
                 // With sub-screens
-                screen(contextMock) {
+                screen(contextMock, storageMock) {
                     val dependencyKey = uniqueKeySequence.next()
                     dependent = pref(uniqueKeySequence.next()) {
                         this.dependency = dependencyKey
@@ -142,7 +146,7 @@ class PreferencesTests {
                 }
                 check(dependent, dependency)
 
-                screen(contextMock) {
+                screen(contextMock, storageMock) {
                     val dependencyKey = uniqueKeySequence.next()
                     subScreen {
                         dependent = pref(uniqueKeySequence.next()) {
@@ -155,7 +159,7 @@ class PreferencesTests {
                 }
                 check(dependent, dependency)
 
-                screen(contextMock) {
+                screen(contextMock, storageMock) {
                     val dependencyKey = uniqueKeySequence.next()
                     dependency = switch(dependencyKey) {
                         this.disableDependents = disableDependents
@@ -168,7 +172,7 @@ class PreferencesTests {
                 }
                 check(dependent, dependency)
 
-                screen(contextMock) {
+                screen(contextMock, storageMock) {
                     val dependencyKey = uniqueKeySequence.next()
                     subScreen {
                         dependency = switch(dependencyKey) {
@@ -190,7 +194,7 @@ class PreferencesTests {
 
         // Setup screens
         lateinit var subScreen: PreferenceScreen
-        val rootScreen = screen(contextMock) {
+        val rootScreen = screen(contextMock, storageMock) {
             subScreen = +PreferenceScreen.Builder(this, "").build()
         }
         adapter.setRootScreen(rootScreen)
@@ -224,7 +228,7 @@ class PreferencesTests {
 
         // Setup screens
         lateinit var subScreen: PreferenceScreen
-        val rootScreen = screen(contextMock) {
+        val rootScreen = screen(contextMock, storageMock) {
             subScreen = +PreferenceScreen.Builder(this, "").build()
         }
         adapter.setRootScreen(rootScreen)
@@ -257,7 +261,7 @@ class PreferencesTests {
     @Test
     fun `Saved state should be empty on root screen`() {
         val adapter = createPreferenceAdapter()
-        adapter.setRootScreen(screen(contextMock) {})
+        adapter.setRootScreen(screen(contextMock, storageMock) {})
         adapter.getSavedState().screenPath.size shouldBe 0
     }
 
@@ -267,7 +271,7 @@ class PreferencesTests {
 
         // Setup screens
         lateinit var subScreen: PreferenceScreen
-        val rootScreen = screen(contextMock) {
+        val rootScreen = screen(contextMock, storageMock) {
             subScreen = +PreferenceScreen.Builder(this, "").build()
         }
         adapter.setRootScreen(rootScreen)
