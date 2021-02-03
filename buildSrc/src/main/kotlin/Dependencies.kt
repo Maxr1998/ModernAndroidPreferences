@@ -3,6 +3,7 @@ import java.util.*
 object Dependencies {
     object Versions {
         // Plugins
+        const val testLogger = "2.1.1"
         const val dependencyUpdates = "0.36.0"
 
         // Core
@@ -19,8 +20,8 @@ object Dependencies {
 
         // Testing
         const val junit = "5.7.0"
-        const val kotest = "4.3.1"
-        const val mockk = "1.10.2"
+        const val kotest = "4.4.0"
+        const val mockk = "1.10.5"
         const val sharedPreferencesMock = "1.0"
 
         // Debug

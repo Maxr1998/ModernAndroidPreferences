@@ -8,7 +8,7 @@ plugins {
     kotlin("android")
     id("kotlin-parcelize")
     id("de.mannodermaus.android-junit5")
-    id("com.adarshr.test-logger") version "2.0.0"
+    id("com.adarshr.test-logger") version Dependencies.Versions.testLogger
     id("maven-publish")
     id("com.jfrog.bintray")
     id("com.github.ben-manes.versions") version Dependencies.Versions.dependencyUpdates
