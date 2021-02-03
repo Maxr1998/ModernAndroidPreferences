@@ -1,7 +1,6 @@
 package de.Maxr1998.modernpreferences.testing
 
 import android.content.Context
-import com.github.ivanshafran.sharedpreferencesmock.SPMockBuilder
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.PreferencesAdapter
@@ -36,7 +35,7 @@ class PreferencesTests {
     @BeforeAll
     fun setup() {
         // Setup mocks for SharedPreferences
-        val sharedPreferences = SPMockBuilder().createSharedPreferences()
+        val sharedPreferences = SharedPreferencesMock()
         every { contextMock.packageName } returns "package"
         every { contextMock.getSharedPreferences(any(), any()) } returns sharedPreferences
     }

@@ -22,7 +22,6 @@ object Dependencies {
         const val junit = "5.7.0"
         const val kotest = "4.4.0"
         const val mockk = "1.10.5"
-        const val sharedPreferencesMock = "1.0"
 
         // Debug
         const val leakCanary = "2.5"
@@ -62,8 +61,6 @@ object Dependencies {
         const val kotestProperty = "io.kotest:kotest-property-jvm:${Versions.kotest}"
         const val kotestRunner = "io.kotest:kotest-runner-junit5-jvm:${Versions.kotest}"
         const val mockk = "io.mockk:mockk:${Versions.mockk}"
-        const val sharedPreferencesMock =
-            "com.github.IvanShafran:shared-preferences-mock:${Versions.sharedPreferencesMock}"
 
         // Debug
         const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanary}"

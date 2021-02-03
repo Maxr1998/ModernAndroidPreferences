@@ -59,7 +59,6 @@ dependencies {
     testImplementation(Dependencies.Testing.kotestProperty)
     testImplementation(Dependencies.Testing.kotestRunner)
     testImplementation(Dependencies.Testing.mockk)
-    testImplementation(Dependencies.Testing.sharedPreferencesMock)
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
