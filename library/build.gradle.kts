@@ -15,8 +15,8 @@ plugins {
 
 // Versions
 val libraryVersion = "1.2.0-alpha1"
-val libraryGroup = "de.Maxr1998.android"
-val libraryName = "modernpreferences"
+val libraryGroup = "de.maxr1998"
+val libraryName = "modernandroidpreferences"
 val prettyLibraryName = "ModernAndroidPreferences"
 
 android {
