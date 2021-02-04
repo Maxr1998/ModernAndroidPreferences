@@ -43,12 +43,17 @@ Example Activities ([with](https://github.com/Maxr1998/ModernAndroidPreferences/
 show advanced info like back handling, saving/restoring scroll position, and using the `OnScreenChangeListener`.
 
 ## Include to project
-ModernAndroidPreferences is on [Bintray](https://bintray.com/maxr1998/maven/ModernAndroidPreferences), so you can get it like any other dependency via JCenter:
+ModernAndroidPreferences is on [Maven Central](https://search.maven.org/artifact/de.maxr1998/modernandroidpreferences),
+so you can get it like any other dependency:
 ```gradle
 dependencies {
-    implementation 'de.Maxr1998.android:modernpreferences:1.1.0'
+    implementation 'de.maxr1998:modernandroidpreferences:2.0'
 }
 ```
+---
+**NOTE:** This library has previously been available as `de.Maxr1998.android:modernpreferences` on Bintray JCenter,
+but was migrated to Sonatype Maven Central in light of the impending JCenter sunsetting.  
+To get in line with Maven naming standards, it was renamed to `de.maxr1998:modernandroidpreferences`.
 
 ## License
 Copyright © 2018-2020  Max Rumpf alias Maxr1998
