@@ -35,7 +35,6 @@ android {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
     implementation(Dependencies.Core.appCompat)
     implementation(Dependencies.Core.coreKtx)
     implementation(Dependencies.Core.activityKtx)
