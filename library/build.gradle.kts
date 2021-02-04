@@ -10,6 +10,7 @@ plugins {
     id("de.mannodermaus.android-junit5")
     id("com.adarshr.test-logger") version Dependencies.Versions.testLogger
     `maven-publish`
+    signing
     id("com.github.ben-manes.versions") version Dependencies.Versions.dependencyUpdates
 }
 
@@ -66,11 +67,16 @@ val sourcesJar by tasks.registering(Jar::class) {
     from(android.sourceSets.getByName("main").java.srcDirs)
 }
 
+var ossrhUsername: String? = null
+var ossrhPassword: String? = null
 var githubToken: String? = null
 val propFile = project.file("key.properties")
 if (propFile.exists()) {
     val props = Properties()
     props.load(FileInputStream(propFile))
+    ext["signing.gnupg.keyName"] = props["signingKeyName"] as? String
+    ossrhUsername = props["ossrhUsername"] as? String
+    ossrhPassword = props["ossrhPassword"] as? String
     githubToken = props["githubToken"] as? String
 }
 
@@ -120,6 +126,14 @@ publishing {
     }
     repositories {
         maven {
+            name = "sonatype"
+            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
+            }
+        }
+        maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/Maxr1998/ModernAndroidPreferences")
             credentials {
@@ -128,6 +142,11 @@ publishing {
             }
         }
     }
+}
+
+signing {
+    useGpgCmd()
+    sign(publishing.publications)
 }
 
 tasks.withType<DependencyUpdatesTask> {
