@@ -9,12 +9,13 @@ plugins {
     id("kotlin-parcelize")
     id("de.mannodermaus.android-junit5")
     id("com.adarshr.test-logger") version Dependencies.Versions.testLogger
-    id("maven-publish")
+    `maven-publish`
     id("com.github.ben-manes.versions") version Dependencies.Versions.dependencyUpdates
 }
 
 // Versions
 val libraryVersion = "1.2.0-alpha1"
+val libraryGroup = "de.Maxr1998.android"
 val libraryName = "modernpreferences"
 val prettyLibraryName = "ModernAndroidPreferences"
 
@@ -74,8 +75,49 @@ if (propFile.exists()) {
 }
 
 // Maven publishing config
-val publicationName = "production"
 publishing {
+    publications {
+        register("production", MavenPublication::class) {
+            groupId = libraryGroup
+            artifactId = libraryName
+            version = android.defaultConfig.versionName
+            artifact("$buildDir/outputs/aar/library-release.aar")
+            artifact(sourcesJar.get())
+
+            pom {
+                name.set(prettyLibraryName)
+                description.set("Android Preferences defined through Kotlin DSL, shown in a RecyclerView")
+                url.set("https://github.com/Maxr1998/ModernAndroidPreferences")
+
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("Maxr1998")
+                        name.set("Max Rumpf")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:github.com/Maxr1998/ModernAndroidPreferences.git")
+                    developerConnection.set("scm:git:ssh://github.com/Maxr1998/ModernAndroidPreferences.git")
+                    url.set("https://github.com/Maxr1998/ModernAndroidPreferences/tree/master")
+                }
+                withXml {
+                    val dependenciesNode = asNode().appendNode("dependencies")
+                    configurations.implementation.get().allDependencies.forEach {
+                        val dependencyNode = dependenciesNode.appendNode("dependency")
+                        dependencyNode.appendNode("groupId", it.group)
+                        dependencyNode.appendNode("artifactId", it.name)
+                        dependencyNode.appendNode("version", it.version)
+                    }
+                }
+            }
+        }
+    }
     repositories {
         maven {
             name = "GitHubPackages"
@@ -83,25 +125,6 @@ publishing {
             credentials {
                 username = "Maxr1998"
                 password = githubToken
-            }
-        }
-    }
-    publications {
-        register(publicationName, MavenPublication::class) {
-            groupId = "de.Maxr1998.android"
-            artifactId = libraryName
-            version = libraryVersion
-            artifact("$buildDir/outputs/aar/library-release.aar")
-            artifact(sourcesJar.get())
-
-            pom.withXml {
-                val dependenciesNode = asNode().appendNode("dependencies")
-                configurations.implementation.get().allDependencies.forEach {
-                    val dependencyNode = dependenciesNode.appendNode("dependency")
-                    dependencyNode.appendNode("groupId", it.group)
-                    dependencyNode.appendNode("artifactId", it.name)
-                    dependencyNode.appendNode("version", it.version)
-                }
             }
         }
     }
