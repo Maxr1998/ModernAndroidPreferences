@@ -76,12 +76,12 @@ inline fun PreferenceScreen.Appendable.expandText(key: String, block: Expandable
     return ExpandableTextPreference(key).apply(block).also(::addPreferenceItem)
 }
 
-inline fun PreferenceScreen.Appendable.singleChoice(key: String, items: List<SelectionItem>, block: SingleChoiceDialogPreference.() -> Unit): SingleChoiceDialogPreference {
-    return SingleChoiceDialogPreference(key, items).apply(block).also(::addPreferenceItem)
+inline fun PreferenceScreen.Appendable.singleChoice(key: String, items: List<SelectionItem>, default: String? = null, block: SingleChoiceDialogPreference.() -> Unit): SingleChoiceDialogPreference {
+    return SingleChoiceDialogPreference(key, items, default).apply(block).also(::addPreferenceItem)
 }
 
-inline fun PreferenceScreen.Appendable.multiChoice(key: String, items: List<SelectionItem>, block: MultiChoiceDialogPreference.() -> Unit): MultiChoiceDialogPreference {
-    return MultiChoiceDialogPreference(key, items).apply(block).also(::addPreferenceItem)
+inline fun PreferenceScreen.Appendable.multiChoice(key: String, items: List<SelectionItem>, default: Set<String>? = null, block: MultiChoiceDialogPreference.() -> Unit): MultiChoiceDialogPreference {
+    return MultiChoiceDialogPreference(key, items, default).apply(block).also(::addPreferenceItem)
 }
 
 inline fun PreferenceScreen.Appendable.editText(key: String, block: EditTextPreference.() -> Unit): EditTextPreference {

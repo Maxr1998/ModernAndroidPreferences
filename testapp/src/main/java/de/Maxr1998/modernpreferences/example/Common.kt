@@ -127,8 +127,14 @@ object Common {
             singleChoice("single-choice-dialog", selectableItems) {
                 title = "Single choice selection dialog"
             }
+            singleChoice("single-choice-dialog-defaults", selectableItems, default = "key_1") {
+                title = "Single choice selection with default value"
+            }
             multiChoice("multi-choice-dialog", selectableItems) {
                 title = "Multi choice selection dialog"
+            }
+            multiChoice("multi-choice-dialog-defaults", selectableItems, default = setOf("key_0", "key_2")) {
+                title = "Multi choice selection with default values"
             }
             editText("edit-text") {
                 title = "Text input"

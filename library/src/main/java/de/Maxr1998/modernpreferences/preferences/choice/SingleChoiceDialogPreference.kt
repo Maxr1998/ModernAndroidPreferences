@@ -2,13 +2,15 @@ package de.Maxr1998.modernpreferences.preferences.choice
 
 import android.content.Context
 
-class SingleChoiceDialogPreference(key: String, items: List<SelectionItem>) : AbstractChoiceDialogPreference(key, items, false) {
+class SingleChoiceDialogPreference(key: String, items: List<SelectionItem>, default: String?) :
+    AbstractChoiceDialogPreference(key, items, false) {
 
     /**
      * The initial selection if no choice has been made yet and no value
      * was persisted to [SharedPreferences][android.content.SharedPreferences]
+     * Using the provided default value, if no default value provided, select none by default
      */
-    var initialSelection: String? = null
+    var initialSelection: String? = default
 
     var currentSelection: SelectionItem? = null
         internal set

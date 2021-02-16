@@ -2,13 +2,14 @@ package de.Maxr1998.modernpreferences.preferences.choice
 
 import android.content.Context
 
-class MultiChoiceDialogPreference(key: String, items: List<SelectionItem>) : AbstractChoiceDialogPreference(key, items, true) {
+class MultiChoiceDialogPreference(key: String, items: List<SelectionItem>, default: Set<String>?) : AbstractChoiceDialogPreference(key, items, true) {
 
     /**
      * The initial selections if no choice has been made yet and no value
      * was persisted to [SharedPreferences][android.content.SharedPreferences]
+     * Using the provided default value, if no default value provided, select none by default
      */
-    var initialSelections: Set<String>? = null
+    var initialSelections: Set<String>? = default
 
     private val selections: MutableSet<SelectionItem> = HashSet()
 
