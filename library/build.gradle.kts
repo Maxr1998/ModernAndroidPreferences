@@ -22,6 +22,11 @@ val prettyLibraryName = "ModernAndroidPreferences"
 
 android {
     compileSdkVersion(30)
+    compileOptions {
+        kotlinOptions {
+            freeCompilerArgs += listOf("-module-name", libraryName)
+        }
+    }
     defaultConfig {
         minSdkVersion(21)
         targetSdkVersion(30)
