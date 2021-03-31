@@ -22,11 +22,6 @@ val prettyLibraryName = "ModernAndroidPreferences"
 
 android {
     compileSdkVersion(30)
-    compileOptions {
-        kotlinOptions {
-            freeCompilerArgs += listOf("-module-name", libraryName)
-        }
-    }
     defaultConfig {
         minSdkVersion(21)
         targetSdkVersion(30)
@@ -45,6 +40,8 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+        @Suppress("SuspiciousCollectionReassignment")
+        freeCompilerArgs += listOf("-module-name", libraryName)
     }
     lintOptions {
         isAbortOnError = false
