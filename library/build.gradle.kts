@@ -40,6 +40,8 @@ android {
     }
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
+        @Suppress("SuspiciousCollectionReassignment")
+        freeCompilerArgs += listOf("-module-name", libraryName)
     }
     lintOptions {
         isAbortOnError = false
