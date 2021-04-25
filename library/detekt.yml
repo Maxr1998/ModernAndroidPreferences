@@ -1,0 +1,27 @@
+build:
+  maxIssues: 0
+
+complexity:
+  LongMethod:
+    threshold: 80
+  TooManyFunctions:
+    thresholdInFiles: 20
+    thresholdInClasses: 20
+    thresholdInInterfaces: 8
+    thresholdInObjects: 16
+    thresholdInEnums: 8
+    ignoreDeprecated: true
+
+naming:
+  PackageNaming:
+    # Package names must be lowercase letters but may include underscores
+    packagePattern: '[a-z]+(\.[a-zA-Z][a-z0-9]*)*'
+
+style:
+  ForbiddenComment:
+    # Allow TODOs
+    values: [ 'FIXME:', 'STOPSHIP:' ]
+  MaxLineLength:
+    maxLineLength: 200
+  NewLineAtEndOfFile:
+    active: false

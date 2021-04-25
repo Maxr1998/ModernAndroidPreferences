@@ -7,6 +7,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("kotlin-parcelize")
+    id("io.gitlab.arturbosch.detekt") version Dependencies.Versions.detekt
     id("de.mannodermaus.android-junit5")
     id("com.adarshr.test-logger") version Dependencies.Versions.testLogger
     `maven-publish`
@@ -19,6 +20,19 @@ val libraryVersion = "2.0"
 val libraryGroup = "de.maxr1998"
 val libraryName = "modernandroidpreferences"
 val prettyLibraryName = "ModernAndroidPreferences"
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    config = files("$projectDir/detekt.yml")
+
+    reports {
+        html.enabled = true
+        xml.enabled = false
+        txt.enabled = true
+        sarif.enabled = true
+    }
+}
 
 android {
     compileSdkVersion(30)

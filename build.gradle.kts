@@ -17,6 +17,14 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+
+        @Suppress("DEPRECATION", "JcenterRepositoryObsolete")
+        jcenter {
+            content {
+                // Only download the 'kotlinx-html-jvm' module from JCenter, needed by detekt
+                includeModule("org.jetbrains.kotlinx", "kotlinx-html-jvm")
+            }
+        }
     }
 }
 
