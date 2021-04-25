@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 import de.Maxr1998.modernpreferences.preferences.DialogPreference
 
 
@@ -21,7 +22,7 @@ abstract class AbstractChoiceDialogPreference(
     }
 
     override fun createDialog(context: Context): Dialog = AlertDialog.Builder(context).apply {
-        if (titleRes != -1) setTitle(titleRes) else setTitle(title)
+        if (titleRes != DEFAULT_RES_ID) setTitle(titleRes) else setTitle(title)
         setView(RecyclerView(context).apply {
             selectionAdapter = SelectionAdapter(this@AbstractChoiceDialogPreference, items, allowMultiSelect)
             adapter = selectionAdapter

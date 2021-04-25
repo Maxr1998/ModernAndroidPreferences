@@ -1,6 +1,7 @@
 package de.Maxr1998.modernpreferences.preferences.choice
 
 import android.content.Context
+import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 
 class MultiChoiceDialogPreference(key: String, items: List<SelectionItem>) : AbstractChoiceDialogPreference(key, items, true) {
 
@@ -49,7 +50,7 @@ class MultiChoiceDialogPreference(key: String, items: List<SelectionItem>) : Abs
     override fun resolveSummary(context: Context): CharSequence? = when {
         selections.isNotEmpty() -> selections.joinToString(limit = 3, truncated = "…") { selection ->
             when {
-                selection.titleRes != -1 -> context.resources.getText(selection.titleRes)
+                selection.titleRes != DEFAULT_RES_ID -> context.resources.getText(selection.titleRes)
                 else -> selection.title
             }
         }
