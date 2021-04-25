@@ -67,6 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:ellipsize="end"
+        android:textAlignment="viewStart"
         android:textAppearance="?textAppearanceListItemSecondary"
         android:textColor="?android:textColorSecondary"
         app:layout_constraintBottom_toBottomOf="@id/map_bottom_barrier"
