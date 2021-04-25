@@ -126,9 +126,11 @@ object Common {
             )
             singleChoice("single-choice-dialog", selectableItems) {
                 title = "Single choice selection dialog"
+                summary = "Only one item is selectable, de-selection is impossible"
             }
             multiChoice("multi-choice-dialog", selectableItems) {
                 title = "Multi choice selection dialog"
+                summary = "None, one or multiple items are selectable"
             }
             editText("edit-text") {
                 title = "Text input"
