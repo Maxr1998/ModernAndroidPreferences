@@ -54,6 +54,7 @@ class EditTextPreference(key: String) : DialogPreference(key) {
         }
         setView(FrameLayout(context).apply {
             val layoutParams = ViewGroup.MarginLayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
+                @Suppress("MagicNumber")
                 val tenDp = (10 * context.resources.displayMetrics.density).toInt()
                 marginStart = 2 * tenDp
                 marginEnd = 2 * tenDp

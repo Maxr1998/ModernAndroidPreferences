@@ -23,6 +23,7 @@ import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.R
+import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 
 /**
  * IMPORTANT: If you're using this independently from the helper DSLs,
@@ -56,7 +57,7 @@ class CollapsePreference(screen: PreferenceScreen.Builder, key: String) : Prefer
      But that will probably not be our problem.
      */
     @SuppressLint("ResourceType")
-    override fun getWidgetLayoutResource() = -10
+    override fun getWidgetLayoutResource() = MARKER_RES_ID
 
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
         if (visible) buildSummary(holder.itemView.context)
@@ -68,12 +69,12 @@ class CollapsePreference(screen: PreferenceScreen.Builder, key: String) : Prefer
     }
 
     private fun buildSummary(context: Context) {
-        if (summaryRes != -1 || summary != null)
+        if (summaryRes != DEFAULT_RES_ID || summary != null)
             return
 
-        summary = preferences.asSequence().filter(Preference::includeInCollapseSummary).take(5).joinToString { p ->
+        summary = preferences.asSequence().filter(Preference::includeInCollapseSummary).take(MAX_PREFS_IN_SUMMARY).joinToString { p ->
             when {
-                p.titleRes != -1 -> context.getString(p.titleRes)
+                p.titleRes != DEFAULT_RES_ID -> context.getString(p.titleRes)
                 else -> p.title
             }
         }
@@ -93,9 +94,8 @@ class CollapsePreference(screen: PreferenceScreen.Builder, key: String) : Prefer
         parent?.requestRebind(screenPosition, 1 + preferences.size)
     }
 
-    // Utility method
-    @Suppress("NOTHING_TO_INLINE")
-    private inline operator fun StringBuilder.plusAssign(string: String) {
-        append(string)
+    companion object {
+        const val MARKER_RES_ID = -10
+        const val MAX_PREFS_IN_SUMMARY = 5
     }
 }

@@ -88,7 +88,7 @@ class ModernSeekBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     private fun drawTickMarks(canvas: Canvas) {
         tickMarkDrawable?.let { tickMark ->
             val count = max
-            if (count > 1) {
+            if (count > 0) {
                 val w = tickMark.intrinsicWidth
                 val h = tickMark.intrinsicHeight
                 val halfW = if (w >= 0) w / 2 else 1
@@ -97,7 +97,7 @@ class ModernSeekBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
                 val spacing: Float = (width - paddingLeft - paddingRight) / count.toFloat()
                 val saveCount = canvas.save()
                 canvas.translate(paddingLeft.toFloat(), height / 2.toFloat())
-                for (i in 0..count) {
+                repeat(count + 1) {
                     tickMark.draw(canvas)
                     canvas.translate(spacing, 0f)
                 }

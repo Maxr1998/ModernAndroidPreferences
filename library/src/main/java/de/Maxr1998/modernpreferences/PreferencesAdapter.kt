@@ -18,6 +18,7 @@ package de.Maxr1998.modernpreferences
 
 import android.animation.StateListAnimator
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,11 @@ import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.helpers.emptyScreen
-import de.Maxr1998.modernpreferences.preferences.*
+import de.Maxr1998.modernpreferences.preferences.AccentButtonPreference
+import de.Maxr1998.modernpreferences.preferences.CategoryHeader
+import de.Maxr1998.modernpreferences.preferences.CollapsePreference
+import de.Maxr1998.modernpreferences.preferences.ImagePreference
+import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
 import kotlinx.parcelize.Parcelize
 import java.util.*
 import kotlin.math.max
@@ -156,6 +161,7 @@ class PreferencesAdapter @VisibleForTesting constructor(
         } catch (e: NoSuchMethodError) {
             // Some awful Android 5 devices apparently don't implement the clone method,
             // although it's part of the Android SDK since API 21. Thus, we catch it and return null instead.
+            Log.e("PreferencesAdapter", "Missing `clone()` method, stateListAnimator won't work for preferences", e)
             null
         }
         if (viewType > 0)

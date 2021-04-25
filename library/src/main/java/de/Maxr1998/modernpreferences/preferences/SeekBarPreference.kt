@@ -75,6 +75,7 @@ class SeekBarPreference(key: String) : Preference(key) {
         }
         holder.iconFrame.updateLayoutParams<ConstraintLayout.LayoutParams> {
             bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID
+            @Suppress("MagicNumber")
             bottomMargin = (40 * holder.itemView.resources.displayMetrics.density).toInt()
         }
         holder.title.updateLayoutParams<ConstraintLayout.LayoutParams> {

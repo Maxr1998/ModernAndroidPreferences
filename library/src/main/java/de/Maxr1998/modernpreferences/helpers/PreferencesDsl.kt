@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "TooManyFunctions")
 
 package de.Maxr1998.modernpreferences.helpers
 
@@ -22,7 +22,16 @@ import android.content.Context
 import android.view.View
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferenceScreen
-import de.Maxr1998.modernpreferences.preferences.*
+import de.Maxr1998.modernpreferences.preferences.AccentButtonPreference
+import de.Maxr1998.modernpreferences.preferences.CategoryHeader
+import de.Maxr1998.modernpreferences.preferences.CheckBoxPreference
+import de.Maxr1998.modernpreferences.preferences.CollapsePreference
+import de.Maxr1998.modernpreferences.preferences.EditTextPreference
+import de.Maxr1998.modernpreferences.preferences.ExpandableTextPreference
+import de.Maxr1998.modernpreferences.preferences.ImagePreference
+import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
+import de.Maxr1998.modernpreferences.preferences.SwitchPreference
+import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
 import de.Maxr1998.modernpreferences.preferences.choice.MultiChoiceDialogPreference
 import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
 import de.Maxr1998.modernpreferences.preferences.choice.SingleChoiceDialogPreference

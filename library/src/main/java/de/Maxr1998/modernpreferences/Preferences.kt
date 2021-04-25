@@ -28,6 +28,7 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.core.view.isVisible
+import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 import de.Maxr1998.modernpreferences.helpers.DependencyManager
 import de.Maxr1998.modernpreferences.helpers.KEY_ROOT_SCREEN
 import de.Maxr1998.modernpreferences.helpers.PreferenceMarker
@@ -35,26 +36,27 @@ import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
 import java.util.concurrent.atomic.AtomicBoolean
 
+@Suppress("UnnecessaryAbstractClass")
 abstract class AbstractPreference internal constructor(val key: String) {
     // UI
     @StringRes
-    var titleRes: Int = -1
+    var titleRes: Int = DEFAULT_RES_ID
     var title: CharSequence = ""
 
     @StringRes
-    var summaryRes: Int = -1
+    var summaryRes: Int = DEFAULT_RES_ID
     var summary: CharSequence? = null
 
     @StringRes
-    var summaryDisabledRes: Int = -1
+    var summaryDisabledRes: Int = DEFAULT_RES_ID
     var summaryDisabled: CharSequence? = null
 
     @DrawableRes
-    var iconRes: Int = -1
+    var iconRes: Int = DEFAULT_RES_ID
     var icon: Drawable? = null
 
     @StringRes
-    var badgeRes: Int = -1
+    var badgeRes: Int = DEFAULT_RES_ID
     var badge: CharSequence? = null
 
     // State
@@ -130,7 +132,7 @@ open class Preference(key: String) : AbstractPreference(key) {
 
     @LayoutRes
     open fun getWidgetLayoutResource(): Int {
-        return -1
+        return DEFAULT_RES_ID
     }
 
     internal fun attachToScreen(screen: PreferenceScreen, position: Int) {
@@ -155,7 +157,7 @@ open class Preference(key: String) : AbstractPreference(key) {
     }
 
     protected open fun resolveSummary(context: Context): CharSequence? = when {
-        !enabled && summaryDisabledRes != -1 -> context.resources.getText(summaryDisabledRes)
+        !enabled && summaryDisabledRes != DEFAULT_RES_ID -> context.resources.getText(summaryDisabledRes)
         !enabled && summaryDisabled != null -> summaryDisabled
         summaryRes != -1 -> context.resources.getText(summaryRes)
         summary != null -> summary
@@ -167,6 +169,7 @@ open class Preference(key: String) : AbstractPreference(key) {
      * Don't call this yourself, it will get called from the [PreferencesAdapter].
      */
     @CallSuper
+    @Suppress("ComplexMethod")
     open fun bindViews(holder: PreferencesAdapter.ViewHolder) {
         val preferenceParent = checkNotNull(parent) {
             "Trying to bind view for a preference not attached to a screen!"
@@ -186,7 +189,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         holder.icon?.apply {
             itemVisible = true
             when {
-                iconRes != -1 -> setImageResource(iconRes)
+                iconRes != DEFAULT_RES_ID -> setImageResource(iconRes)
                 icon != null -> setImageDrawable(icon)
                 else -> {
                     setImageDrawable(null)
@@ -201,7 +204,7 @@ open class Preference(key: String) : AbstractPreference(key) {
             }
         }
         holder.title.apply {
-            if (titleRes != -1) setText(titleRes) else text = title
+            if (titleRes != DEFAULT_RES_ID) setText(titleRes) else text = title
             maxLines = Config.titleMaxLines
         }
         holder.summary?.apply {
@@ -213,7 +216,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         holder.badge?.apply {
             itemVisible = true
             when {
-                badgeRes != -1 -> setText(badgeRes)
+                badgeRes != DEFAULT_RES_ID -> setText(badgeRes)
                 badge != null -> text = badge
                 else -> {
                     text = null
@@ -233,7 +236,9 @@ open class Preference(key: String) : AbstractPreference(key) {
                 v.isPressed = true
                 v.isPressed = false
             }
+            @Suppress("MagicNumber")
             v.postDelayed(highlightRunnable, 300)
+            @Suppress("MagicNumber")
             v.postDelayed(highlightRunnable, 600)
         }
     }
@@ -296,7 +301,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         ReplaceWith("getString() ?: defaultValue"),
         DeprecationLevel.ERROR
     )
-    fun getString(defaultValue: String): String = throw UnsupportedOperationException("Not implemented")
+    fun getString(@Suppress("UNUSED_PARAMETER") defaultValue: String): String = throw UnsupportedOperationException("Not implemented")
 
     fun commitStringSet(values: Set<String>) {
         prefs?.edit {
@@ -336,6 +341,7 @@ open class Preference(key: String) : AbstractPreference(key) {
          *
          * 1 by default, allowed values are 1 to 3.
          */
+        @Suppress("MagicNumber")
         var titleMaxLines: Int = 1
             set(value) {
                 require(value in 1..3) { "titleMaxLines must be within [1,3]" }
@@ -347,6 +353,7 @@ open class Preference(key: String) : AbstractPreference(key) {
          *
          * 3 by default, allowed values are 1 to 5.
          */
+        @Suppress("MagicNumber")
         var summaryMaxLines: Int = 3
             set(value) {
                 require(value in 1..5) { "subtitleMaxLines must be within [1,5]" }
