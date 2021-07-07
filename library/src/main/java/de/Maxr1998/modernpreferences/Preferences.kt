@@ -182,8 +182,9 @@ open class Preference(key: String) : AbstractPreference(key) {
             holder.itemView.isVisible = false
             return
         }
-        if (enabled != holder.itemView.isEnabled) // Only set if different from ViewHolder
+        if (enabled != holder.itemView.isEnabled) { // Only set if different from ViewHolder
             holder.setEnabledState(enabled)
+        }
 
         var itemVisible = false
         holder.icon?.apply {
@@ -254,8 +255,7 @@ open class Preference(key: String) : AbstractPreference(key) {
 
     internal fun performClick(holder: PreferencesAdapter.ViewHolder) {
         onClick(holder)
-        if (clickListener?.onClick(this, holder) == true)
-            bindViews(holder)
+        if (clickListener?.onClick(this, holder) == true) bindViews(holder)
     }
 
     open fun onClick(holder: PreferencesAdapter.ViewHolder) {}
@@ -425,8 +425,7 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
      */
     fun requestRebind(key: String) {
         val index = indexOf(key)
-        if (index > 0)
-            requestRebind(index)
+        if (index > 0) requestRebind(index)
     }
 
     internal fun requestRebind(position: Int, itemCount: Int = 1) {
@@ -436,9 +435,9 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
     override fun equals(other: Any?): Boolean = when {
         other == null -> false
         this === other -> true
-        this::class.java == other::class.java
-                && key == (other as PreferenceScreen).key
-                && preferences == other.preferences -> true
+        this::class.java == other::class.java &&
+                key == (other as PreferenceScreen).key &&
+                preferences == other.preferences -> true
         else -> false
     }
 
@@ -487,10 +486,12 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
                 }
                 throw UnsupportedOperationException(message)
             }
-            if (p.key.isEmpty() && p !is PreferenceScreen)
+            if (p.key.isEmpty() && p !is PreferenceScreen) {
                 throw UnsupportedOperationException("Preference key may not be empty!")
-            if (p.key.isNotEmpty() && keyMap.put(p.key, p) != null)
+            }
+            if (p.key.isNotEmpty() && keyMap.put(p.key, p) != null) {
                 throw UnsupportedOperationException("A preference with this key is already in the screen!")
+            }
 
             preferences.add(p)
         }

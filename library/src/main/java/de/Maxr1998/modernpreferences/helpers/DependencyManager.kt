@@ -4,11 +4,9 @@ import android.content.SharedPreferences
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.preferences.StatefulPreference
 import java.lang.ref.WeakReference
-import java.util.*
-import kotlin.collections.HashMap
+import java.util.LinkedList
 
 internal object DependencyManager {
-
     private val preferences = HashMap<PreferenceKey, LinkedList<WeakReference<Preference>>>()
     private val stateCache = HashMap<PreferenceKey, Boolean>()
 

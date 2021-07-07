@@ -216,7 +216,6 @@ class PreferencesTests {
         verify(exactly = 2) { onChangeListener.onScreenChanged(rootScreen, false) }
     }
 
-
     @Test
     fun `beforeScreenChangeListener can prevent screen changes`() {
         val adapter = createPreferenceAdapter()

@@ -30,8 +30,7 @@ abstract class TwoStatePreference(key: String) : StatefulPreference(key) {
             checkNotNull(parent) {
                 "Setting the checked value before the preference was attached isn't supported. Consider using `defaultValue` instead."
             }
-            if (value != checkedInternal)
-                updateState(null, value)
+            if (value != checkedInternal) updateState(null, value)
         }
 
     /**

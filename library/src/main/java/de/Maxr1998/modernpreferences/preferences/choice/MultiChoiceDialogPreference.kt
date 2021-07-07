@@ -20,8 +20,9 @@ class MultiChoiceDialogPreference(key: String, items: List<SelectionItem>) : Abs
 
     override fun onAttach() {
         super.onAttach()
-        if (selections.isEmpty())
+        if (selections.isEmpty()) {
             resetSelection()
+        }
     }
 
     override fun select(item: SelectionItem) {
@@ -36,8 +37,9 @@ class MultiChoiceDialogPreference(key: String, items: List<SelectionItem>) : Abs
     override fun persistSelection() {
         val resultSet = HashSet<String>()
         selections.mapTo(resultSet, SelectionItem::key)
-        if (selectionChangeListener?.onSelectionChange(this, HashSet(resultSet)) != false)
+        if (selectionChangeListener?.onSelectionChange(this, HashSet(resultSet)) != false) {
             commitStringSet(resultSet)
+        }
     }
 
     override fun resetSelection() {

@@ -37,12 +37,13 @@ import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 import de.Maxr1998.modernpreferences.preferences.ImagePreference
 import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
 import kotlinx.parcelize.Parcelize
-import java.util.*
+import java.util.Stack
 import kotlin.math.max
 
 @Suppress("MemberVisibilityCanBePrivate", "NotifyDataSetChanged")
 class PreferencesAdapter @VisibleForTesting constructor(
-    root: PreferenceScreen? = null, hasStableIds: Boolean
+    root: PreferenceScreen? = null,
+    hasStableIds: Boolean,
 ) : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>() {
     constructor(root: PreferenceScreen? = null) : this(root, true)
 
@@ -86,8 +87,9 @@ class PreferencesAdapter @VisibleForTesting constructor(
     }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
-        if (recyclerView.layoutManager !is LinearLayoutManager)
+        if (recyclerView.layoutManager !is LinearLayoutManager) {
             throw UnsupportedOperationException("ModernAndroidPreferences requires a LinearLayoutManager")
+        }
     }
 
     @MainThread
@@ -106,8 +108,8 @@ class PreferencesAdapter @VisibleForTesting constructor(
     @MainThread
     internal fun openScreen(screen: PreferenceScreen) {
         secondScreenAdapter?.setRootScreen(screen) ?: /* ELSE */ run {
-            if (beforeScreenChangeListener?.beforeScreenChange(screen) == false)
-                return
+            if (beforeScreenChangeListener?.beforeScreenChange(screen) == false) return
+
             currentScreen.adapter = null
             screenStack.push(screen)
             notifyDataSetChanged()
@@ -140,8 +142,9 @@ class PreferencesAdapter @VisibleForTesting constructor(
             onScreenChangeListener?.onScreenChanged(currentScreen, isInSubScreen())
             for (i in 0 until oldScreen.size()) {
                 val p = oldScreen[i]
-                if (p.javaClass == CollapsePreference::class.java)
+                if (p.javaClass == CollapsePreference::class.java) {
                     (p as CollapsePreference).reset()
+                }
             }
             true
         }
@@ -155,6 +158,8 @@ class PreferencesAdapter @VisibleForTesting constructor(
             ImagePreference.RESOURCE_CONST -> R.layout.map_image_preference
             else -> R.layout.map_preference
         }
+
+        // Inflate main preference view
         val view = layoutInflater.inflate(layout, parent, false)
         view.stateListAnimator = try {
             stateListAnimator?.clone()
@@ -164,8 +169,10 @@ class PreferencesAdapter @VisibleForTesting constructor(
             Log.e("PreferencesAdapter", "Missing `clone()` method, stateListAnimator won't work for preferences", e)
             null
         }
-        if (viewType > 0)
-            layoutInflater.inflate(viewType, view.findViewById(R.id.map_widget_frame), true)
+
+        // Inflate preference widget
+        if (viewType > 0) layoutInflater.inflate(viewType, view.findViewById(R.id.map_widget_frame), true)
+
         return ViewHolder(view)
     }
 
@@ -174,8 +181,7 @@ class PreferencesAdapter @VisibleForTesting constructor(
         pref.bindViews(holder)
 
         // Category header and seek bar shouldn't be clickable
-        if (pref is CategoryHeader || pref is SeekBarPreference)
-            return
+        if (pref is CategoryHeader || pref is SeekBarPreference) return
 
         holder.itemView.setOnClickListener {
             if (pref is PreferenceScreen) {
@@ -281,10 +287,9 @@ class PreferencesAdapter @VisibleForTesting constructor(
     @MainThread
     fun loadSavedState(state: SavedState): Boolean {
         if (screenStack.size != 2) return false
-        state.screenPath.forEach {
-            val screen = currentScreen[it]
-            if (screen is PreferenceScreen)
-                screenStack.push(screen)
+        state.screenPath.forEach { i ->
+            val screen = currentScreen[i]
+            if (screen is PreferenceScreen) screenStack.push(screen)
             else return@forEach
         }
         currentScreen.adapter = this

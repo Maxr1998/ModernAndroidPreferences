@@ -19,8 +19,9 @@ class SingleChoiceDialogPreference(key: String, items: List<SelectionItem>) : Ab
 
     override fun onAttach() {
         super.onAttach()
-        if (currentSelection == null)
+        if (currentSelection == null) {
             resetSelection()
+        }
     }
 
     override fun select(item: SelectionItem) {
@@ -32,8 +33,9 @@ class SingleChoiceDialogPreference(key: String, items: List<SelectionItem>) : Ab
 
     override fun persistSelection() {
         currentSelection?.let { selection ->
-            if (selectionChangeListener?.onSelectionChange(this, selection.key) != false)
+            if (selectionChangeListener?.onSelectionChange(this, selection.key) != false) {
                 commitString(selection.key)
+            }
         }
     }
 

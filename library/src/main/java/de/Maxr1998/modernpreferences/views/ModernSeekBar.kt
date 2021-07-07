@@ -45,10 +45,13 @@ class ModernSeekBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
     var hasTickMarks
         get() = tickMarkDrawable != null
         set(value) {
-            if (value) {
-                if (tickMarkDrawable == null)
-                    tickMarkDrawable = ContextCompat.getDrawable(context, R.drawable.map_seekbar_tick_mark)
-            } else tickMarkDrawable = null
+            tickMarkDrawable = when {
+                value -> when (tickMarkDrawable) {
+                    null -> ContextCompat.getDrawable(context, R.drawable.map_seekbar_tick_mark)
+                    else -> tickMarkDrawable
+                }
+                else -> null
+            }
         }
 
     var default: Int? = null
@@ -58,8 +61,9 @@ class ModernSeekBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
             }
             field = value
             if (value != null) {
-                if (defaultMarkerDrawable == null)
+                if (defaultMarkerDrawable == null) {
                     defaultMarkerDrawable = ContextCompat.getDrawable(context, R.drawable.map_seekbar_default_marker)
+                }
             } else defaultMarkerDrawable = null
         }
 

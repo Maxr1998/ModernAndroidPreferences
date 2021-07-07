@@ -25,6 +25,7 @@ detekt {
     buildUponDefaultConfig = true
     allRules = false
     config = files("$projectDir/detekt.yml")
+    autoCorrect = true
 
     reports {
         html.enabled = true
@@ -75,6 +76,9 @@ dependencies {
     testImplementation(Dependencies.Testing.kotestProperty)
     testImplementation(Dependencies.Testing.kotestRunner)
     testImplementation(Dependencies.Testing.mockk)
+
+    // Detekt formatting
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Dependencies.Versions.detekt}")
 }
 
 val sourcesJar by tasks.registering(Jar::class) {

@@ -36,8 +36,7 @@ class EditTextPreference(key: String) : DialogPreference(key) {
 
     override fun onAttach() {
         super.onAttach()
-        if (currentInput == null)
-            currentInput = getString()
+        if (currentInput == null) currentInput = getString()
     }
 
     override fun createDialog(context: Context): Dialog = AlertDialog.Builder(context).apply {

@@ -69,8 +69,7 @@ class CollapsePreference(screen: PreferenceScreen.Builder, key: String) : Prefer
     }
 
     private fun buildSummary(context: Context) {
-        if (summaryRes != DEFAULT_RES_ID || summary != null)
-            return
+        if (summaryRes != DEFAULT_RES_ID || summary != null) return
 
         summary = preferences.asSequence().filter(Preference::includeInCollapseSummary).take(MAX_PREFS_IN_SUMMARY).joinToString { p ->
             when {

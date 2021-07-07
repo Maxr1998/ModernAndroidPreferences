@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 import de.Maxr1998.modernpreferences.preferences.DialogPreference
 
-
 abstract class AbstractChoiceDialogPreference(
     key: String,
     protected val items: List<SelectionItem>,
