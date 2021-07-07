@@ -8,24 +8,24 @@ object Dependencies {
         const val dependencyUpdates = "0.39.0"
 
         // Core
-        const val appCompat = "1.2.0"
-        const val coreKtx = "1.3.2"
-        const val activityKtx = "1.1.0"
+        const val appCompat = "1.3.0"
+        const val coreKtx = "1.6.0"
+        const val activityKtx = "1.2.3"
 
         // UI
-        const val constraintLayout = "2.0.0-beta6"
-        const val recyclerView = "1.1.0"
+        const val constraintLayout = "2.0.4"
+        const val recyclerView = "1.2.1"
 
         // Lifecycle
-        const val lifecycleExtensions = "2.2.0"
+        const val lifecycleExtensions = "2.3.1"
 
         // Testing
-        const val junit = "5.7.0"
-        const val kotest = "4.4.0"
-        const val mockk = "1.10.5"
+        const val junit = "5.7.2"
+        const val kotest = "4.6.0"
+        const val mockk = "1.12.0"
 
         // Debug
-        const val leakCanary = "2.5"
+        const val leakCanary = "2.7"
 
         fun isStable(version: String): Boolean {
             return listOf("alpha", "beta", "dev", "rc", "m").none {
