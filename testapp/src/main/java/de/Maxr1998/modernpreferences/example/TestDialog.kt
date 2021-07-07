@@ -24,7 +24,8 @@ import androidx.appcompat.app.AlertDialog
 import de.Maxr1998.modernpreferences.preferences.DialogPreference
 
 class TestDialog : DialogPreference("dialog") {
-    override fun createDialog(context: Context): Dialog =
+    override fun createDialog(context: Context): Dialog = createDialog(context, 0)
+    override fun createDialog(context: Context, style: Int): Dialog =
             AlertDialog.Builder(context)
                     .setTitle("Info")
                     .setMessage("You opened this dialog!")
