@@ -40,7 +40,7 @@ class EditTextPreference(key: String) : DialogPreference(key) {
             currentInput = getString()
     }
 
-    override fun createDialog(context: Context): Dialog = createDialog(context, 0)
+    override fun createDialog(context: Context): Dialog = createDialog(context, style)
 
     override fun createDialog(context: Context, style: Int): Dialog = AlertDialog.Builder(context, style).apply {
         if (titleRes != -1) setTitle(titleRes) else setTitle(title)
