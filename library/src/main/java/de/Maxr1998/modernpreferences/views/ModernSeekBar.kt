@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatSeekBar
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
 import de.Maxr1998.modernpreferences.R
@@ -46,7 +47,7 @@ class ModernSeekBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         set(value) {
             if (value) {
                 if (tickMarkDrawable == null)
-                    tickMarkDrawable = context.getDrawable(R.drawable.map_seekbar_tick_mark)
+                    tickMarkDrawable = ContextCompat.getDrawable(context, R.drawable.map_seekbar_tick_mark)
             } else tickMarkDrawable = null
         }
 
@@ -58,7 +59,7 @@ class ModernSeekBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
             field = value
             if (value != null) {
                 if (defaultMarkerDrawable == null)
-                    defaultMarkerDrawable = context.getDrawable(R.drawable.map_seekbar_default_marker)
+                    defaultMarkerDrawable = ContextCompat.getDrawable(context, R.drawable.map_seekbar_default_marker)
             } else defaultMarkerDrawable = null
         }
 
