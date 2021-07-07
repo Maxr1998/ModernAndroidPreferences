@@ -67,6 +67,7 @@ dependencies {
     implementation(Dependencies.Core.coreKtx)
     implementation(Dependencies.UI.constraintLayout)
     implementation(Dependencies.UI.recyclerView)
+    implementation(Dependencies.UI.googleMaterial)
 
     // Testing
     testImplementation(Dependencies.Testing.junit)
