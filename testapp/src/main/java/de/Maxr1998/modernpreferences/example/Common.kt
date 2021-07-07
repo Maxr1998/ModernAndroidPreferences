@@ -55,7 +55,7 @@ object Common {
                 badge = "pro"
             }
             accentButtonPref("accent-button") {
-                title = "Button style".toUpperCase(Locale.getDefault())
+                title = "Button style".uppercase(Locale.getDefault())
             }
             categoryHeader("header_two_state") {
                 title = "Two state"
