@@ -29,7 +29,8 @@ abstract class AbstractChoiceDialogPreference(
         require(items.isNotEmpty()) { "Supplied list of items may not be empty!" }
     }
 
-    override fun createDialog(context: Context): Dialog = AlertDialog.Builder(context).apply {
+    override fun createDialog(context: Context): Dialog = createDialog(context, 0)
+    override fun createDialog(context: Context, style: Int): Dialog = AlertDialog.Builder(context, style).apply {
         if (titleRes != DEFAULT_RES_ID) setTitle(titleRes) else setTitle(title)
         setView(RecyclerView(context).apply {
             selectionAdapter = SelectionAdapter(this@AbstractChoiceDialogPreference, items, allowMultiSelect)
