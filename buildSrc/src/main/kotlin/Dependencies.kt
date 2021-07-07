@@ -15,6 +15,7 @@ object Dependencies {
         // UI
         const val constraintLayout = "2.0.0-beta6"
         const val recyclerView = "1.1.0"
+        const val googleMaterial = "1.4.0"
 
         // Lifecycle
         const val lifecycleExtensions = "2.2.0"
@@ -44,6 +45,7 @@ object Dependencies {
         const val constraintLayout =
             "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
         const val recyclerView = "androidx.recyclerview:recyclerview:${Versions.recyclerView}"
+        const val googleMaterial = "com.google.android.material:material:${Versions.googleMaterial}"
     }
 
     object LifecycleX {

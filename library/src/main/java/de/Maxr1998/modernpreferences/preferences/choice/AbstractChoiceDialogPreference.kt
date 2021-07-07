@@ -2,9 +2,9 @@ package de.Maxr1998.modernpreferences.preferences.choice
 
 import android.app.Dialog
 import android.content.Context
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 import de.Maxr1998.modernpreferences.preferences.DialogPreference
 
@@ -29,8 +29,7 @@ abstract class AbstractChoiceDialogPreference(
         require(items.isNotEmpty()) { "Supplied list of items may not be empty!" }
     }
 
-    override fun createDialog(context: Context): Dialog = createDialog(context, style)
-    override fun createDialog(context: Context, style: Int): Dialog = AlertDialog.Builder(context, style).apply {
+    override fun createDialog(context: Context): Dialog = MaterialAlertDialogBuilder(context).apply {
         if (titleRes != DEFAULT_RES_ID) setTitle(titleRes) else setTitle(title)
         setView(RecyclerView(context).apply {
             selectionAdapter = SelectionAdapter(this@AbstractChoiceDialogPreference, items, allowMultiSelect)
