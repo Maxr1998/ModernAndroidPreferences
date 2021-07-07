@@ -40,7 +40,7 @@ import kotlinx.parcelize.Parcelize
 import java.util.*
 import kotlin.math.max
 
-@Suppress("MemberVisibilityCanBePrivate")
+@Suppress("MemberVisibilityCanBePrivate", "NotifyDataSetChanged")
 class PreferencesAdapter @VisibleForTesting constructor(
     root: PreferenceScreen? = null, hasStableIds: Boolean
 ) : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>() {
