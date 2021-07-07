@@ -195,9 +195,9 @@ class PreferencesTests {
         adapter.setRootScreen(rootScreen)
 
         // Setup listeners
-        val beforeChangeListener = spyk(PreferencesAdapter.BeforeScreenChangeListener {
-            true
-        })
+        val beforeChangeListener = spyk<PreferencesAdapter.BeforeScreenChangeListener> {
+            every { beforeScreenChange(any()) } returns true
+        }
         adapter.beforeScreenChangeListener = beforeChangeListener
         val onChangeListener: PreferencesAdapter.OnScreenChangeListener = spyk()
         adapter.onScreenChangeListener = onChangeListener
@@ -227,7 +227,9 @@ class PreferencesTests {
         }
         adapter.setRootScreen(rootScreen)
 
-        val beforeChangeListener = spyk(PreferencesAdapter.BeforeScreenChangeListener { false })
+        val beforeChangeListener = spyk<PreferencesAdapter.BeforeScreenChangeListener> {
+            every { beforeScreenChange(any()) } returns false
+        }
         adapter.beforeScreenChangeListener = beforeChangeListener
 
         // Listener should prevent changes
