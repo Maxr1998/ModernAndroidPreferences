@@ -28,6 +28,9 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import androidx.core.content.edit
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 import de.Maxr1998.modernpreferences.helpers.DependencyManager
 import de.Maxr1998.modernpreferences.helpers.KEY_ROOT_SCREEN
@@ -375,6 +378,7 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
     internal val prefs = builder.prefs
     private val keyMap: Map<String, Preference> = builder.keyMap
     private val preferences: List<Preference> = builder.preferences
+    private val lifecycleObservers: List<LifecycleEventObserver> = builder.lifecycleObservers
     internal val collapseIcon: Boolean = builder.collapseIcon
     internal val centerIcon: Boolean = builder.centerIcon
 
@@ -432,6 +436,12 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
         adapter?.notifyItemRangeChanged(position, itemCount)
     }
 
+    internal fun notifyLifecycleObservers(source: LifecycleOwner, event: Lifecycle.Event) {
+        lifecycleObservers.forEach { lifecycleObserver ->
+            lifecycleObserver.onStateChanged(source, event)
+        }
+    }
+
     override fun equals(other: Any?): Boolean = when {
         other == null -> false
         this === other -> true
@@ -453,6 +463,7 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
         internal var prefs: SharedPreferences? = null
         internal val keyMap = HashMap<String, Preference>()
         internal val preferences = ArrayList<Preference>()
+        internal val lifecycleObservers = ArrayList<LifecycleEventObserver>()
 
         /**
          * The filename to use for the [SharedPreferences] of this [PreferenceScreen]
@@ -494,6 +505,9 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
             }
 
             preferences.add(p)
+            if (p is LifecycleEventObserver) {
+                lifecycleObservers.add(p)
+            }
         }
 
         fun build(): PreferenceScreen {

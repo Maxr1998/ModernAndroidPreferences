@@ -3,6 +3,8 @@ package de.Maxr1998.modernpreferences.preferences.choice
 import android.app.Dialog
 import android.content.Context
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
@@ -53,8 +55,8 @@ abstract class AbstractChoiceDialogPreference(
 
     abstract fun isSelected(item: SelectionItem): Boolean
 
-    override fun onStop() {
-        super.onStop()
-        selectionAdapter = null
+    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+        super.onStateChanged(source, event)
+        if (event == Lifecycle.Event.ON_DESTROY) selectionAdapter = null
     }
 }

@@ -66,6 +66,7 @@ android {
 dependencies {
     implementation(Dependencies.Core.appCompat)
     implementation(Dependencies.Core.coreKtx)
+    implementation(Dependencies.LifecycleX.runtime)
     implementation(Dependencies.UI.constraintLayout)
     implementation(Dependencies.UI.recyclerView)
 

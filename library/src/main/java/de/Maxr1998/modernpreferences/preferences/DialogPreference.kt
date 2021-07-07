@@ -20,9 +20,8 @@ import android.app.Dialog
 import android.content.Context
 import androidx.annotation.CallSuper
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 
@@ -30,10 +29,8 @@ import de.Maxr1998.modernpreferences.PreferencesAdapter
  * DialogPreference is a helper class to display custom [Dialog]s on preference clicks.
  * It is recommended to override this class once and then inflate different dialogs
  * based on their keys in [createDialog].
- *
- * Also, the context which this preference's views get attached to should be a [LifecycleOwner].
  */
-abstract class DialogPreference(key: String) : Preference(key), LifecycleObserver {
+abstract class DialogPreference(key: String) : Preference(key), LifecycleEventObserver {
 
     private var dialog: Dialog? = null
 
@@ -42,22 +39,8 @@ abstract class DialogPreference(key: String) : Preference(key), LifecycleObserve
      */
     private var recreateDialog = false
 
-    override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
-        super.bindViews(holder)
-        holder.itemView.context.apply {
-            if (this is LifecycleOwner) lifecycle.addObserver(this@DialogPreference)
-        }
-
-        if (recreateDialog) {
-            recreateDialog = false
-            onClick(holder)
-        }
-    }
-
     override fun onClick(holder: PreferencesAdapter.ViewHolder) {
-        dialog = (dialog ?: createDialog(holder.itemView.context)).apply {
-            show()
-        }
+        createAndShowDialog(holder.itemView.context)
     }
 
     /**
@@ -68,21 +51,40 @@ abstract class DialogPreference(key: String) : Preference(key), LifecycleObserve
      */
     abstract fun createDialog(context: Context): Dialog
 
+    private fun createAndShowDialog(context: Context) {
+        (dialog ?: createDialog(context).apply { dialog = this }).show()
+    }
+
     /**
      * Dismiss the currently attached dialog, if any
      */
     fun dismiss() = dialog?.dismiss()
 
-    /**
-     * Used internally to react to lifecycle changes
-     */
     @CallSuper
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    open fun onStop() {
-        dialog?.apply {
-            recreateDialog = isShowing
-            dismiss()
+    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+        when (event) {
+            Lifecycle.Event.ON_CREATE -> {
+                if (recreateDialog && source is Context) {
+                    recreateDialog = false
+                    createAndShowDialog(source)
+                }
+            }
+            Lifecycle.Event.ON_STOP -> @Suppress("DEPRECATION") onStop()
+            Lifecycle.Event.ON_DESTROY -> {
+                dialog?.apply {
+                    recreateDialog = isShowing
+                    dismiss()
+                }
+                dialog = null
+            }
+            else -> Unit // ignore
         }
-        dialog = null
+    }
+
+    /**
+     * Kept for backwards compatibility
+     */
+    @Deprecated("Override onStateChanged() instead")
+    open fun onStop() {
     }
 }

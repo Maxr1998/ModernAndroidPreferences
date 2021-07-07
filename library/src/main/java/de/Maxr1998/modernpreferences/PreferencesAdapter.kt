@@ -28,6 +28,10 @@ import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import androidx.core.view.get
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewTreeLifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.helpers.emptyScreen
@@ -44,7 +48,9 @@ import kotlin.math.max
 class PreferencesAdapter @VisibleForTesting constructor(
     root: PreferenceScreen? = null,
     hasStableIds: Boolean,
-) : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>(),
+    LifecycleEventObserver {
+
     constructor(root: PreferenceScreen? = null) : this(root, true)
 
     private val screenStack: Stack<PreferenceScreen> = Stack<PreferenceScreen>().apply {
@@ -90,6 +96,11 @@ class PreferencesAdapter @VisibleForTesting constructor(
         if (recyclerView.layoutManager !is LinearLayoutManager) {
             throw UnsupportedOperationException("ModernAndroidPreferences requires a LinearLayoutManager")
         }
+        ViewTreeLifecycleOwner.get(recyclerView)?.lifecycle?.addObserver(this)
+    }
+
+    override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+        currentScreen.notifyLifecycleObservers(source, event)
     }
 
     @MainThread
