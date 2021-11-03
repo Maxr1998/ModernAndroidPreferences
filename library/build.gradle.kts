@@ -36,12 +36,10 @@ detekt {
 }
 
 android {
-    compileSdkVersion(31)
+    compileSdk = 31
     defaultConfig {
-        minSdkVersion(21)
-        targetSdkVersion(31)
-        versionCode = 1
-        versionName = libraryVersion
+        minSdk = 21
+        targetSdk = 31
     }
     buildTypes {
         getByName("release") {
@@ -58,7 +56,7 @@ android {
         @Suppress("SuspiciousCollectionReassignment")
         freeCompilerArgs += listOf("-module-name", libraryName)
     }
-    lintOptions {
+    lint {
         isAbortOnError = false
     }
 }
@@ -106,7 +104,7 @@ publishing {
         register("production", MavenPublication::class) {
             groupId = libraryGroup
             artifactId = libraryName
-            version = android.defaultConfig.versionName
+            version = libraryVersion
             artifact("$buildDir/outputs/aar/library-release.aar")
             artifact(sourcesJar.get())
 
@@ -147,7 +145,7 @@ publishing {
     repositories {
         maven {
             name = "sonatype"
-            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
             credentials {
                 username = ossrhUsername
                 password = ossrhPassword
@@ -155,7 +153,7 @@ publishing {
         }
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/Maxr1998/ModernAndroidPreferences")
+            setUrl("https://maven.pkg.github.com/Maxr1998/ModernAndroidPreferences")
             credentials {
                 username = "Maxr1998"
                 password = githubToken
