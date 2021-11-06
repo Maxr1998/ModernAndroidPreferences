@@ -3,7 +3,7 @@ import java.util.*
 object Dependencies {
     object Versions {
         // Plugins
-        const val detekt = "1.17.1"
+        const val detekt = "1.18.1"
         const val testLogger = "3.0.0"
         const val dependencyUpdates = "0.39.0"
 
