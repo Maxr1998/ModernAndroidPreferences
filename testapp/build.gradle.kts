@@ -38,6 +38,7 @@ dependencies {
 
     // UI
     implementation(libs.androidx.recyclerview)
+    implementation(libs.google.material)
 
     // Preferences library
     implementation(project(":library"))

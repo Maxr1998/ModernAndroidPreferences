@@ -15,6 +15,7 @@ androidx-activity = "1.4.0"
 # UI
 androidx-constraintlayout = "2.1.1"
 androidx-recyclerview = "1.2.1"
+google-material = "1.4.0"
 
 # Lifecycle
 androidx-lifecycle = "2.4.0"
@@ -46,6 +47,7 @@ androidx-activity = { group = "androidx.activity", name = "activity-ktx", versio
 # UI
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "androidx-constraintlayout" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "androidx-recyclerview" }
+google-material = { group = "com.google.android.material", name = "material", version.ref = "google-material" }
 
 # Lifecycle
 androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidx-lifecycle" }
