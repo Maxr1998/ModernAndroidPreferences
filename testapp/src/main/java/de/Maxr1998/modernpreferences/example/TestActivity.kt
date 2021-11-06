@@ -32,7 +32,7 @@ class TestActivity : BaseActivity() {
 
         // Restore adapter state from saved state
         savedInstanceState?.getParcelable<PreferencesAdapter.SavedState>("adapter")
-                ?.let(preferencesAdapter::loadSavedState)
+            ?.let(preferencesAdapter::loadSavedState)
         preferencesAdapter.onScreenChangeListener = this
     }
 

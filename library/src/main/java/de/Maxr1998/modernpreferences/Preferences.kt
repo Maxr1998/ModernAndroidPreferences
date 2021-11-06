@@ -300,7 +300,7 @@ open class Preference(key: String) : AbstractPreference(key) {
 
     @Deprecated(
         "Passing a default value is not supported anymore, " +
-                "use the nullable replacement getString() and an elvis operator",
+            "use the nullable replacement getString() and an elvis operator",
         ReplaceWith("getString() ?: defaultValue"),
         DeprecationLevel.ERROR
     )
@@ -446,8 +446,8 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
         other == null -> false
         this === other -> true
         this::class.java == other::class.java &&
-                key == (other as PreferenceScreen).key &&
-                preferences == other.preferences -> true
+            key == (other as PreferenceScreen).key &&
+            preferences == other.preferences -> true
         else -> false
     }
 

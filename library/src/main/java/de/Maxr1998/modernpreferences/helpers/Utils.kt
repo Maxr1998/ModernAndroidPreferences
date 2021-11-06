@@ -25,7 +25,8 @@ const val DEFAULT_RES_ID = -1
 internal fun SeekBar.onSeek(callback: (Int, Boolean) -> Unit) {
     setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
         @Suppress("EmptyFunctionBlock")
-        override fun onStartTrackingTouch(seekBar: SeekBar) {}
+        override fun onStartTrackingTouch(seekBar: SeekBar) {
+        }
 
         override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
             if (fromUser) callback(progress, false)

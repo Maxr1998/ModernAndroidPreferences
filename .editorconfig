@@ -13,7 +13,6 @@ charset = utf-8
 indent_style = space
 indent_size = 4
 max_line_length = 200 # Prefer manual wrapping
-ij_continuation_indent_size = 8
 trim_trailing_whitespace = true
 
 ij_kotlin_code_style_defaults = KOTLIN_OFFICIAL

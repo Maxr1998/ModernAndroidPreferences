@@ -23,11 +23,11 @@ data class SelectionItem private constructor(
      * @see SelectionItem
      */
     constructor(key: String, @StringRes titleRes: Int, @StringRes summaryRes: Int = DEFAULT_RES_ID) :
-            this(key, titleRes, "", summaryRes, null)
+        this(key, titleRes, "", summaryRes, null)
 
     /**
      * @see SelectionItem
      */
     constructor(key: String, title: CharSequence, summary: CharSequence? = null) :
-            this(key, DEFAULT_RES_ID, title, DEFAULT_RES_ID, summary)
+        this(key, DEFAULT_RES_ID, title, DEFAULT_RES_ID, summary)
 }

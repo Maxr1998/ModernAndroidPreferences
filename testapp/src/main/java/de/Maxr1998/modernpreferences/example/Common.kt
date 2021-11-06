@@ -23,7 +23,20 @@ import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.widget.Toast
 import de.Maxr1998.modernpreferences.Preference
-import de.Maxr1998.modernpreferences.helpers.*
+import de.Maxr1998.modernpreferences.helpers.accentButtonPref
+import de.Maxr1998.modernpreferences.helpers.categoryHeader
+import de.Maxr1998.modernpreferences.helpers.checkBox
+import de.Maxr1998.modernpreferences.helpers.collapse
+import de.Maxr1998.modernpreferences.helpers.editText
+import de.Maxr1998.modernpreferences.helpers.expandText
+import de.Maxr1998.modernpreferences.helpers.image
+import de.Maxr1998.modernpreferences.helpers.multiChoice
+import de.Maxr1998.modernpreferences.helpers.pref
+import de.Maxr1998.modernpreferences.helpers.screen
+import de.Maxr1998.modernpreferences.helpers.seekBar
+import de.Maxr1998.modernpreferences.helpers.singleChoice
+import de.Maxr1998.modernpreferences.helpers.subScreen
+import de.Maxr1998.modernpreferences.helpers.switch
 import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
 import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
 import java.util.*
@@ -139,7 +152,7 @@ object Common {
             expandText("expand-text") {
                 title = "Expandable text"
                 text = "This is an example implementation of ModernAndroidPreferences, check out " +
-                        "the source on https://github.com/Maxr1998/ModernAndroidPreferences"
+                    "the source on https://github.com/Maxr1998/ModernAndroidPreferences"
             }
             collapse {
                 pref("collapsed_one") {
