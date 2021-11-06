@@ -31,16 +31,20 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.Core.appCompat)
-    implementation(Dependencies.Core.coreKtx)
-    implementation(Dependencies.Core.activityKtx)
-    implementation(Dependencies.LifecycleX.viewModel)
-    implementation(Dependencies.LifecycleX.runtime)
-    implementation(Dependencies.LifecycleX.common)
-    implementation(Dependencies.UI.recyclerView)
+    // Core
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.activity)
+
+    // UI
+    implementation(libs.androidx.recyclerview)
 
     // Preferences library
     implementation(project(":library"))
 
-    debugImplementation(Dependencies.Testing.leakCanary)
+    // Lifecycle
+    implementation(libs.bundles.androidx.lifecycle)
+
+    // Debug
+    debugImplementation(libs.leakcanary)
 }

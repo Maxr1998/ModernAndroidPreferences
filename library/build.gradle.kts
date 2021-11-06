@@ -59,22 +59,25 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.Core.appCompat)
-    implementation(Dependencies.Core.coreKtx)
-    implementation(Dependencies.LifecycleX.runtime)
-    implementation(Dependencies.UI.constraintLayout)
-    implementation(Dependencies.UI.recyclerView)
+    // Core
+    implementation(libs.androidx.core)
+    implementation(libs.androidx.appcompat)
+
+    // UI
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview)
+
+    // Lifecycle
+    implementation(libs.androidx.lifecycle.runtime)
 
     // Testing
-    testImplementation(Dependencies.Testing.junit)
-    testRuntimeOnly(Dependencies.Testing.junitEngine)
-    testImplementation(Dependencies.Testing.kotestAssertions)
-    testImplementation(Dependencies.Testing.kotestProperty)
-    testImplementation(Dependencies.Testing.kotestRunner)
-    testImplementation(Dependencies.Testing.mockk)
+    testImplementation(libs.junit.api)
+    testRuntimeOnly(libs.junit.engine)
+    testImplementation(libs.bundles.kotest)
+    testImplementation(libs.mockk)
 
     // Detekt formatting
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Dependencies.Versions.detekt}")
+    detektPlugins(libs.detekt.formatting)
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
