@@ -1,5 +1,3 @@
-import java.util.*
-
 object Dependencies {
     object Versions {
         // Plugins
@@ -24,12 +22,6 @@ object Dependencies {
 
         // Debug
         const val leakCanary = "2.7"
-
-        fun isStable(version: String): Boolean {
-            return listOf("alpha", "beta", "dev", "rc", "m").none {
-                version.toLowerCase(Locale.ROOT).contains(it)
-            }
-        }
     }
 
     object Core {

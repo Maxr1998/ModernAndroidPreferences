@@ -1,5 +1,3 @@
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-import com.github.benmanes.gradle.versions.updates.gradle.GradleReleaseChannel
 import java.io.FileInputStream
 import java.util.*
 
@@ -12,7 +10,6 @@ plugins {
     alias(libs.plugins.testlogger)
     `maven-publish`
     signing
-    alias(libs.plugins.dependencyupdates)
 }
 
 // Versions
@@ -165,11 +162,4 @@ publishing {
 signing {
     useGpgCmd()
     sign(publishing.publications)
-}
-
-tasks.withType<DependencyUpdatesTask> {
-    gradleReleaseChannel = GradleReleaseChannel.CURRENT.id
-    rejectVersionIf {
-        !Dependencies.Versions.isStable(candidate.version) && Dependencies.Versions.isStable(currentVersion)
-    }
 }
