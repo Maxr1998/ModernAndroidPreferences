@@ -4,20 +4,20 @@ object Dependencies {
         const val detekt = "1.18.1"
 
         // Core
-        const val appCompat = "1.3.0"
-        const val coreKtx = "1.6.0"
-        const val activityKtx = "1.2.3"
+        const val appCompat = "1.3.1"
+        const val coreKtx = "1.7.0"
+        const val activityKtx = "1.4.0"
 
         // UI
-        const val constraintLayout = "2.0.4"
+        const val constraintLayout = "2.1.1"
         const val recyclerView = "1.2.1"
 
         // Lifecycle
-        const val lifecycleExtensions = "2.3.1"
+        const val lifecycleExtensions = "2.4.0"
 
         // Testing
-        const val junit = "5.7.2"
-        const val kotest = "4.6.0"
+        const val junit = "5.8.1"
+        const val kotest = "4.6.3"
         const val mockk = "1.12.0"
 
         // Debug
