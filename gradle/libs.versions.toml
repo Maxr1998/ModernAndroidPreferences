@@ -1,0 +1,18 @@
+[versions]
+# Plugins
+android-plugin = "7.0.3"
+kotlin = "1.5.31"
+detekt = "1.18.1"
+android-junit5 = "1.8.0.0"
+testlogger = "3.0.0"
+dependencyupdates = "0.39.0"
+
+[plugins]
+android-library = { id = "com.android.library", version.ref = "android-plugin" }
+android-app = { id = "com.android.application", version.ref = "android-plugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
+android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "android-junit5" }
+testlogger = { id = "com.adarshr.test-logger", version.ref = "testlogger" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+dependencyupdates = { id = "com.github.ben-manes.versions", version.ref = "dependencyupdates" }

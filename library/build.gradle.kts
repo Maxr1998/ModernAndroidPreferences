@@ -7,12 +7,12 @@ plugins {
     id("com.android.library")
     kotlin("android")
     id("kotlin-parcelize")
-    id("io.gitlab.arturbosch.detekt") version Dependencies.Versions.detekt
-    id("de.mannodermaus.android-junit5")
-    id("com.adarshr.test-logger") version Dependencies.Versions.testLogger
+    alias(libs.plugins.detekt)
+    alias(libs.plugins.android.junit5)
+    alias(libs.plugins.testlogger)
     `maven-publish`
     signing
-    id("com.github.ben-manes.versions") version Dependencies.Versions.dependencyUpdates
+    alias(libs.plugins.dependencyupdates)
 }
 
 // Versions

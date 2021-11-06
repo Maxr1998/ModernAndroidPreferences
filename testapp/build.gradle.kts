@@ -4,7 +4,7 @@ import com.github.benmanes.gradle.versions.updates.gradle.GradleReleaseChannel
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("com.github.ben-manes.versions") version Dependencies.Versions.dependencyUpdates
+    alias(libs.plugins.dependencyupdates)
 }
 
 android {

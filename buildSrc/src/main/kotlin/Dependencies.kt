@@ -4,8 +4,6 @@ object Dependencies {
     object Versions {
         // Plugins
         const val detekt = "1.18.1"
-        const val testLogger = "3.0.0"
-        const val dependencyUpdates = "0.39.0"
 
         // Core
         const val appCompat = "1.3.0"
