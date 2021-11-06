@@ -8,7 +8,6 @@ import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import androidx.annotation.StringRes
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 
 class EditTextPreference(key: String) : DialogPreference(key) {
@@ -39,7 +38,7 @@ class EditTextPreference(key: String) : DialogPreference(key) {
         if (currentInput == null) currentInput = getString()
     }
 
-    override fun createDialog(context: Context): Dialog = AlertDialog.Builder(context).apply {
+    override fun createDialog(context: Context): Dialog = Config.dialogBuilderFactory(context).apply {
         if (titleRes != -1) setTitle(titleRes) else setTitle(title)
         val editText = AppCompatEditText(context).apply {
             if (textInputType != InputType.TYPE_NULL) {

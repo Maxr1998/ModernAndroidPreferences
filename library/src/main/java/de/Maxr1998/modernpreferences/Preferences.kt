@@ -26,6 +26,7 @@ import androidx.annotation.CallSuper
 import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.edit
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -362,6 +363,16 @@ open class Preference(key: String) : AbstractPreference(key) {
                 require(value in 1..5) { "subtitleMaxLines must be within [1,5]" }
                 field = value
             }
+
+        /**
+         * Factory for [AlertDialog.Builder] that can be overridden for styling reasons.
+         *
+         * It's not recommended to pre-configure this dialog builder with anything else like title, message, or buttons,
+         * since the library may overwrite those wherever necessary.
+         */
+        var dialogBuilderFactory: (Context) -> AlertDialog.Builder = { context ->
+            AlertDialog.Builder(context)
+        }
     }
 }
 

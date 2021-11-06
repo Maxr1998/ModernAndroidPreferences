@@ -22,6 +22,7 @@ import android.content.Context
 import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.widget.Toast
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.helpers.accentButtonPref
 import de.Maxr1998.modernpreferences.helpers.categoryHeader
@@ -42,6 +43,12 @@ import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
 import java.util.*
 
 object Common {
+    init {
+        Preference.Config.dialogBuilderFactory = { context ->
+            MaterialAlertDialogBuilder(context)
+        }
+    }
+
     fun createRootScreen(context: Context) = screen(context) {
         subScreen("types") {
             title = "Preference types"
