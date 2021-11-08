@@ -1,10 +1,10 @@
 # ModernAndroidPreferences
 
-![GitHub release](https://img.shields.io/github/v/release/Maxr1998/ModernAndroidPreferences)
-![Maven Central](https://img.shields.io/maven-central/v/de.maxr1998/modernandroidpreferences)
-![Build status](https://img.shields.io/github/workflow/status/Maxr1998/ModernAndroidPreferences/Test%20library/master)
-![Lint status](https://img.shields.io/github/workflow/status/Maxr1998/ModernAndroidPreferences/Lint%20library%20code/master?label=detekt%20%26%20lint)
-![License](https://img.shields.io/github/license/Maxr1998/ModernAndroidPreferences)
+[![GitHub release](https://img.shields.io/github/v/release/Maxr1998/ModernAndroidPreferences)](https://github.com/Maxr1998/ModernAndroidPreferences/releases)
+[![Maven Central](https://img.shields.io/maven-central/v/de.maxr1998/modernandroidpreferences)](https://repo.maven.apache.org/maven2/de/maxr1998/modernandroidpreferences/)
+[![Build status](https://img.shields.io/github/workflow/status/Maxr1998/ModernAndroidPreferences/Test%20library/master)](https://github.com/Maxr1998/ModernAndroidPreferences/actions/workflows/library-test.yml)
+[![Lint status](https://img.shields.io/github/workflow/status/Maxr1998/ModernAndroidPreferences/Lint%20library%20code/master?label=detekt%20%26%20lint)](https://github.com/Maxr1998/ModernAndroidPreferences/actions/workflows/app-lint.yaml)
+[![License](https://img.shields.io/github/license/Maxr1998/ModernAndroidPreferences)](https://github.com/Maxr1998/ModernAndroidPreferences/blob/master/LICENSE)
 
 Android preferences in Kotlin DSL, displayed in a RecyclerView.
 
