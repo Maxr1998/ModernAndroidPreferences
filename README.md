@@ -63,6 +63,6 @@ To get in line with Maven naming standards, it was renamed to `de.maxr1998:moder
 Copyright © 2018-2021  Max Rumpf alias Maxr1998
 
 This library is released under the Apache License version 2.0.
-If you use this library (or code inspired by it) in your projects, crediting me is appreciated.
+If you use this library (or code from it) in your projects, crediting me is appreciated.
 
 The example application however is licensed under the GNU General Public version 3, or any later version.
