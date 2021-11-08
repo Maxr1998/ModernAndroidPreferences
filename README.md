@@ -1,7 +1,8 @@
 # ModernAndroidPreferences
 
 ![Latest release](https://img.shields.io/github/v/release/Maxr1998/ModernAndroidPreferences)
-![Build status](https://img.shields.io/github/workflow/status/Maxr1998/ModernAndroidPreferences/Build%20library%20and%20test%20app)
+![Build status](https://img.shields.io/github/workflow/status/Maxr1998/ModernAndroidPreferences/Test%20library/master)
+![Lint status](https://img.shields.io/github/workflow/status/Maxr1998/ModernAndroidPreferences/Lint%20library%20code/master?label=detekt%20%26%20lint)
 ![License](https://img.shields.io/github/license/Maxr1998/ModernAndroidPreferences)
 
 Android preferences in Kotlin DSL, displayed in a RecyclerView.
