@@ -4,8 +4,9 @@
 ![Build status](https://img.shields.io/github/workflow/status/Maxr1998/ModernAndroidPreferences/Build%20library%20and%20test%20app)
 ![License](https://img.shields.io/github/license/Maxr1998/ModernAndroidPreferences)
 
-Android Preferences defined through Kotlin DSL, shown in a RecyclerView.  
-_No XML, no awful PreferenceManager, Fragments or styling problems, no more ListView._ :tada:
+Android preferences in Kotlin DSL, displayed in a RecyclerView.
+
+_No XML, no troubles with PreferenceManager, Fragments, or styling, no more ListView._ :tada:
 
 #### Code example
 ```Kotlin
@@ -45,18 +46,21 @@ show advanced info like back handling, saving/restoring scroll position, and usi
 ## Include to project
 ModernAndroidPreferences is on [Maven Central](https://search.maven.org/artifact/de.maxr1998/modernandroidpreferences),
 so you can get it like any other dependency:
+
 ```gradle
 dependencies {
-    implementation 'de.maxr1998:modernandroidpreferences:2.0'
+    implementation 'de.maxr1998:modernandroidpreferences:2.2.0'
 }
 ```
+
 ---
+
 **NOTE:** This library has previously been available as `de.Maxr1998.android:modernpreferences` on Bintray JCenter,
 but was migrated to Sonatype Maven Central in light of the impending JCenter sunsetting.  
 To get in line with Maven naming standards, it was renamed to `de.maxr1998:modernandroidpreferences`.
 
 ## License
-Copyright © 2018-2020  Max Rumpf alias Maxr1998
+Copyright © 2018-2021  Max Rumpf alias Maxr1998
 
 This library is released under the Apache License version 2.0.
 If you use this library (or code inspired by it) in your projects, crediting me is appreciated.
