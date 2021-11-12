@@ -8,18 +8,23 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.PreferenceScreen
 import de.Maxr1998.modernpreferences.PreferencesAdapter
+import de.Maxr1998.modernpreferences.example.databinding.ActivityMainBinding
 
 abstract class BaseActivity : AppCompatActivity(), PreferencesAdapter.OnScreenChangeListener {
 
-    protected lateinit var preferencesView: RecyclerView
     protected abstract val preferencesAdapter: PreferencesAdapter
+    protected lateinit var preferencesView: RecyclerView
+    private lateinit var binding: ActivityMainBinding
     private lateinit var layoutManager: LinearLayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setSupportActionBar(binding.toolbar)
         layoutManager = LinearLayoutManager(this)
-        preferencesView = RecyclerView(this).apply {
-            setContentView(this)
+        preferencesView = binding.recyclerView.apply {
             layoutManager = this@BaseActivity.layoutManager
             adapter = preferencesAdapter
             layoutAnimation = AnimationUtils.loadLayoutAnimation(this@BaseActivity, R.anim.preference_layout_fall_down)
