@@ -17,6 +17,9 @@
 package de.Maxr1998.modernpreferences
 
 import android.animation.StateListAnimator
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,6 +30,7 @@ import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
+import androidx.core.content.res.use
 import androidx.core.view.get
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -238,7 +242,7 @@ class PreferencesAdapter @VisibleForTesting constructor(
      * Common ViewHolder in [PreferencesAdapter] for every [Preference] object/every preference extending it
      */
     class ViewHolder internal constructor(
-        private val type: Int,
+        type: Int,
         view: View,
     ) : RecyclerView.ViewHolder(view) {
         val root: ViewGroup get() = itemView as ViewGroup
@@ -249,6 +253,26 @@ class PreferencesAdapter @VisibleForTesting constructor(
         val badge: TextView? = itemView.findViewById(R.id.map_badge)
         val widgetFrame: ViewGroup? = itemView.findViewById(R.id.map_widget_frame)
         val widget: View? = widgetFrame?.getChildAt(0)
+
+        init {
+            // Apply accent text color via theme attribute from library or fallback to AppCompat
+            val attrs = intArrayOf(R.attr.mapAccentTextColor, R.attr.colorAccent)
+            val accentTextColor = itemView.context.theme.obtainStyledAttributes(attrs).use { array ->
+                // Return first resolved attribute or null
+                if (array.indexCount > 0) array.getColorStateList(array.getIndex(0)) else null
+            } ?: ColorStateList.valueOf(Color.BLACK) // fallback to black if no colorAccent is defined (unlikely)
+
+            when (type) {
+                CategoryHeader.RESOURCE_CONST,
+                AccentButtonPreference.RESOURCE_CONST -> title.setTextColor(accentTextColor)
+            }
+
+            badge?.apply {
+                setTextColor(accentTextColor)
+                backgroundTintList = accentTextColor
+                backgroundTintMode = PorterDuff.Mode.SRC_ATOP
+            }
+        }
 
         internal fun setEnabledState(enabled: Boolean) {
             setEnabledStateRecursive(itemView, enabled)

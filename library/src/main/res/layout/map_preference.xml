@@ -86,7 +86,6 @@
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:textAllCaps="true"
-        android:textColor="?colorAccent"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@android:id/title"
         app:layout_constraintEnd_toStartOf="@id/map_widget_frame"
