@@ -184,7 +184,7 @@ class PreferencesAdapter @VisibleForTesting constructor(
         // Inflate preference widget
         if (viewType > 0) layoutInflater.inflate(viewType, view.findViewById(R.id.map_widget_frame), true)
 
-        return ViewHolder(view)
+        return ViewHolder(viewType, view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -237,7 +237,10 @@ class PreferencesAdapter @VisibleForTesting constructor(
     /**
      * Common ViewHolder in [PreferencesAdapter] for every [Preference] object/every preference extending it
      */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ViewHolder internal constructor(
+        private val type: Int,
+        view: View,
+    ) : RecyclerView.ViewHolder(view) {
         val root: ViewGroup get() = itemView as ViewGroup
         val iconFrame: View = itemView.findViewById(R.id.map_icon_frame)
         val icon: ImageView? = itemView.findViewById(android.R.id.icon)
