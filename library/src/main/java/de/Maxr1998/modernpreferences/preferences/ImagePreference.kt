@@ -72,7 +72,7 @@ class ImagePreference(key: String) : Preference(key) {
         holder.root.findViewById<ImageView>(R.id.map_image_scrim).isVisible = showScrim && title.isNotBlank()
     }
 
-    companion object {
-        const val RESOURCE_CONST = -4
+    internal companion object {
+        internal const val RESOURCE_CONST = -4
     }
 }

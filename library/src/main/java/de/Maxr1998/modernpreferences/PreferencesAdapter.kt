@@ -38,7 +38,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewTreeLifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import de.Maxr1998.modernpreferences.helpers.emptyScreen
 import de.Maxr1998.modernpreferences.preferences.AccentButtonPreference
 import de.Maxr1998.modernpreferences.preferences.CategoryHeader
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
@@ -54,6 +53,12 @@ class PreferencesAdapter @VisibleForTesting constructor(
     hasStableIds: Boolean,
 ) : RecyclerView.Adapter<PreferencesAdapter.ViewHolder>(),
     LifecycleEventObserver {
+
+    private companion object {
+        private val emptyScreen: PreferenceScreen by lazy {
+            PreferenceScreen.Builder(null).build()
+        }
+    }
 
     constructor(root: PreferenceScreen? = null) : this(root, true)
 

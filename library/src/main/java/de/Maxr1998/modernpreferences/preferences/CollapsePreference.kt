@@ -93,8 +93,8 @@ class CollapsePreference(screen: PreferenceScreen.Builder, key: String) : Prefer
         parent?.requestRebind(screenPosition, 1 + preferences.size)
     }
 
-    companion object {
-        const val MARKER_RES_ID = -10
-        const val MAX_PREFS_IN_SUMMARY = 5
+    internal companion object {
+        internal const val MARKER_RES_ID = -10
+        internal const val MAX_PREFS_IN_SUMMARY = 5
     }
 }

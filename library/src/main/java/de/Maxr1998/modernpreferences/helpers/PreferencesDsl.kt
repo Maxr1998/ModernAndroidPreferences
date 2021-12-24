@@ -41,8 +41,6 @@ inline fun screen(context: Context?, block: PreferenceScreen.Builder.() -> Unit)
     return PreferenceScreen.Builder(context).apply(block).build()
 }
 
-val emptyScreen: PreferenceScreen by lazy { screen(null) {} }
-
 inline fun PreferenceScreen.Builder.subScreen(key: String = "", block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
     return PreferenceScreen.Builder(this, key).apply(block).build().also(::addPreferenceItem)
 }

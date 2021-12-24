@@ -23,7 +23,7 @@ class AccentButtonPreference(key: String) : Preference(key) {
     @SuppressLint("ResourceType")
     override fun getWidgetLayoutResource() = RESOURCE_CONST
 
-    companion object {
-        const val RESOURCE_CONST = -3
+    internal companion object {
+        internal const val RESOURCE_CONST = -3
     }
 }
