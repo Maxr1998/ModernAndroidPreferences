@@ -6,6 +6,7 @@ plugins {
     kotlin("android")
     id("kotlin-parcelize")
     alias(libs.plugins.detekt)
+    alias(libs.plugins.binarycompatibilityvalidator)
     alias(libs.plugins.android.junit5)
     alias(libs.plugins.testlogger)
     `maven-publish`
