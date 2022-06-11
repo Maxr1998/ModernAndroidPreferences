@@ -72,7 +72,7 @@ class PreferencesTests {
                 row(a = false, b = false, c = false),
                 row(a = true, b = false, c = true),
                 row(a = false, b = true, c = true),
-                row(a = true, b = true, c = false)
+                row(a = true, b = true, c = false),
             ) { checked: Boolean, disableDependents: Boolean, state: Boolean ->
                 lateinit var pref: TwoStatePreference
                 screen(contextMock) {

@@ -31,11 +31,12 @@ abstract class AbstractChoiceDialogPreference(
 
     override fun createDialog(context: Context): Dialog = Config.dialogBuilderFactory(context).apply {
         if (titleRes != DEFAULT_RES_ID) setTitle(titleRes) else setTitle(title)
-        setView(RecyclerView(context).apply {
+        val dialogContent = RecyclerView(context).apply {
             selectionAdapter = SelectionAdapter(this@AbstractChoiceDialogPreference, items, allowMultiSelect)
             adapter = selectionAdapter
             layoutManager = LinearLayoutManager(context)
-        })
+        }
+        setView(dialogContent)
         setCancelable(false)
         setPositiveButton(android.R.string.ok) { _, _ ->
             persistSelection()

@@ -17,6 +17,10 @@ formatting:
     insertFinalNewLine: false
   MaximumLineLength:
     maxLineLength: 200
+  TrailingComma:
+    active: true
+    allowTrailingComma: true
+    allowTrailingCommaOnCallSite: true
 
 naming:
   PackageNaming:

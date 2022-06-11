@@ -44,10 +44,10 @@ class ExpandableTextPreference(key: String) : Preference(key) {
     override fun bindViews(holder: PreferencesAdapter.ViewHolder) {
         super.bindViews(holder)
         val widget = holder.widget as CheckBox
-        val inflater = LayoutInflater.from(widget.context)
-        val tv: TextView = (widget.tag ?: run {
-            inflater.inflate(R.layout.map_preference_expand_text, holder.root).findViewById<TextView>(android.R.id.message)
-        }) as TextView
+        val tv: TextView = widget.tag as? TextView ?: run {
+            val inflater = LayoutInflater.from(widget.context)
+            inflater.inflate(R.layout.map_preference_expand_text, holder.root).findViewById(android.R.id.message)
+        }
         widget.tag = tv
         tv.apply {
             if (textRes != -1) setText(textRes) else text = this@ExpandableTextPreference.text

@@ -85,11 +85,11 @@ class SeekBarPreference(key: String) : Preference(key) {
             bottomMargin = 0
         }
         val widget = holder.widget as Space
-        val inflater = LayoutInflater.from(widget.context)
-        val sb = (widget.tag
-            ?: inflater.inflate(R.layout.map_preference_widget_seekbar, holder.root)
-                .findViewById(android.R.id.progress)) as ModernSeekBar
-        val tv = (sb.tag ?: holder.itemView.findViewById(R.id.progress_text)) as TextView
+        val sb = widget.tag as? ModernSeekBar ?: run {
+            val inflater = LayoutInflater.from(widget.context)
+            inflater.inflate(R.layout.map_preference_widget_seekbar, holder.root).findViewById(android.R.id.progress)
+        }
+        val tv = sb.tag as? TextView ?: holder.itemView.findViewById(R.id.progress_text)
         widget.tag = sb.apply {
             isEnabled = enabled
             max = calcRaw(this@SeekBarPreference.max)

@@ -303,7 +303,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         "Passing a default value is not supported anymore, " +
             "use the nullable replacement getString() and an elvis operator",
         ReplaceWith("getString() ?: defaultValue"),
-        DeprecationLevel.ERROR
+        DeprecationLevel.ERROR,
     )
     fun getString(@Suppress("UNUSED_PARAMETER") defaultValue: String): String = throw UnsupportedOperationException("Not implemented")
 

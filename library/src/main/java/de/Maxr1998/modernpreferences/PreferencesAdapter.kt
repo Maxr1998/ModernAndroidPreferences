@@ -269,7 +269,8 @@ class PreferencesAdapter @VisibleForTesting constructor(
 
             when (type) {
                 CategoryHeader.RESOURCE_CONST,
-                AccentButtonPreference.RESOURCE_CONST -> title.setTextColor(accentTextColor)
+                AccentButtonPreference.RESOURCE_CONST,
+                -> title.setTextColor(accentTextColor)
             }
 
             badge?.apply {

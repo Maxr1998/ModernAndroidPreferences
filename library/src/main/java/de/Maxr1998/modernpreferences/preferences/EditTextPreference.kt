@@ -50,7 +50,7 @@ class EditTextPreference(key: String) : DialogPreference(key) {
             }
             setText(currentInput)
         }
-        setView(FrameLayout(context).apply {
+        val dialogContent = FrameLayout(context).apply {
             val layoutParams = ViewGroup.MarginLayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
                 @Suppress("MagicNumber")
                 val tenDp = (10 * context.resources.displayMetrics.density).toInt()
@@ -59,7 +59,8 @@ class EditTextPreference(key: String) : DialogPreference(key) {
                 topMargin = tenDp
             }
             addView(editText, layoutParams)
-        })
+        }
+        setView(dialogContent)
         setCancelable(false)
         setPositiveButton(android.R.string.ok) { _, _ ->
             editText.text?.let(::persist)
