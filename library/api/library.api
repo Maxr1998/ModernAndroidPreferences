@@ -183,6 +183,14 @@ public final class de/Maxr1998/modernpreferences/PreferencesAdapter$SavedState :
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
+public final class de/Maxr1998/modernpreferences/PreferencesAdapter$SavedState$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public final fun createFromParcel (Landroid/os/Parcel;)Lde/Maxr1998/modernpreferences/PreferencesAdapter$SavedState;
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun newArray (I)[Lde/Maxr1998/modernpreferences/PreferencesAdapter$SavedState;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+}
+
 public final class de/Maxr1998/modernpreferences/PreferencesAdapter$ViewHolder : androidx/recyclerview/widget/RecyclerView$ViewHolder {
 	public final fun getBadge ()Landroid/widget/TextView;
 	public final fun getIcon ()Landroid/widget/ImageView;
