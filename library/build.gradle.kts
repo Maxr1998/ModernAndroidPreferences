@@ -1,3 +1,4 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -24,13 +25,6 @@ detekt {
     allRules = false
     config = files("$projectDir/detekt.yml")
     autoCorrect = true
-
-    reports {
-        html.enabled = true
-        xml.enabled = false
-        txt.enabled = true
-        sarif.enabled = true
-    }
 }
 
 android {
@@ -79,6 +73,17 @@ dependencies {
 
     // Detekt formatting
     detektPlugins(libs.detekt.formatting)
+}
+
+tasks {
+    withType<Detekt> {
+        reports {
+            html.required.set(true)
+            xml.required.set(false)
+            txt.required.set(true)
+            sarif.required.set(true)
+        }
+    }
 }
 
 val sourcesJar by tasks.registering(Jar::class) {
