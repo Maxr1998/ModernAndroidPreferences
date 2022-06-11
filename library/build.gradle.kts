@@ -1,5 +1,5 @@
 import java.io.FileInputStream
-import java.util.*
+import java.util.Properties
 
 plugins {
     id("com.android.library")
@@ -43,6 +43,10 @@ android {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            lint {
+                disable.add("MissingTranslation")
+                disable.add("ExtraTranslation")
+            }
         }
     }
     compileOptions {
@@ -55,9 +59,8 @@ android {
         freeCompilerArgs += listOf("-module-name", libraryName)
     }
     lint {
-        isAbortOnError = false
+        abortOnError = false
         sarifReport = true
-        disable("MissingTranslation", "ExtraTranslation")
     }
 }
 

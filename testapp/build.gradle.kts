@@ -29,7 +29,7 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     lint {
-        isAbortOnError = false
+        abortOnError = false
     }
 }
 
