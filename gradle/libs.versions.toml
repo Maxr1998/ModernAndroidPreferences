@@ -2,11 +2,11 @@
 # Plugins
 android-plugin = "7.2.1"
 kotlin = "1.7.0"
-binarycompatibilityvalidator = "0.8.0"
-detekt = "1.18.1"
-android-junit5 = "1.8.0.0"
-testlogger = "3.1.0"
-dependencyupdates = "0.39.0"
+binarycompatibilityvalidator = "0.10.0"
+detekt = "1.20.0"
+android-junit5 = "1.8.2.0"
+testlogger = "3.2.0"
+dependencyupdates = "0.42.0"
 
 # Core
 androidx-core = "1.7.0"
