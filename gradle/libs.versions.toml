@@ -22,12 +22,12 @@ google-material = "1.4.0"
 androidx-lifecycle = "2.4.0"
 
 # Testing
-junit = "5.8.1"
-kotest = "4.6.3"
-mockk = "1.12.0"
+junit = "5.8.2"
+kotest = "5.3.0"
+mockk = "1.12.4"
 
 # Debug
-leakcanary = "2.7"
+leakcanary = "2.9.1"
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "android-plugin" }
