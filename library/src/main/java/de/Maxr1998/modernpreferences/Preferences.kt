@@ -264,7 +264,7 @@ open class Preference(key: String) : AbstractPreference(key) {
     open fun onClick(holder: PreferencesAdapter.ViewHolder) {}
 
     /**
-     * Save an int for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
+     * Save an int for this [Preference]s' [key] to the [Storage] of the attached [PreferenceScreen]
      */
     fun commitInt(value: Int) {
         storage?.setInt(key, value)
@@ -274,7 +274,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         storage?.getInt(key, defaultValue) ?: defaultValue
 
     /**
-     * Save a boolean for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
+     * Save a boolean for this [Preference]s' [key] to the [Storage] of the attached [PreferenceScreen]
      */
     fun commitBoolean(value: Boolean) {
         storage?.setBoolean(key, value)
@@ -284,7 +284,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         storage?.getBoolean(key, defaultValue) ?: defaultValue
 
     /**
-     * Save a String for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
+     * Save a String for this [Preference]s' [key] to the [Storage] of the attached [PreferenceScreen]
      */
     fun commitString(value: String) {
         storage?.setString(key, value)
@@ -372,7 +372,7 @@ open class Preference(key: String) : AbstractPreference(key) {
  *
  * It extends the [Preference] class, but gets handled slightly differently in a few things:
  * - [PreferenceScreen]s don't have a key attached to them
- * - Every [PreferenceScreen] can be bound to a different [SharedPreferences] file
+ * - Every [PreferenceScreen] can be bound to a different [Storage]
  * - Even though you can change the [enabled] or the [persistent] state, it doesn't have any effect in this instance
  */
 @Suppress("unused", "MemberVisibilityCanBePrivate")
