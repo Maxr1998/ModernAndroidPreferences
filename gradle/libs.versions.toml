@@ -2,7 +2,7 @@
 # Plugins
 android-plugin = "7.2.1"
 kotlin = "1.7.0"
-binarycompatibilityvalidator = "0.10.0"
+binarycompatibilityvalidator = "0.10.1"
 detekt = "1.20.0"
 android-junit5 = "1.8.2.0"
 testlogger = "3.2.0"
