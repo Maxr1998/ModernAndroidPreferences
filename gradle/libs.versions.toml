@@ -22,7 +22,7 @@ google-material = "1.6.1"
 androidx-lifecycle = "2.5.0"
 
 # Testing
-junit = "5.8.2"
+junit = "5.9.0"
 kotest = "5.4.0"
 mockk = "1.12.4"
 
