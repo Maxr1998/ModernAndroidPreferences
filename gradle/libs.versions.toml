@@ -19,7 +19,7 @@ androidx-recyclerview = "1.2.1"
 google-material = "1.6.1"
 
 # Lifecycle
-androidx-lifecycle = "2.5.0"
+androidx-lifecycle = "2.5.1"
 
 # Testing
 junit = "5.9.0"
