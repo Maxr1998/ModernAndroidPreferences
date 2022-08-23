@@ -24,7 +24,7 @@ androidx-lifecycle = "2.5.1"
 # Testing
 junit = "5.9.0"
 kotest = "5.4.1"
-mockk = "1.12.5"
+mockk = "1.12.7"
 
 # Debug
 leakcanary = "2.9.1"
