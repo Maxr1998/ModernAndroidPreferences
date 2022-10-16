@@ -1,4 +1,4 @@
-name: Check library code
+name: Library / Lint
 
 on:
   push:
@@ -6,20 +6,25 @@ on:
       - master
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   lint:
-    runs-on: ubuntu-20.04
+    name: Lint
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+        uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # tag=v3.1.0
       - name: Setup Java
-        uses: actions/setup-java@d854b6da19cdadd9a010605529e522c2393ebd38 # tag=v3
+        uses: actions/setup-java@a18c333f3f14249953dab3e186e5e21bf3390f1d # tag=v3.5.1
         with:
           distribution: temurin
           java-version: 11
-          cache: gradle
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@fd32ae908111fe31afa48827bd1ee909540aa971 # tag=v2.3.2
       - name: Run check task
-        run: ./gradlew --build-cache --no-daemon --info :library:check
+        run: ./gradlew :library:check
       - name: Upload SARIF files
         uses: github/codeql-action/upload-sarif@e0e5ded33cabb451ae0a9768fc7b0410bad9ad44 # tag=v2
         if: ${{ always() }}
