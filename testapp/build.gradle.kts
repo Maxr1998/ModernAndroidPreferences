@@ -4,9 +4,9 @@ plugins {
 }
 
 android {
+    namespace = "de.Maxr1998.modernpreferences.example"
     compileSdk = 31
     defaultConfig {
-        applicationId = "de.Maxr1998.modernpreferences.example"
         minSdk = 21
         targetSdk = 31
         versionCode = 1
