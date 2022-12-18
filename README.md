@@ -60,7 +60,7 @@ so you can get it like any other dependency:
 
 ```gradle
 dependencies {
-    implementation 'de.maxr1998:modernandroidpreferences:2.2.0'
+    implementation 'de.maxr1998:modernandroidpreferences:2.3.2'
 }
 ```
 
