@@ -108,11 +108,15 @@ if (propFile.exists()) {
 // Maven publishing config
 publishing {
     publications {
-        register("production", MavenPublication::class) {
+        register<MavenPublication>("production") {
             groupId = libraryGroup
             artifactId = libraryName
             version = libraryVersion
-            artifact("$buildDir/outputs/aar/library-release.aar")
+
+            afterEvaluate {
+                from(components["release"])
+            }
+
             artifact(sourcesJar.get())
 
             pom {
@@ -130,21 +134,13 @@ publishing {
                     developer {
                         id.set("Maxr1998")
                         name.set("Max Rumpf")
+                        url.set("https://github.com/Maxr1998")
                     }
                 }
                 scm {
                     connection.set("scm:git:github.com/Maxr1998/ModernAndroidPreferences.git")
                     developerConnection.set("scm:git:ssh://github.com/Maxr1998/ModernAndroidPreferences.git")
                     url.set("https://github.com/Maxr1998/ModernAndroidPreferences/tree/master")
-                }
-                withXml {
-                    val dependenciesNode = asNode().appendNode("dependencies")
-                    configurations.implementation.get().allDependencies.forEach {
-                        val dependencyNode = dependenciesNode.appendNode("dependency")
-                        dependencyNode.appendNode("groupId", it.group)
-                        dependencyNode.appendNode("artifactId", it.name)
-                        dependencyNode.appendNode("version", it.version)
-                    }
                 }
             }
         }
