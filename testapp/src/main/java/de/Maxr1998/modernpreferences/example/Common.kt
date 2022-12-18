@@ -40,7 +40,7 @@ import de.Maxr1998.modernpreferences.helpers.subScreen
 import de.Maxr1998.modernpreferences.helpers.switch
 import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
 import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
-import java.util.*
+import java.util.Locale
 
 object Common {
     init {
@@ -49,6 +49,7 @@ object Common {
         }
     }
 
+    @Suppress("LongMethod", "MagicNumber")
     fun createRootScreen(context: Context) = screen(context) {
         subScreen("types") {
             title = "Preference types"
