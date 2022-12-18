@@ -9,7 +9,7 @@ testlogger = "3.2.0"
 dependencyupdates = "0.44.0"
 
 # Core
-androidx-core = "1.8.0"
+androidx-core = "1.9.0"
 androidx-appcompat = "1.5.1"
 androidx-activity = "1.5.1"
 
