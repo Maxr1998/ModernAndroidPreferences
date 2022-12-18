@@ -16,7 +16,7 @@ androidx-activity = "1.5.1"
 # UI
 androidx-constraintlayout = "2.1.4"
 androidx-recyclerview = "1.2.1"
-google-material = "1.6.1"
+google-material = "1.7.0"
 
 # Lifecycle
 androidx-lifecycle = "2.5.1"
