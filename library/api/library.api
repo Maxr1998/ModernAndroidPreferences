@@ -277,11 +277,13 @@ public final class de/Maxr1998/modernpreferences/preferences/EditTextPreference 
 	public fun <init> (Ljava/lang/String;)V
 	public fun createDialog (Landroid/content/Context;)Landroid/app/Dialog;
 	public final fun getCurrentInput ()Ljava/lang/CharSequence;
+	public final fun getDefaultValue ()Ljava/lang/String;
 	public final fun getSummaryProvider ()Lkotlin/jvm/functions/Function1;
 	public final fun getTextChangeListener ()Lde/Maxr1998/modernpreferences/preferences/EditTextPreference$OnTextChangeListener;
 	public final fun getTextInputHint ()Ljava/lang/CharSequence;
 	public final fun getTextInputHintRes ()I
 	public final fun getTextInputType ()I
+	public final fun setDefaultValue (Ljava/lang/String;)V
 	public final fun setSummaryProvider (Lkotlin/jvm/functions/Function1;)V
 	public final fun setTextChangeListener (Lde/Maxr1998/modernpreferences/preferences/EditTextPreference$OnTextChangeListener;)V
 	public final fun setTextInputHint (Ljava/lang/CharSequence;)V

@@ -16,6 +16,11 @@ class EditTextPreference(key: String) : DialogPreference(key) {
         private set
 
     /**
+     * The default value of this preference, when nothing was committed to storage yet
+     */
+    var defaultValue: String = ""
+
+    /**
      * The [InputType] applied to the contained [EditText][AppCompatEditText]
      */
     var textInputType: Int = InputType.TYPE_NULL
@@ -35,7 +40,9 @@ class EditTextPreference(key: String) : DialogPreference(key) {
 
     override fun onAttach() {
         super.onAttach()
-        if (currentInput == null) currentInput = getString()
+        if (currentInput == null) {
+            currentInput = getString() ?: defaultValue.takeUnless(String::isEmpty)
+        }
     }
 
     override fun createDialog(context: Context): Dialog = Config.dialogBuilderFactory(context).apply {
