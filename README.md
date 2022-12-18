@@ -10,7 +10,7 @@ Android preferences in Kotlin DSL, displayed in a RecyclerView.
 
 _No XML, no troubles with PreferenceManager, Fragments, or styling, no more ListView._ :tada:
 
-#### Code example
+### Code example
 ```Kotlin
 // Setup a preference screen
 val screen = screen(context) {
@@ -41,9 +41,18 @@ val preferencesAdapter = PreferencesAdapter(screen)
 recyclerView.adapter = preferencesAdapter
 ```
 
-#### View the example app
+### Example app
 Example Activities ([with](https://github.com/Maxr1998/ModernAndroidPreferences/tree/master/testapp/src/main/java/de/Maxr1998/modernpreferences/example/view_model) and [without](https://github.com/Maxr1998/ModernAndroidPreferences/blob/master/testapp/src/main/java/de/Maxr1998/modernpreferences/example/TestActivity.kt) using ViewModel)
 show advanced info like back handling, saving/restoring scroll position, and using the `OnScreenChangeListener`.
+
+### Screenshots
+<details>
+  <summary>Click to show</summary>
+
+| ![](screenshots/screenshot_1.png) | ![](screenshots/screenshot_2.png) |
+|:---------------------------------:|:---------------------------------:|
+
+</details>
 
 ## Include to project
 ModernAndroidPreferences is on [Maven Central](https://search.maven.org/artifact/de.maxr1998/modernandroidpreferences),
