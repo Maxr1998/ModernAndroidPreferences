@@ -13,6 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
       - name: Update Gradle Wrapper
-        uses: gradle-update/update-gradle-wrapper-action@981c551b17dbcf1940b1b4435afdb79babb7c13a # tag=v1.0.18
+        uses: gradle-update/update-gradle-wrapper-action@981c551b17dbcf1940b1b4435afdb79babb7c13a # v1.0.18
         with:
           repo-token: ${{ secrets.GRADLE_UPDATE_TOKEN }}
