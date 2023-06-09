@@ -6,7 +6,7 @@ binarycompatibilityvalidator = "0.13.1"
 detekt = "1.21.0"
 android-junit5 = "1.8.2.1"
 testlogger = "3.2.0"
-dependencyupdates = "0.44.0"
+dependencyupdates = "0.47.0"
 
 # Core
 androidx-core = "1.9.0"
