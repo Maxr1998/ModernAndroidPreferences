@@ -52,6 +52,13 @@ android {
         abortOnError = false
         sarifReport = true
     }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+    }
 }
 
 dependencies {
@@ -78,6 +85,8 @@ dependencies {
 
 tasks {
     withType<Detekt> {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+
         reports {
             html.required.set(true)
             xml.required.set(false)

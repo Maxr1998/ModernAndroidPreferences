@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "de.Maxr1998.modernpreferences.example"
-    compileSdk = 31
+    compileSdk = 33
     defaultConfig {
         minSdk = 21
         targetSdk = 31
@@ -21,15 +21,15 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
-    }
     lint {
         abortOnError = false
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 }
 
