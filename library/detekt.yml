@@ -13,10 +13,15 @@ complexity:
     ignoreDeprecated: true
 
 formatting:
+  Filename:
+    active: false # active in naming rules
   FinalNewline:
     insertFinalNewLine: false
   MaximumLineLength:
-    maxLineLength: 200
+    active: false # active in style rules
+    maxLineLength: 120
+  PackageName:
+    active: false # active in naming rules
   TrailingComma:
     active: true
     allowTrailingComma: true
@@ -32,6 +37,6 @@ style:
     # Allow TODOs
     values: [ 'FIXME:', 'STOPSHIP:' ]
   MaxLineLength:
-    maxLineLength: 200
+    maxLineLength: 120
   NewLineAtEndOfFile:
     active: false

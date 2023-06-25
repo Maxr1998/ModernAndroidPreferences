@@ -41,7 +41,10 @@ inline fun screen(context: Context?, block: PreferenceScreen.Builder.() -> Unit)
     return PreferenceScreen.Builder(context).apply(block).build()
 }
 
-inline fun PreferenceScreen.Builder.subScreen(key: String = "", block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
+inline fun PreferenceScreen.Builder.subScreen(
+    key: String = "",
+    block: PreferenceScreen.Builder.() -> Unit,
+): PreferenceScreen {
     return PreferenceScreen.Builder(this, key).apply(block).build().also(::addPreferenceItem)
 }
 
@@ -74,15 +77,26 @@ inline fun PreferenceScreen.Appendable.seekBar(key: String, block: SeekBarPrefer
     return SeekBarPreference(key).apply(block).also(::addPreferenceItem)
 }
 
-inline fun PreferenceScreen.Appendable.expandText(key: String, block: ExpandableTextPreference.() -> Unit): ExpandableTextPreference {
+inline fun PreferenceScreen.Appendable.expandText(
+    key: String,
+    block: ExpandableTextPreference.() -> Unit,
+): ExpandableTextPreference {
     return ExpandableTextPreference(key).apply(block).also(::addPreferenceItem)
 }
 
-inline fun PreferenceScreen.Appendable.singleChoice(key: String, items: List<SelectionItem>, block: SingleChoiceDialogPreference.() -> Unit): SingleChoiceDialogPreference {
+inline fun PreferenceScreen.Appendable.singleChoice(
+    key: String,
+    items: List<SelectionItem>,
+    block: SingleChoiceDialogPreference.() -> Unit,
+): SingleChoiceDialogPreference {
     return SingleChoiceDialogPreference(key, items).apply(block).also(::addPreferenceItem)
 }
 
-inline fun PreferenceScreen.Appendable.multiChoice(key: String, items: List<SelectionItem>, block: MultiChoiceDialogPreference.() -> Unit): MultiChoiceDialogPreference {
+inline fun PreferenceScreen.Appendable.multiChoice(
+    key: String,
+    items: List<SelectionItem>,
+    block: MultiChoiceDialogPreference.() -> Unit,
+): MultiChoiceDialogPreference {
     return MultiChoiceDialogPreference(key, items).apply(block).also(::addPreferenceItem)
 }
 
@@ -94,7 +108,10 @@ inline fun <reified T : Preference> PreferenceScreen.Appendable.custom(key: Stri
     return T::class.java.getConstructor(String::class.java).newInstance(key).apply(block).also(::addPreferenceItem)
 }
 
-inline fun PreferenceScreen.Builder.collapse(key: String = "advanced", block: CollapsePreference.() -> Unit): CollapsePreference {
+inline fun PreferenceScreen.Builder.collapse(
+    key: String = "advanced",
+    block: CollapsePreference.() -> Unit,
+): CollapsePreference {
     return CollapsePreference(this, key).also(::addPreferenceItem).apply {
         block()
         clearContext()

@@ -305,7 +305,8 @@ open class Preference(key: String) : AbstractPreference(key) {
         ReplaceWith("getString() ?: defaultValue"),
         DeprecationLevel.ERROR,
     )
-    fun getString(@Suppress("UNUSED_PARAMETER") defaultValue: String): String = throw UnsupportedOperationException("Not implemented")
+    fun getString(@Suppress("UNUSED_PARAMETER") defaultValue: String): String =
+        throw UnsupportedOperationException("Not implemented")
 
     fun commitStringSet(values: Set<String>) {
         prefs?.edit {
@@ -465,7 +466,10 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
     override fun hashCode() = (31 * key.hashCode()) + preferences.hashCode()
 
     @PreferenceMarker
-    class Builder private constructor(private var context: Context?, key: String) : AbstractPreference(key), Appendable {
+    class Builder private constructor(
+        private var context: Context?,
+        key: String,
+    ) : AbstractPreference(key), Appendable {
         constructor(context: Context?) : this(context, KEY_ROOT_SCREEN)
         constructor(builder: Builder, key: String = "") : this(builder.context, key)
         constructor(collapse: CollapsePreference, key: String = "") : this(collapse.screen?.context, key)

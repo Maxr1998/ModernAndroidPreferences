@@ -28,6 +28,7 @@ abstract class TwoStatePreference(key: String) : StatefulPreference(key) {
         get() = checkedInternal
         set(value) {
             checkNotNull(parent) {
+                @Suppress("MaxLineLength")
                 "Setting the checked value before the preference was attached isn't supported. Consider using `defaultValue` instead."
             }
             if (value != checkedInternal) updateState(null, value)
@@ -103,6 +104,10 @@ abstract class TwoStatePreference(key: String) : StatefulPreference(key) {
          *
          * @return true to commit the new button state to [SharedPreferences][android.content.SharedPreferences]
          */
-        fun onCheckedChanged(preference: TwoStatePreference, holder: PreferencesAdapter.ViewHolder?, checked: Boolean): Boolean
+        fun onCheckedChanged(
+            preference: TwoStatePreference,
+            holder: PreferencesAdapter.ViewHolder?,
+            checked: Boolean,
+        ): Boolean
     }
 }

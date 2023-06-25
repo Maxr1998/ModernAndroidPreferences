@@ -16,7 +16,10 @@ internal class SelectionAdapter(
 ) : RecyclerView.Adapter<SelectionAdapter.SelectionViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectionViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val layout = if (allowMultiSelect) R.layout.map_dialog_multi_choice_item else R.layout.map_dialog_single_choice_item
+        val layout = when {
+            allowMultiSelect -> R.layout.map_dialog_multi_choice_item
+            else -> R.layout.map_dialog_single_choice_item
+        }
         val view = layoutInflater.inflate(layout, parent, false)
         return SelectionViewHolder(view)
     }

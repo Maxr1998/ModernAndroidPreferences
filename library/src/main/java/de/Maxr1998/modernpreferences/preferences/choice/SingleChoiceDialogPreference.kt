@@ -3,10 +3,14 @@ package de.Maxr1998.modernpreferences.preferences.choice
 import android.content.Context
 import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 
-class SingleChoiceDialogPreference(key: String, items: List<SelectionItem>) : AbstractChoiceDialogPreference(key, items, false) {
+class SingleChoiceDialogPreference(
+    key: String,
+    items: List<SelectionItem>,
+) : AbstractChoiceDialogPreference(key, items, false) {
 
     /**
-     * The initial selection if no choice has been made and no value persisted to [SharedPreferences][android.content.SharedPreferences] yet.
+     * The initial selection if no choice has been made and no value persisted
+     * to [SharedPreferences][android.content.SharedPreferences] yet.
      *
      * Must match a [SelectionItem.key] in [items].
      */

@@ -10,7 +10,11 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
 import de.Maxr1998.modernpreferences.R
 
-class ModernSeekBar(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : AppCompatSeekBar(context, attrs, defStyleAttr) {
+class ModernSeekBar(
+    context: Context,
+    attrs: AttributeSet?,
+    defStyleAttr: Int,
+) : AppCompatSeekBar(context, attrs, defStyleAttr) {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.seekBarStyle)
     constructor(context: Context) : this(context, null)
 
