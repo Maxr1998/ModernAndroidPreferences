@@ -4,8 +4,8 @@ rootProject.name = "ModernAndroidPreferences"
 
 pluginManagement {
     repositories {
-        gradlePluginPortal()
-        mavenCentral()
         google()
+        mavenCentral()
+        gradlePluginPortal()
     }
 }
