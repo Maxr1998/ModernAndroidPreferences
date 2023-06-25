@@ -1,8 +1,8 @@
 [versions]
 # Plugins
 android-plugin = "7.4.2"
-kotlin = "1.8.20"
-binarycompatibilityvalidator = "0.13.1"
+kotlin = "1.8.22"
+binarycompatibilityvalidator = "0.13.2"
 detekt = "1.21.0"
 android-junit5 = "1.8.2.1"
 testlogger = "3.2.0"
