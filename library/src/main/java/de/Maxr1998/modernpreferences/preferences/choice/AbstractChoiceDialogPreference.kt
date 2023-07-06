@@ -15,6 +15,8 @@ abstract class AbstractChoiceDialogPreference(
     private val allowMultiSelect: Boolean,
 ) : DialogPreference(key) {
 
+    var onItemClick: OnItemClick? = null
+
     internal var selectionAdapter: SelectionAdapter? = null
 
     /**
@@ -32,7 +34,7 @@ abstract class AbstractChoiceDialogPreference(
     override fun createDialog(context: Context): Dialog = Config.dialogBuilderFactory(context).apply {
         if (titleRes != DEFAULT_RES_ID) setTitle(titleRes) else setTitle(title)
         val dialogContent = RecyclerView(context).apply {
-            selectionAdapter = SelectionAdapter(this@AbstractChoiceDialogPreference, items, allowMultiSelect)
+            selectionAdapter = SelectionAdapter(this@AbstractChoiceDialogPreference, items, allowMultiSelect, onItemClick)
             adapter = selectionAdapter
             layoutManager = LinearLayoutManager(context)
         }

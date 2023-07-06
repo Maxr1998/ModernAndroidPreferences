@@ -9,10 +9,24 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.R
 
+fun interface OnItemClick {
+    /**
+     * Notified when the user clicks a [SelectionItem].
+     * This is called before the change gets persisted and can be prevented by returning false.
+     *
+     * @param item the clicked item
+     * @param index the index of the clicked item
+     *
+     * @return true to to allow the selection of the item
+     */
+    fun shouldPersistClick(item: SelectionItem, index: Int): Boolean
+}
+
 internal class SelectionAdapter(
     private val preference: AbstractChoiceDialogPreference,
     private val items: List<SelectionItem>,
     private val allowMultiSelect: Boolean,
+    private val onItemClick: OnItemClick? = null
 ) : RecyclerView.Adapter<SelectionAdapter.SelectionViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectionViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -36,6 +50,9 @@ internal class SelectionAdapter(
                 isVisible = item.summaryRes != -1 || item.summary != null
             }
             itemView.setOnClickListener {
+                onItemClick?.shouldPersistClick(item, position)?.let { shouldPersist ->
+                    if (!shouldPersist) return@setOnClickListener
+                }
                 preference.select(item)
                 if (allowMultiSelect) notifyItemChanged(position)
                 else notifySelectionChanged()
