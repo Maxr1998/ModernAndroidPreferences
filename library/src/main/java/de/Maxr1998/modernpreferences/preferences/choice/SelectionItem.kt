@@ -12,14 +12,11 @@ import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 @Suppress("DataClassPrivateConstructor")
 data class SelectionItem private constructor(
     val key: String,
-    @StringRes
-    val titleRes: Int,
+    @StringRes val titleRes: Int,
     val title: CharSequence,
-    @StringRes
-    val summaryRes: Int,
+    @StringRes val summaryRes: Int,
     val summary: CharSequence?,
-    @StringRes
-    val badgeRes: Int,
+    @StringRes val badgeRes: Int,
     val badge: CharSequence? = null,
 ) {
     /**
@@ -33,6 +30,10 @@ data class SelectionItem private constructor(
     /**
      * @see SelectionItem
      */
-    constructor(key: String, title: CharSequence, summary: CharSequence? = null, badge: CharSequence? = null) :
-        this(key, DEFAULT_RES_ID, title, DEFAULT_RES_ID, summary, DEFAULT_RES_ID, badge)
+    constructor(
+        key: String,
+        title: CharSequence,
+        summary: CharSequence? = null,
+        badge: CharSequence? = null,
+    ) : this(key, DEFAULT_RES_ID, title, DEFAULT_RES_ID, summary, DEFAULT_RES_ID, badge)
 }
