@@ -1,14 +1,10 @@
 package de.Maxr1998.modernpreferences.preferences.choice
 
-import android.content.res.ColorStateList
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.TextView
-import androidx.core.content.res.use
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.R
