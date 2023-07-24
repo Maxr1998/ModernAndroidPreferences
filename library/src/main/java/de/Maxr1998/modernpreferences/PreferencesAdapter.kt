@@ -274,9 +274,15 @@ class PreferencesAdapter @VisibleForTesting constructor(
             }
 
             badge?.apply {
-                setTextColor(accentTextColor)
-                backgroundTintList = accentTextColor
+                setBadgeColor(accentTextColor)
                 backgroundTintMode = PorterDuff.Mode.SRC_ATOP
+            }
+        }
+
+        internal fun setBadgeColor(color: ColorStateList) {
+            badge?.apply {
+                setTextColor(color)
+                backgroundTintList = color
             }
         }
 

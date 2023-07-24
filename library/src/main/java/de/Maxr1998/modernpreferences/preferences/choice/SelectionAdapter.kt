@@ -44,8 +44,10 @@ internal class SelectionAdapter(
                 isVisible = item.summaryRes != -1 || item.summary != null
             }
             badge.apply {
-                if (item.badgeRes != -1) setText(item.badgeRes) else text = item.badge
-                isVisible = item.badgeRes != -1 || item.badge != null
+                item.badge?.let { badge ->
+                    if (badge.textRes != -1) setText(badge.textRes) else text = badge.text
+                }
+                isVisible = item.badge != null && (item.badge?.textRes != -1 || item.badge.text != null)
 
                 setTextColor(accentTextColor)
                 backgroundTintList = accentTextColor

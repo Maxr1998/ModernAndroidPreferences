@@ -32,6 +32,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
+import de.Maxr1998.modernpreferences.helpers.Badge
 import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 import de.Maxr1998.modernpreferences.helpers.DependencyManager
 import de.Maxr1998.modernpreferences.helpers.KEY_ROOT_SCREEN
@@ -59,9 +60,7 @@ abstract class AbstractPreference internal constructor(val key: String) {
     var iconRes: Int = DEFAULT_RES_ID
     var icon: Drawable? = null
 
-    @StringRes
-    var badgeRes: Int = DEFAULT_RES_ID
-    var badge: CharSequence? = null
+    var badge: Badge? = null
 
     // State
     var visible = true
@@ -76,7 +75,6 @@ abstract class AbstractPreference internal constructor(val key: String) {
         icon = other.icon
         iconRes = other.iconRes
         badge = other.badge
-        badgeRes = other.badgeRes
 
         visible = other.visible
     }
@@ -221,14 +219,17 @@ open class Preference(key: String) : AbstractPreference(key) {
         holder.badge?.apply {
             itemVisible = true
             when {
-                badgeRes != DEFAULT_RES_ID -> setText(badgeRes)
-                badge != null -> text = badge
+                badge != null && badge?.textRes != DEFAULT_RES_ID -> badge?.textRes?.let { textRes -> setText(textRes) }
+                badge != null && badge?.text != null -> text = badge?.text
                 else -> {
                     text = null
                     itemVisible = false
                 }
             }
             isVisible = itemVisible
+        }
+        holder.apply {
+            this@Preference.badge?.badgeColor?.let { this.setBadgeColor(it) }
         }
         holder.widgetFrame?.apply {
             isVisible = childCount > 0 && this@Preference !is SeekBarPreference
@@ -241,10 +242,8 @@ open class Preference(key: String) : AbstractPreference(key) {
                 v.isPressed = true
                 v.isPressed = false
             }
-            @Suppress("MagicNumber")
-            v.postDelayed(highlightRunnable, 300)
-            @Suppress("MagicNumber")
-            v.postDelayed(highlightRunnable, 600)
+            @Suppress("MagicNumber") v.postDelayed(highlightRunnable, 300)
+            @Suppress("MagicNumber") v.postDelayed(highlightRunnable, 600)
         }
     }
 
@@ -273,8 +272,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    fun getInt(defaultValue: Int): Int =
-        prefs?.getInt(key, defaultValue) ?: defaultValue
+    fun getInt(defaultValue: Int): Int = prefs?.getInt(key, defaultValue) ?: defaultValue
 
     /**
      * Save a boolean for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
@@ -285,8 +283,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    fun getBoolean(defaultValue: Boolean): Boolean =
-        prefs?.getBoolean(key, defaultValue) ?: defaultValue
+    fun getBoolean(defaultValue: Boolean): Boolean = prefs?.getBoolean(key, defaultValue) ?: defaultValue
 
     /**
      * Save a String for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
@@ -300,8 +297,7 @@ open class Preference(key: String) : AbstractPreference(key) {
     fun getString(): String? = prefs?.getString(key, null)
 
     @Deprecated(
-        "Passing a default value is not supported anymore, " +
-            "use the nullable replacement getString() and an elvis operator",
+        "Passing a default value is not supported anymore, " + "use the nullable replacement getString() and an elvis operator",
         ReplaceWith("getString() ?: defaultValue"),
         DeprecationLevel.ERROR,
     )
@@ -401,8 +397,7 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
 
     init {
         copyFrom(builder)
-        for (i in preferences.indices)
-            preferences[i].attachToScreen(this, i)
+        for (i in preferences.indices) preferences[i].attachToScreen(this, i)
     }
 
     /**
@@ -457,9 +452,7 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
     override fun equals(other: Any?): Boolean = when {
         other == null -> false
         this === other -> true
-        this::class.java == other::class.java &&
-            key == (other as PreferenceScreen).key &&
-            preferences == other.preferences -> true
+        this::class.java == other::class.java && key == (other as PreferenceScreen).key && preferences == other.preferences -> true
         else -> false
     }
 
