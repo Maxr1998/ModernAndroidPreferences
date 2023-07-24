@@ -49,8 +49,9 @@ internal class SelectionAdapter(
                 }
                 isVisible = item.badge != null && (item.badge?.textRes != -1 || item.badge.text != null)
 
-                setTextColor(accentTextColor)
-                backgroundTintList = accentTextColor
+                val badgeColor = item.badge?.badgeColor ?: accentTextColor
+                setTextColor(badgeColor)
+                backgroundTintList = badgeColor
                 backgroundTintMode = PorterDuff.Mode.SRC_ATOP
             }
             itemView.setOnClickListener {
