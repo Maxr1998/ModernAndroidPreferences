@@ -9,19 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 import de.Maxr1998.modernpreferences.preferences.DialogPreference
 
-fun interface OnItemClickListener {
-    /**
-     * Notified when the user clicks a [SelectionItem].
-     * This is called before the change gets persisted and can be prevented by returning false.
-     *
-     * @param item the clicked item
-     * @param index the index of the clicked item
-     *
-     * @return true to to allow the selection of the item
-     */
-    fun onItemSelected(item: SelectionItem): Boolean
-}
-
 abstract class AbstractChoiceDialogPreference(
     key: String,
     protected val items: List<SelectionItem>,
