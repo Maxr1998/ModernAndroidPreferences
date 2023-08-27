@@ -22,7 +22,7 @@ androidx-lifecycle = "2.5.1"
 
 # Testing
 junit = "5.10.0"
-kotest = "5.5.4"
+kotest = "5.6.2"
 mockk = "1.13.4"
 
 # Debug
