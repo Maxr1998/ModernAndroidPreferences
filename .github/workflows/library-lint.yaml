@@ -11,7 +11,44 @@ permissions:
   security-events: write
 
 jobs:
+  api_check:
+    name: API check
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      - name: Setup Java
+        uses: actions/setup-java@cd89f46ac9d01407894225f350157564c9c7cee2 # v3.12.0
+        with:
+          distribution: temurin
+          java-version: 11
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@243af859f8ca30903d9d7f7936897ca0358ba691 # v2.7.1
+      - name: Run API check task
+        run: ./gradlew :library:apiCheck
+  detekt:
+    name: detekt
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      - name: Setup Java
+        uses: actions/setup-java@cd89f46ac9d01407894225f350157564c9c7cee2 # v3.12.0
+        with:
+          distribution: temurin
+          java-version: 11
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@243af859f8ca30903d9d7f7936897ca0358ba691 # v2.7.1
+      - name: Run detekt task
+        run: ./gradlew :library:detekt
+      - name: Upload SARIF files
+        uses: github/codeql-action/upload-sarif@a09933a12a80f87b87005513f0abb1494c27a716 # v2.21.4
+        if: ${{ always() }}
+        with:
+          sarif_file: .
   lint:
+    # Only run Android Lint in pull requests
+    if: ${{ github.event_name == 'pull_request' }}
     name: Lint
     runs-on: ubuntu-22.04
     steps:
@@ -24,8 +61,8 @@ jobs:
           java-version: 11
       - name: Setup Gradle
         uses: gradle/gradle-build-action@243af859f8ca30903d9d7f7936897ca0358ba691 # v2.7.1
-      - name: Run check task
-        run: ./gradlew :library:check
+      - name: Run lint task
+        run: ./gradlew :library:lintDebug
       - name: Upload SARIF files
         uses: github/codeql-action/upload-sarif@a09933a12a80f87b87005513f0abb1494c27a716 # v2.21.4
         if: ${{ always() }}
