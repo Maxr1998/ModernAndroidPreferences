@@ -36,9 +36,11 @@ internal class SelectionAdapter(
                 isVisible = item.summaryRes != -1 || item.summary != null
             }
             itemView.setOnClickListener {
-                preference.select(item)
-                if (allowMultiSelect) notifyItemChanged(position)
-                else notifySelectionChanged()
+                if (preference.shouldSelect(item)) {
+                    preference.select(item)
+                    if (allowMultiSelect) notifyItemChanged(position)
+                    else notifySelectionChanged()
+                }
             }
         }
     }

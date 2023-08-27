@@ -17,6 +17,8 @@ abstract class AbstractChoiceDialogPreference(
 
     internal var selectionAdapter: SelectionAdapter? = null
 
+    var onItemClickListener: OnItemClickListener? = null
+
     /**
      * Whether the summary should be auto-generated from the current selection.
      * If true, [summary] and [summaryRes] are ignored.
@@ -32,7 +34,11 @@ abstract class AbstractChoiceDialogPreference(
     override fun createDialog(context: Context): Dialog = Config.dialogBuilderFactory(context).apply {
         if (titleRes != DEFAULT_RES_ID) setTitle(titleRes) else setTitle(title)
         val dialogContent = RecyclerView(context).apply {
-            selectionAdapter = SelectionAdapter(this@AbstractChoiceDialogPreference, items, allowMultiSelect)
+            selectionAdapter = SelectionAdapter(
+                this@AbstractChoiceDialogPreference,
+                items,
+                allowMultiSelect,
+            )
             adapter = selectionAdapter
             layoutManager = LinearLayoutManager(context)
         }
@@ -46,6 +52,10 @@ abstract class AbstractChoiceDialogPreference(
             resetSelection()
         }
     }.create()
+
+    internal fun shouldSelect(item: SelectionItem): Boolean {
+        return onItemClickListener?.onItemSelected(item) ?: true
+    }
 
     internal abstract fun select(item: SelectionItem)
 
