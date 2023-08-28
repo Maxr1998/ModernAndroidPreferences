@@ -60,7 +60,30 @@ abstract class AbstractPreference internal constructor(val key: String) {
     var iconRes: Int = DEFAULT_RES_ID
     var icon: Drawable? = null
 
-    var badge: Badge? = null
+    @Deprecated(
+        "badgeInfo was introduced to allow for further badge customization. " +
+                "Use badgeInfo instead",
+        ReplaceWith("badgeInfo"),
+        DeprecationLevel.WARNING,
+    )
+    @StringRes
+    var badgeRes: Int = DEFAULT_RES_ID
+        set(value) {
+            badgeInfo = Badge(value)
+        }
+
+    @Deprecated(
+        "badgeInfo was introduced to allow for further badge customization. " +
+                "Use badgeInfo instead",
+        ReplaceWith("badgeInfo"),
+        DeprecationLevel.WARNING,
+    )
+    var badge: CharSequence? = null
+        set(value) {
+            badgeInfo = Badge(value)
+        }
+
+    var badgeInfo: Badge? = null
 
     // State
     var visible = true
@@ -74,7 +97,7 @@ abstract class AbstractPreference internal constructor(val key: String) {
         summaryDisabledRes = other.summaryDisabledRes
         icon = other.icon
         iconRes = other.iconRes
-        badge = other.badge
+        badgeInfo = other.badgeInfo
 
         visible = other.visible
     }
@@ -159,7 +182,10 @@ open class Preference(key: String) : AbstractPreference(key) {
     }
 
     protected open fun resolveSummary(context: Context): CharSequence? = when {
-        !enabled && summaryDisabledRes != DEFAULT_RES_ID -> context.resources.getText(summaryDisabledRes)
+        !enabled && summaryDisabledRes != DEFAULT_RES_ID -> context.resources.getText(
+            summaryDisabledRes
+        )
+
         !enabled && summaryDisabled != null -> summaryDisabled
         summaryRes != -1 -> context.resources.getText(summaryRes)
         summary != null -> summary
@@ -179,7 +205,8 @@ open class Preference(key: String) : AbstractPreference(key) {
 
         preBindListener?.onPreBind(this, holder)
 
-        holder.itemView.layoutParams.height = if (visible) ViewGroup.LayoutParams.WRAP_CONTENT else 0
+        holder.itemView.layoutParams.height =
+            if (visible) ViewGroup.LayoutParams.WRAP_CONTENT else 0
         if (!visible) {
             holder.itemView.isVisible = false
             return
@@ -203,7 +230,8 @@ open class Preference(key: String) : AbstractPreference(key) {
         holder.iconFrame.apply {
             isVisible = itemVisible || !preferenceParent.collapseIcon
             if (isVisible && this is LinearLayout) {
-                gravity = if (preferenceParent.centerIcon) Gravity.CENTER else Gravity.START or Gravity.CENTER_VERTICAL
+                gravity =
+                    if (preferenceParent.centerIcon) Gravity.CENTER else Gravity.START or Gravity.CENTER_VERTICAL
             }
         }
         holder.title.apply {
@@ -219,8 +247,13 @@ open class Preference(key: String) : AbstractPreference(key) {
         holder.badge?.apply {
             itemVisible = true
             when {
-                badge != null && badge?.textRes != DEFAULT_RES_ID -> badge?.textRes?.let { textRes -> setText(textRes) }
-                badge != null && badge?.text != null -> text = badge?.text
+                badgeInfo != null && badgeInfo?.textRes != DEFAULT_RES_ID -> badgeInfo?.textRes?.let { textRes ->
+                    setText(
+                        textRes
+                    )
+                }
+
+                badgeInfo != null && badgeInfo?.text != null -> text = badgeInfo?.text
                 else -> {
                     text = null
                     itemVisible = false
@@ -229,7 +262,7 @@ open class Preference(key: String) : AbstractPreference(key) {
             isVisible = itemVisible
         }
         holder.apply {
-            this@Preference.badge?.badgeColor?.let { this.setBadgeColor(it) }
+            this@Preference.badgeInfo?.badgeColor?.let { this.setBadgeColor(it) }
         }
         holder.widgetFrame?.apply {
             isVisible = childCount > 0 && this@Preference !is SeekBarPreference
@@ -283,7 +316,8 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    fun getBoolean(defaultValue: Boolean): Boolean = prefs?.getBoolean(key, defaultValue) ?: defaultValue
+    fun getBoolean(defaultValue: Boolean): Boolean =
+        prefs?.getBoolean(key, defaultValue) ?: defaultValue
 
     /**
      * Save a String for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
@@ -465,7 +499,10 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
     ) : AbstractPreference(key), Appendable {
         constructor(context: Context?) : this(context, KEY_ROOT_SCREEN)
         constructor(builder: Builder, key: String = "") : this(builder.context, key)
-        constructor(collapse: CollapsePreference, key: String = "") : this(collapse.screen?.context, key)
+        constructor(collapse: CollapsePreference, key: String = "") : this(
+            collapse.screen?.context,
+            key
+        )
 
         // Internal structures
         internal var prefs: SharedPreferences? = null
