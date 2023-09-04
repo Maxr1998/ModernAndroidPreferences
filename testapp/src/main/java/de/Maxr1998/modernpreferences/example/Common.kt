@@ -155,11 +155,7 @@ object Common {
             val selectableItems = listOf(
                 SelectionItem("key_0", "Option 1", null),
                 SelectionItem("key_1", "Option 2", "Second option"),
-                SelectionItem(
-                    "key_2",
-                    "Option 3",
-                    "You can put anything you want into this summary!"
-                ),
+                SelectionItem("key_2", "Option 3", "You can put anything you want into this summary!"),
             )
             singleChoice("single-choice-dialog", selectableItems) {
                 title = "Single choice selection dialog"
@@ -176,7 +172,7 @@ object Common {
             expandText("expand-text") {
                 title = "Expandable text"
                 text = "This is an example implementation of ModernAndroidPreferences, check out " +
-                        "the source on https://github.com/Maxr1998/ModernAndroidPreferences"
+                    "the source on https://github.com/Maxr1998/ModernAndroidPreferences"
             }
             collapse {
                 pref("collapsed_one") {
@@ -192,8 +188,7 @@ object Common {
         }
         subScreen("list") {
             title = "Long list"
-            summary =
-                "A longer list to see how well library performs thanks to the backing RecyclerView"
+            summary = "A longer list to see how well library performs thanks to the backing RecyclerView"
             iconRes = R.drawable.ic_list_24dp
             collapseIcon = true
 
