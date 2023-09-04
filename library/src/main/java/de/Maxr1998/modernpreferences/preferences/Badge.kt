@@ -4,11 +4,11 @@ import android.content.res.ColorStateList
 import androidx.annotation.StringRes
 import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 
-class Badge private constructor(
+data class Badge internal constructor(
     @StringRes
-    var textRes: Int = DEFAULT_RES_ID,
-    var text: CharSequence? = null,
-    var badgeColor: ColorStateList? = null,
+    val textRes: Int = DEFAULT_RES_ID,
+    val text: CharSequence? = null,
+    val badgeColor: ColorStateList? = null,
 ) {
     constructor(text: CharSequence?, badgeColor: ColorStateList? = null) : this(
         textRes = DEFAULT_RES_ID,
