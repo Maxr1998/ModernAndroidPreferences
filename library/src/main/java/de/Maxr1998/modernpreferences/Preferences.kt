@@ -245,9 +245,7 @@ open class Preference(key: String) : AbstractPreference(key) {
                 }
                 isVisible = badgeInfo.isVisible
             }
-            if (badgeInfo.badgeColor != null) {
-                holder.setBadgeColor(badgeInfo.badgeColor)
-            }
+            holder.setBadgeColor(badgeInfo.badgeColor)
         } else {
             holder.badge?.isVisible = false
         }
