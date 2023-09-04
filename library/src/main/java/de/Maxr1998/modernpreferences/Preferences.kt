@@ -295,7 +295,8 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    fun getInt(defaultValue: Int): Int = prefs?.getInt(key, defaultValue) ?: defaultValue
+    fun getInt(defaultValue: Int): Int =
+        prefs?.getInt(key, defaultValue) ?: defaultValue
 
     /**
      * Save a boolean for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]

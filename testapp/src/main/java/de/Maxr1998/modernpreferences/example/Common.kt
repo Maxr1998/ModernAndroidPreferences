@@ -91,11 +91,7 @@ object Common {
                 title = "Toggle the switch above"
                 dependency = "switch"
                 clickListener = Preference.OnClickListener { _, holder ->
-                    Toast.makeText(
-                        holder.itemView.context,
-                        "Preference was clicked!",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(holder.itemView.context, "Preference was clicked!", Toast.LENGTH_SHORT).show()
                     false
                 }
             }
