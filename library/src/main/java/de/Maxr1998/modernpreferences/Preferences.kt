@@ -241,8 +241,7 @@ open class Preference(key: String) : AbstractPreference(key) {
             holder.badge?.apply {
                 when {
                     badgeInfo.textRes != DEFAULT_RES_ID -> setText(badgeInfo.textRes)
-                    badgeInfo.text != null -> text = badgeInfo.text
-                    else -> text = null
+                    else -> text = badgeInfo.text
                 }
                 isVisible = badgeInfo.isVisible
             }
