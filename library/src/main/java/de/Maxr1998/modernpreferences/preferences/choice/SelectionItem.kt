@@ -1,8 +1,8 @@
 package de.Maxr1998.modernpreferences.preferences.choice
 
 import androidx.annotation.StringRes
-import de.Maxr1998.modernpreferences.helpers.Badge
 import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
+import de.Maxr1998.modernpreferences.preferences.Badge
 
 /**
  * Represents a selectable item in a selection dialog preference,
