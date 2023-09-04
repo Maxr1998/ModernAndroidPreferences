@@ -78,11 +78,6 @@ object Common {
                 title = "And badges!"
                 badgeInfo = Badge("pro", ColorStateList.valueOf(Color.RED))
             }
-            pref("with-badge-deprecated") {
-                title = "Old badge!"
-                summary = "This way of using badges is deprecated!"
-                badge = "deprecated"
-            }
             accentButtonPref("accent-button") {
                 title = "Button style".uppercase(Locale.getDefault())
             }
