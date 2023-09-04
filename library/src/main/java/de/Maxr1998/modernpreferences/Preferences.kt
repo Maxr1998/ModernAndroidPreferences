@@ -61,10 +61,8 @@ abstract class AbstractPreference internal constructor(val key: String) {
     var icon: Drawable? = null
 
     @Deprecated(
-        "badgeInfo was introduced to allow for further badge customization. " +
-                "Use badgeInfo instead",
-        ReplaceWith("badgeInfo"),
-        DeprecationLevel.WARNING,
+        message = "Replace with badgeInfo, which was introduced to allow for further badge customization",
+        level = DeprecationLevel.WARNING,
     )
     @StringRes
     var badgeRes: Int = DEFAULT_RES_ID
@@ -73,10 +71,8 @@ abstract class AbstractPreference internal constructor(val key: String) {
         }
 
     @Deprecated(
-        "badgeInfo was introduced to allow for further badge customization. " +
-                "Use badgeInfo instead",
-        ReplaceWith("badgeInfo"),
-        DeprecationLevel.WARNING,
+        message = "Replace with badgeInfo, which was introduced to allow for further badge customization",
+        level = DeprecationLevel.WARNING,
     )
     var badge: CharSequence? = null
         set(value) {
