@@ -27,6 +27,7 @@ internal class SelectionAdapter(
         return SelectionViewHolder(view)
     }
 
+    @Suppress("ComplexMethod", "NestedBlockDepth")
     override fun onBindViewHolder(holder: SelectionViewHolder, position: Int) {
         val item = items[position]
         holder.apply {

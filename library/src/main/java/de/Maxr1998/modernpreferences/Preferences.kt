@@ -482,7 +482,9 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
     override fun equals(other: Any?): Boolean = when {
         other == null -> false
         this === other -> true
-        this::class.java == other::class.java && key == (other as PreferenceScreen).key && preferences == other.preferences -> true
+        this::class.java == other::class.java &&
+            key == (other as PreferenceScreen).key &&
+            preferences == other.preferences -> true
         else -> false
     }
 
