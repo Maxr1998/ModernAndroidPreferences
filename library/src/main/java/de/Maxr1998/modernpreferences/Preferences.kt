@@ -64,8 +64,8 @@ abstract class AbstractPreference internal constructor(val key: String) {
         message = "Replace with badgeInfo, which was introduced to allow for further badge customization",
         level = DeprecationLevel.WARNING,
     )
-    @StringRes
-    var badgeRes: Int = DEFAULT_RES_ID
+    var badgeRes: Int
+        get() = badgeInfo?.textRes ?: DEFAULT_RES_ID
         set(value) {
             badgeInfo = Badge(value)
         }
@@ -74,7 +74,8 @@ abstract class AbstractPreference internal constructor(val key: String) {
         message = "Replace with badgeInfo, which was introduced to allow for further badge customization",
         level = DeprecationLevel.WARNING,
     )
-    var badge: CharSequence? = null
+    var badge: CharSequence?
+        get() = badgeInfo?.text
         set(value) {
             badgeInfo = Badge(value)
         }
