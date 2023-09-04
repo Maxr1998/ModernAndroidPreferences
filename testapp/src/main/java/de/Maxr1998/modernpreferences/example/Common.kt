@@ -147,6 +147,7 @@ object Common {
                 SelectionItem("key_0", "Option 1", null),
                 SelectionItem("key_1", "Option 2", "Second option"),
                 SelectionItem("key_2", "Option 3", "You can put anything you want into this summary!"),
+                SelectionItem("key_3", "Option 4", "Even supports badges!", Badge("pro")),
             )
             singleChoice("single-choice-dialog", selectableItems) {
                 title = "Single choice selection dialog"
