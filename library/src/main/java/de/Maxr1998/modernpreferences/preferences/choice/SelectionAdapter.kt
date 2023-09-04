@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.R
+import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 
 internal class SelectionAdapter(
     private val preference: AbstractChoiceDialogPreference,
@@ -45,10 +46,15 @@ internal class SelectionAdapter(
                 isVisible = item.summaryRes != -1 || item.summary != null
             }
             badge.apply {
-                item.badgeInfo?.let { badgeInfo ->
-                    if (badgeInfo.textRes != -1) setText(badgeInfo.textRes) else text = badgeInfo.text
+                if (item.badgeInfo != null) {
+                    when {
+                        item.badgeInfo.textRes != DEFAULT_RES_ID -> setText(item.badgeInfo.textRes)
+                        else -> text = item.badgeInfo.text
+                    }
+                    isVisible = item.badgeInfo.isVisible
+                } else {
+                    isVisible = false
                 }
-                isVisible = item.badgeInfo?.isVisible == true
 
                 val badgeColor = item.badgeInfo?.badgeColor ?: accentTextColor
                 setTextColor(badgeColor)
