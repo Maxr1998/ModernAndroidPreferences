@@ -15,9 +15,13 @@ class Badge private constructor(
         text = text,
         badgeColor = badgeColor,
     )
+
     constructor(@StringRes textRes: Int, badgeColor: ColorStateList? = null) : this(
         textRes = textRes,
         text = null,
         badgeColor = badgeColor,
     )
+
+    val isVisible: Boolean
+        get() = textRes != DEFAULT_RES_ID || text != null
 }

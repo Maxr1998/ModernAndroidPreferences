@@ -47,7 +47,7 @@ internal class SelectionAdapter(
                 item.badge?.let { badge ->
                     if (badge.textRes != -1) setText(badge.textRes) else text = badge.text
                 }
-                isVisible = item.badge != null && (item.badge?.textRes != -1 || item.badge.text != null)
+                isVisible = item.badge?.isVisible == true
 
                 val badgeColor = item.badge?.badgeColor ?: accentTextColor
                 setTextColor(badgeColor)
