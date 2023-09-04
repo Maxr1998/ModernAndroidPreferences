@@ -31,12 +31,12 @@
         android:fontFamily="sans-serif-condensed-medium"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:text="Badge"
         android:textAllCaps="true"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="pro" />
 
     <TextView
         android:id="@android:id/title"
