@@ -45,12 +45,12 @@ internal class SelectionAdapter(
                 isVisible = item.summaryRes != -1 || item.summary != null
             }
             badge.apply {
-                item.badge?.let { badge ->
-                    if (badge.textRes != -1) setText(badge.textRes) else text = badge.text
+                item.badgeInfo?.let { badgeInfo ->
+                    if (badgeInfo.textRes != -1) setText(badgeInfo.textRes) else text = badgeInfo.text
                 }
-                isVisible = item.badge?.isVisible == true
+                isVisible = item.badgeInfo?.isVisible == true
 
-                val badgeColor = item.badge?.badgeColor ?: accentTextColor
+                val badgeColor = item.badgeInfo?.badgeColor ?: accentTextColor
                 setTextColor(badgeColor)
                 backgroundTintList = badgeColor
                 backgroundTintMode = PorterDuff.Mode.SRC_ATOP

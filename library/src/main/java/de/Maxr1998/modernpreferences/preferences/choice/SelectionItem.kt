@@ -19,7 +19,7 @@ data class SelectionItem private constructor(
     @StringRes
     val summaryRes: Int,
     val summary: CharSequence?,
-    val badge: Badge?,
+    val badgeInfo: Badge?,
 ) {
     /**
      * @see SelectionItem
@@ -30,14 +30,14 @@ data class SelectionItem private constructor(
         titleRes: Int,
         @StringRes
         summaryRes: Int = DEFAULT_RES_ID,
-        badge: Badge? = null,
+        badgeInfo: Badge? = null,
     ) : this(
         key = key,
         titleRes = titleRes,
         title = "",
         summaryRes = summaryRes,
         summary = null,
-        badge = badge,
+        badgeInfo = badgeInfo,
     )
 
     /**
@@ -47,13 +47,13 @@ data class SelectionItem private constructor(
         key: String,
         title: CharSequence,
         summary: CharSequence? = null,
-        badge: Badge? = null,
+        badgeInfo: Badge? = null,
     ) : this(
         key = key,
         titleRes = DEFAULT_RES_ID,
         title = title,
         summaryRes = DEFAULT_RES_ID,
         summary = summary,
-        badge = badge,
+        badgeInfo = badgeInfo,
     )
 }
