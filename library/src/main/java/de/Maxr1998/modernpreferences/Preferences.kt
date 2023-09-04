@@ -236,22 +236,21 @@ open class Preference(key: String) : AbstractPreference(key) {
             maxLines = Config.summaryMaxLines
             isVisible = summary != null
         }
-        holder.badge?.apply {
-            itemVisible = true
-            when {
-                badgeInfo != null && badgeInfo?.textRes != DEFAULT_RES_ID -> badgeInfo?.textRes?.let { textRes ->
-                    setText(textRes)
+        val badgeInfo = badgeInfo
+        if (badgeInfo != null) {
+            holder.badge?.apply {
+                when {
+                    badgeInfo.textRes != DEFAULT_RES_ID -> setText(badgeInfo.textRes)
+                    badgeInfo.text != null -> text = badgeInfo.text
+                    else -> text = null
                 }
-                badgeInfo != null && badgeInfo?.text != null -> text = badgeInfo?.text
-                else -> {
-                    text = null
-                    itemVisible = false
-                }
+                isVisible = badgeInfo.isVisible
             }
-            isVisible = itemVisible
-        }
-        holder.apply {
-            this@Preference.badgeInfo?.badgeColor?.let { this.setBadgeColor(it) }
+            if (badgeInfo.badgeColor != null) {
+                holder.setBadgeColor(badgeInfo.badgeColor)
+            }
+        } else {
+            holder.badge?.isVisible = false
         }
         holder.widgetFrame?.apply {
             isVisible = childCount > 0 && this@Preference !is SeekBarPreference
