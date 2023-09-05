@@ -28,13 +28,6 @@ public abstract class de/Maxr1998/modernpreferences/AbstractPreference {
 	public final fun setVisible (Z)V
 }
 
-public final class de/Maxr1998/modernpreferences/BuildConfig {
-	public static final field BUILD_TYPE Ljava/lang/String;
-	public static final field DEBUG Z
-	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
-	public fun <init> ()V
-}
-
 public class de/Maxr1998/modernpreferences/Preference : de/Maxr1998/modernpreferences/AbstractPreference {
 	public fun <init> (Ljava/lang/String;)V
 	public fun bindViews (Lde/Maxr1998/modernpreferences/PreferencesAdapter$ViewHolder;)V

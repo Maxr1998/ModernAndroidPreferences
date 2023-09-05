@@ -263,7 +263,7 @@ class PreferencesAdapter @VisibleForTesting constructor(
 
         init {
             // Apply accent text color via theme attribute from library or fallback to AppCompat
-            val attrs = intArrayOf(R.attr.mapAccentTextColor, R.attr.colorAccent)
+            val attrs = intArrayOf(R.attr.mapAccentTextColor, androidx.appcompat.R.attr.colorAccent)
             accentTextColor = itemView.context.theme.obtainStyledAttributes(attrs).use { array ->
                 // Return first resolved attribute or null
                 if (array.indexCount > 0) array.getColorStateList(array.getIndex(0)) else null
