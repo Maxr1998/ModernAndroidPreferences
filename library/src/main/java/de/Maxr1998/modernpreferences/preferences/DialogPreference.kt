@@ -69,10 +69,6 @@ abstract class DialogPreference(key: String) : Preference(key), LifecycleEventOb
                     createAndShowDialog(source)
                 }
             }
-            Lifecycle.Event.ON_STOP -> {
-                @Suppress("DEPRECATION")
-                onStop()
-            }
             Lifecycle.Event.ON_DESTROY -> {
                 dialog?.apply {
                     recreateDialog = isShowing
@@ -82,12 +78,5 @@ abstract class DialogPreference(key: String) : Preference(key), LifecycleEventOb
             }
             else -> Unit // ignore
         }
-    }
-
-    /**
-     * Kept for backwards compatibility
-     */
-    @Deprecated("Override onStateChanged() instead")
-    open fun onStop() {
     }
 }

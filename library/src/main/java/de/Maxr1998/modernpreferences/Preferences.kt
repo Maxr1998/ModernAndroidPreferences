@@ -330,15 +330,6 @@ open class Preference(key: String) : AbstractPreference(key) {
         return prefs?.getString(key, null)
     }
 
-    @Deprecated(
-        "Passing a default value is not supported anymore, " +
-            "use the nullable replacement getString() and an elvis operator",
-        ReplaceWith("getString() ?: defaultValue"),
-        DeprecationLevel.ERROR,
-    )
-    fun getString(@Suppress("UNUSED_PARAMETER") defaultValue: String): String =
-        throw UnsupportedOperationException("Not implemented")
-
     fun commitStringSet(values: Set<String>) {
         prefs?.edit {
             putStringSet(key, values)

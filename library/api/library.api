@@ -46,7 +46,6 @@ public class de/Maxr1998/modernpreferences/Preference : de/Maxr1998/modernprefer
 	public final fun getPreBindListener ()Lde/Maxr1998/modernpreferences/Preference$OnPreBindListener;
 	public final fun getScreenPosition ()I
 	public final fun getString ()Ljava/lang/String;
-	public final fun getString (Ljava/lang/String;)Ljava/lang/String;
 	public final fun getStringSet ()Ljava/util/Set;
 	public fun getWidgetLayoutResource ()I
 	public final fun hasParent (Ljava/lang/String;)Z
@@ -285,7 +284,6 @@ public abstract class de/Maxr1998/modernpreferences/preferences/DialogPreference
 	public final fun dismiss ()Lkotlin/Unit;
 	public fun onClick (Lde/Maxr1998/modernpreferences/PreferencesAdapter$ViewHolder;)V
 	public fun onStateChanged (Landroidx/lifecycle/LifecycleOwner;Landroidx/lifecycle/Lifecycle$Event;)V
-	public fun onStop ()V
 }
 
 public final class de/Maxr1998/modernpreferences/preferences/EditTextPreference : de/Maxr1998/modernpreferences/preferences/DialogPreference {
