@@ -259,10 +259,12 @@ class PreferencesAdapter @VisibleForTesting constructor(
         val widgetFrame: ViewGroup? = itemView.findViewById(R.id.map_widget_frame)
         val widget: View? = widgetFrame?.getChildAt(0)
 
+        private val accentTextColor: ColorStateList
+
         init {
             // Apply accent text color via theme attribute from library or fallback to AppCompat
             val attrs = intArrayOf(R.attr.mapAccentTextColor, R.attr.colorAccent)
-            val accentTextColor = itemView.context.theme.obtainStyledAttributes(attrs).use { array ->
+            accentTextColor = itemView.context.theme.obtainStyledAttributes(attrs).use { array ->
                 // Return first resolved attribute or null
                 if (array.indexCount > 0) array.getColorStateList(array.getIndex(0)) else null
             } ?: ColorStateList.valueOf(Color.BLACK) // fallback to black if no colorAccent is defined (unlikely)
@@ -273,9 +275,14 @@ class PreferencesAdapter @VisibleForTesting constructor(
                 -> title.setTextColor(accentTextColor)
             }
 
+            // Set initial badge color
+            setBadgeColor(null)
+        }
+
+        internal fun setBadgeColor(color: ColorStateList?) {
             badge?.apply {
-                setTextColor(accentTextColor)
-                backgroundTintList = accentTextColor
+                setTextColor(color ?: accentTextColor)
+                backgroundTintList = color ?: accentTextColor
                 backgroundTintMode = PorterDuff.Mode.SRC_ATOP
             }
         }

@@ -36,6 +36,7 @@ import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 import de.Maxr1998.modernpreferences.helpers.DependencyManager
 import de.Maxr1998.modernpreferences.helpers.KEY_ROOT_SCREEN
 import de.Maxr1998.modernpreferences.helpers.PreferenceMarker
+import de.Maxr1998.modernpreferences.preferences.Badge
 import de.Maxr1998.modernpreferences.preferences.CollapsePreference
 import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
 import java.util.concurrent.atomic.AtomicBoolean
@@ -59,9 +60,27 @@ abstract class AbstractPreference internal constructor(val key: String) {
     var iconRes: Int = DEFAULT_RES_ID
     var icon: Drawable? = null
 
-    @StringRes
-    var badgeRes: Int = DEFAULT_RES_ID
-    var badge: CharSequence? = null
+    @Deprecated(
+        message = "Replace with badgeInfo, which was introduced to allow for further badge customization",
+        level = DeprecationLevel.WARNING,
+    )
+    var badgeRes: Int
+        get() = badgeInfo?.textRes ?: DEFAULT_RES_ID
+        set(value) {
+            badgeInfo = Badge(value)
+        }
+
+    @Deprecated(
+        message = "Replace with badgeInfo, which was introduced to allow for further badge customization",
+        level = DeprecationLevel.WARNING,
+    )
+    var badge: CharSequence?
+        get() = badgeInfo?.text
+        set(value) {
+            badgeInfo = Badge(value)
+        }
+
+    var badgeInfo: Badge? = null
 
     // State
     var visible = true
@@ -75,8 +94,7 @@ abstract class AbstractPreference internal constructor(val key: String) {
         summaryDisabledRes = other.summaryDisabledRes
         icon = other.icon
         iconRes = other.iconRes
-        badge = other.badge
-        badgeRes = other.badgeRes
+        badgeInfo = other.badgeInfo
 
         visible = other.visible
     }
@@ -218,17 +236,18 @@ open class Preference(key: String) : AbstractPreference(key) {
             maxLines = Config.summaryMaxLines
             isVisible = summary != null
         }
-        holder.badge?.apply {
-            itemVisible = true
-            when {
-                badgeRes != DEFAULT_RES_ID -> setText(badgeRes)
-                badge != null -> text = badge
-                else -> {
-                    text = null
-                    itemVisible = false
+        val badgeInfo = badgeInfo
+        if (badgeInfo != null) {
+            holder.badge?.apply {
+                when {
+                    badgeInfo.textRes != DEFAULT_RES_ID -> setText(badgeInfo.textRes)
+                    else -> text = badgeInfo.text
                 }
+                isVisible = badgeInfo.isVisible
             }
-            isVisible = itemVisible
+            holder.setBadgeColor(badgeInfo.badgeColor)
+        } else {
+            holder.badge?.isVisible = false
         }
         holder.widgetFrame?.apply {
             isVisible = childCount > 0 && this@Preference !is SeekBarPreference

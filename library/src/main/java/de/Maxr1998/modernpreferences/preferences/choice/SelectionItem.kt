@@ -2,6 +2,7 @@ package de.Maxr1998.modernpreferences.preferences.choice
 
 import androidx.annotation.StringRes
 import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
+import de.Maxr1998.modernpreferences.preferences.Badge
 
 /**
  * Represents a selectable item in a selection dialog preference,
@@ -18,16 +19,41 @@ data class SelectionItem private constructor(
     @StringRes
     val summaryRes: Int,
     val summary: CharSequence?,
+    val badgeInfo: Badge?,
 ) {
     /**
      * @see SelectionItem
      */
-    constructor(key: String, @StringRes titleRes: Int, @StringRes summaryRes: Int = DEFAULT_RES_ID) :
-        this(key, titleRes, "", summaryRes, null)
+    constructor(
+        key: String,
+        @StringRes
+        titleRes: Int,
+        @StringRes
+        summaryRes: Int = DEFAULT_RES_ID,
+        badgeInfo: Badge? = null,
+    ) : this(
+        key = key,
+        titleRes = titleRes,
+        title = "",
+        summaryRes = summaryRes,
+        summary = null,
+        badgeInfo = badgeInfo,
+    )
 
     /**
      * @see SelectionItem
      */
-    constructor(key: String, title: CharSequence, summary: CharSequence? = null) :
-        this(key, DEFAULT_RES_ID, title, DEFAULT_RES_ID, summary)
+    constructor(
+        key: String,
+        title: CharSequence,
+        summary: CharSequence? = null,
+        badgeInfo: Badge? = null,
+    ) : this(
+        key = key,
+        titleRes = DEFAULT_RES_ID,
+        title = title,
+        summaryRes = DEFAULT_RES_ID,
+        summary = summary,
+        badgeInfo = badgeInfo,
+    )
 }

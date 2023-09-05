@@ -19,6 +19,8 @@
 package de.Maxr1998.modernpreferences.example
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.widget.Toast
@@ -38,6 +40,7 @@ import de.Maxr1998.modernpreferences.helpers.seekBar
 import de.Maxr1998.modernpreferences.helpers.singleChoice
 import de.Maxr1998.modernpreferences.helpers.subScreen
 import de.Maxr1998.modernpreferences.helpers.switch
+import de.Maxr1998.modernpreferences.preferences.Badge
 import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
 import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
 import java.util.Locale
@@ -73,7 +76,7 @@ object Common {
             }
             pref("with-badge") {
                 title = "And badges!"
-                badge = "pro"
+                badgeInfo = Badge("pro", ColorStateList.valueOf(Color.RED))
             }
             accentButtonPref("accent-button") {
                 title = "Button style".uppercase(Locale.getDefault())
@@ -144,6 +147,7 @@ object Common {
                 SelectionItem("key_0", "Option 1", null),
                 SelectionItem("key_1", "Option 2", "Second option"),
                 SelectionItem("key_2", "Option 3", "You can put anything you want into this summary!"),
+                SelectionItem("key_3", "Option 4", "Even supports badges!", Badge("pro")),
             )
             singleChoice("single-choice-dialog", selectableItems) {
                 title = "Single choice selection dialog"

@@ -1,13 +1,18 @@
 package de.Maxr1998.modernpreferences.preferences.choice
 
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.TextView
+import androidx.core.content.res.use
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.R
+import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
 
 internal class SelectionAdapter(
     private val preference: AbstractChoiceDialogPreference,
@@ -24,6 +29,7 @@ internal class SelectionAdapter(
         return SelectionViewHolder(view)
     }
 
+    @Suppress("ComplexMethod", "NestedBlockDepth")
     override fun onBindViewHolder(holder: SelectionViewHolder, position: Int) {
         val item = items[position]
         holder.apply {
@@ -34,6 +40,18 @@ internal class SelectionAdapter(
             summary.apply {
                 if (item.summaryRes != -1) setText(item.summaryRes) else text = item.summary
                 isVisible = item.summaryRes != -1 || item.summary != null
+            }
+            if (item.badgeInfo != null) {
+                badge.apply {
+                    when {
+                        item.badgeInfo.textRes != DEFAULT_RES_ID -> setText(item.badgeInfo.textRes)
+                        else -> text = item.badgeInfo.text
+                    }
+                    isVisible = item.badgeInfo.isVisible
+                }
+                setBadgeColor(item.badgeInfo.badgeColor)
+            } else {
+                badge.isVisible = false
             }
             itemView.setOnClickListener {
                 if (preference.shouldSelect(item)) {
@@ -55,5 +73,28 @@ internal class SelectionAdapter(
         val selector: CompoundButton = itemView.findViewById(R.id.map_selector)
         val title: TextView = itemView.findViewById(android.R.id.title)
         val summary: TextView = itemView.findViewById(android.R.id.summary)
+        val badge: TextView = itemView.findViewById(R.id.badge)
+
+        private val accentTextColor: ColorStateList
+
+        init {
+            // Apply accent text color via theme attribute from library or fallback to AppCompat
+            val attrs = intArrayOf(R.attr.mapAccentTextColor, R.attr.colorAccent)
+            accentTextColor = itemView.context.theme.obtainStyledAttributes(attrs).use { array ->
+                // Return first resolved attribute or null
+                if (array.indexCount > 0) array.getColorStateList(array.getIndex(0)) else null
+            } ?: ColorStateList.valueOf(Color.BLACK) // fallback to black if no colorAccent is defined (unlikely)
+
+            // Set initial badge color
+            setBadgeColor(null)
+        }
+
+        internal fun setBadgeColor(color: ColorStateList?) {
+            badge.apply {
+                setTextColor(color ?: accentTextColor)
+                backgroundTintList = color ?: accentTextColor
+                backgroundTintMode = PorterDuff.Mode.SRC_ATOP
+            }
+        }
     }
 }

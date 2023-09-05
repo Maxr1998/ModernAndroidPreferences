@@ -1,6 +1,7 @@
 public abstract class de/Maxr1998/modernpreferences/AbstractPreference {
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBadge ()Ljava/lang/CharSequence;
+	public final fun getBadgeInfo ()Lde/Maxr1998/modernpreferences/preferences/Badge;
 	public final fun getBadgeRes ()I
 	public final fun getIcon ()Landroid/graphics/drawable/Drawable;
 	public final fun getIconRes ()I
@@ -14,6 +15,7 @@ public abstract class de/Maxr1998/modernpreferences/AbstractPreference {
 	public final fun getVisible ()Z
 	public fun hashCode ()I
 	public final fun setBadge (Ljava/lang/CharSequence;)V
+	public final fun setBadgeInfo (Lde/Maxr1998/modernpreferences/preferences/Badge;)V
 	public final fun setBadgeRes (I)V
 	public final fun setIcon (Landroid/graphics/drawable/Drawable;)V
 	public final fun setIconRes (I)V
@@ -242,6 +244,26 @@ public final class de/Maxr1998/modernpreferences/preferences/AccentButtonPrefere
 	public fun getWidgetLayoutResource ()I
 }
 
+public final class de/Maxr1998/modernpreferences/preferences/Badge {
+	public fun <init> ()V
+	public fun <init> (ILandroid/content/res/ColorStateList;)V
+	public synthetic fun <init> (ILandroid/content/res/ColorStateList;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/CharSequence;Landroid/content/res/ColorStateList;)V
+	public synthetic fun <init> (Ljava/lang/CharSequence;Landroid/content/res/ColorStateList;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/lang/CharSequence;
+	public final fun component3 ()Landroid/content/res/ColorStateList;
+	public final fun copy (ILjava/lang/CharSequence;Landroid/content/res/ColorStateList;)Lde/Maxr1998/modernpreferences/preferences/Badge;
+	public static synthetic fun copy$default (Lde/Maxr1998/modernpreferences/preferences/Badge;ILjava/lang/CharSequence;Landroid/content/res/ColorStateList;ILjava/lang/Object;)Lde/Maxr1998/modernpreferences/preferences/Badge;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBadgeColor ()Landroid/content/res/ColorStateList;
+	public final fun getText ()Ljava/lang/CharSequence;
+	public final fun getTextRes ()I
+	public fun hashCode ()I
+	public final fun isVisible ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class de/Maxr1998/modernpreferences/preferences/CategoryHeader : de/Maxr1998/modernpreferences/Preference {
 	public fun <init> (Ljava/lang/String;)V
 	public fun getWidgetLayoutResource ()I
@@ -419,18 +441,20 @@ public abstract interface class de/Maxr1998/modernpreferences/preferences/choice
 }
 
 public final class de/Maxr1998/modernpreferences/preferences/choice/SelectionItem {
-	public fun <init> (Ljava/lang/String;II)V
-	public synthetic fun <init> (Ljava/lang/String;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/CharSequence;Ljava/lang/CharSequence;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/CharSequence;Ljava/lang/CharSequence;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;IILde/Maxr1998/modernpreferences/preferences/Badge;)V
+	public synthetic fun <init> (Ljava/lang/String;IILde/Maxr1998/modernpreferences/preferences/Badge;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/CharSequence;Ljava/lang/CharSequence;Lde/Maxr1998/modernpreferences/preferences/Badge;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/CharSequence;Ljava/lang/CharSequence;Lde/Maxr1998/modernpreferences/preferences/Badge;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()I
 	public final fun component3 ()Ljava/lang/CharSequence;
 	public final fun component4 ()I
 	public final fun component5 ()Ljava/lang/CharSequence;
-	public final fun copy (Ljava/lang/String;ILjava/lang/CharSequence;ILjava/lang/CharSequence;)Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;
-	public static synthetic fun copy$default (Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;Ljava/lang/String;ILjava/lang/CharSequence;ILjava/lang/CharSequence;ILjava/lang/Object;)Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;
+	public final fun component6 ()Lde/Maxr1998/modernpreferences/preferences/Badge;
+	public final fun copy (Ljava/lang/String;ILjava/lang/CharSequence;ILjava/lang/CharSequence;Lde/Maxr1998/modernpreferences/preferences/Badge;)Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;
+	public static synthetic fun copy$default (Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;Ljava/lang/String;ILjava/lang/CharSequence;ILjava/lang/CharSequence;Lde/Maxr1998/modernpreferences/preferences/Badge;ILjava/lang/Object;)Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBadgeInfo ()Lde/Maxr1998/modernpreferences/preferences/Badge;
 	public final fun getKey ()Ljava/lang/String;
 	public final fun getSummary ()Ljava/lang/CharSequence;
 	public final fun getSummaryRes ()I
