@@ -32,7 +32,6 @@ android {
     compileSdk = 31
     defaultConfig {
         minSdk = 21
-        targetSdk = 31
     }
     buildTypes {
         getByName("release") {
@@ -45,7 +44,6 @@ android {
         }
     }
     kotlinOptions {
-        @Suppress("SuspiciousCollectionReassignment")
         freeCompilerArgs += listOf("-module-name", libraryName)
     }
     lint {
@@ -104,7 +102,7 @@ val sourcesJar by tasks.registering(Jar::class) {
 var ossrhUsername: String? = null
 var ossrhPassword: String? = null
 var githubToken: String? = null
-val propFile = project.file("key.properties")
+val propFile: File = project.file("key.properties")
 if (propFile.exists()) {
     val props = Properties()
     props.load(FileInputStream(propFile))
