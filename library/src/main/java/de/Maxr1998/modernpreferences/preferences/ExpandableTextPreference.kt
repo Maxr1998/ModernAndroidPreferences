@@ -50,8 +50,14 @@ class ExpandableTextPreference(key: String) : Preference(key) {
         }
         widget.tag = tv
         tv.apply {
-            if (textRes != -1) setText(textRes) else text = this@ExpandableTextPreference.text
-            typeface = if (monospace) Typeface.MONOSPACE else Typeface.SANS_SERIF
+            when {
+                textRes != -1 -> setText(textRes)
+                else -> text = this@ExpandableTextPreference.text
+            }
+            typeface = when {
+                monospace -> Typeface.MONOSPACE
+                else -> Typeface.SANS_SERIF
+            }
             with(context.obtainStyledAttributes(intArrayOf(R.attr.expandableTextBackgroundColor))) {
                 val fallback = ContextCompat.getColor(context, R.color.expandableTextBackgroundColorDefault)
                 setBackgroundColor(getColor(0, fallback))

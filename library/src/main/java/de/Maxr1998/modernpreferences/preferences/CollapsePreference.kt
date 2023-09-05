@@ -84,15 +84,17 @@ class CollapsePreference(screen: PreferenceScreen.Builder, key: String) : Prefer
 
     override fun onClick(holder: PreferencesAdapter.ViewHolder) {
         visible = false
-        for (i in preferences.indices)
+        for (i in preferences.indices) {
             preferences[i].visible = true
+        }
         parent?.requestRebind(screenPosition, 1 + preferences.size)
     }
 
     fun reset() {
         visible = true
-        for (i in preferences.indices)
+        for (i in preferences.indices) {
             preferences[i].visible = false
+        }
         parent?.requestRebind(screenPosition, 1 + preferences.size)
     }
 

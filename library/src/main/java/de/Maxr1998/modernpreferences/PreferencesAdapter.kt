@@ -97,7 +97,9 @@ class PreferencesAdapter @VisibleForTesting constructor(
     init {
         // Necessary for testing, because setHasStableIds calls into an (in the stubbed android.jar)
         // uninitialized observer list which causes a NPE
-        if (hasStableIds) setHasStableIds(true)
+        if (hasStableIds) {
+            setHasStableIds(true)
+        }
         root?.let(::setRootScreen)
     }
 
@@ -127,8 +129,10 @@ class PreferencesAdapter @VisibleForTesting constructor(
     @VisibleForTesting
     @MainThread
     internal fun openScreen(screen: PreferenceScreen) {
-        secondScreenAdapter?.setRootScreen(screen) ?: /* ELSE */ run {
-            if (beforeScreenChangeListener?.beforeScreenChange(screen) == false) return
+        secondScreenAdapter?.setRootScreen(screen) ?: run { // ELSE
+            if (beforeScreenChangeListener?.beforeScreenChange(screen) == false) {
+                return
+            }
 
             currentScreen.adapter = null
             screenStack.push(screen)
@@ -191,7 +195,9 @@ class PreferencesAdapter @VisibleForTesting constructor(
         }
 
         // Inflate preference widget
-        if (viewType > 0) layoutInflater.inflate(viewType, view.findViewById(R.id.map_widget_frame), true)
+        if (viewType > 0) {
+            layoutInflater.inflate(viewType, view.findViewById(R.id.map_widget_frame), true)
+        }
 
         return ViewHolder(viewType, view)
     }
@@ -206,7 +212,9 @@ class PreferencesAdapter @VisibleForTesting constructor(
         holder.itemView.setOnClickListener {
             if (pref is PreferenceScreen) {
                 openScreen(pref) // Navigate to sub screen
-            } else pref.performClick(holder)
+            } else {
+                pref.performClick(holder)
+            }
         }
     }
 
@@ -235,10 +243,12 @@ class PreferencesAdapter @VisibleForTesting constructor(
 
     private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(r: RecyclerView, state: Int) {
-            if (state == RecyclerView.SCROLL_STATE_IDLE) currentScreen.apply {
-                val layoutManager = r.layoutManager as LinearLayoutManager
-                scrollPosition = layoutManager.findFirstCompletelyVisibleItemPosition()
-                scrollOffset = r.findViewHolderForAdapterPosition(scrollPosition)?.run { itemView.top } ?: 0
+            if (state == RecyclerView.SCROLL_STATE_IDLE) {
+                currentScreen.apply {
+                    val layoutManager = r.layoutManager as LinearLayoutManager
+                    scrollPosition = layoutManager.findFirstCompletelyVisibleItemPosition()
+                    scrollOffset = r.findViewHolderForAdapterPosition(scrollPosition)?.run { itemView.top } ?: 0
+                }
             }
         }
     }
@@ -266,7 +276,10 @@ class PreferencesAdapter @VisibleForTesting constructor(
             val attrs = intArrayOf(R.attr.mapAccentTextColor, androidx.appcompat.R.attr.colorAccent)
             accentTextColor = itemView.context.theme.obtainStyledAttributes(attrs).use { array ->
                 // Return first resolved attribute or null
-                if (array.indexCount > 0) array.getColorStateList(array.getIndex(0)) else null
+                when {
+                    array.indexCount > 0 -> array.getColorStateList(array.getIndex(0))
+                    else -> null
+                }
             } ?: ColorStateList.valueOf(Color.BLACK) // fallback to black if no colorAccent is defined (unlikely)
 
             when (type) {
@@ -340,8 +353,11 @@ class PreferencesAdapter @VisibleForTesting constructor(
         if (screenStack.size != 2) return false
         state.screenPath.forEach { i ->
             val screen = currentScreen[i]
-            if (screen is PreferenceScreen) screenStack.push(screen)
-            else return@forEach
+            if (screen is PreferenceScreen) {
+                screenStack.push(screen)
+            } else {
+                return@forEach
+            }
         }
         currentScreen.adapter = this
         notifyDataSetChanged()
@@ -350,9 +366,9 @@ class PreferencesAdapter @VisibleForTesting constructor(
 
     @Parcelize
     data class SavedState(val screenPath: IntArray) : Parcelable {
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            return javaClass == other?.javaClass && screenPath.contentEquals((other as SavedState).screenPath)
+        override fun equals(other: Any?): Boolean = when {
+            this === other -> true
+            else -> javaClass == other?.javaClass && screenPath.contentEquals((other as SavedState).screenPath)
         }
 
         override fun hashCode(): Int {

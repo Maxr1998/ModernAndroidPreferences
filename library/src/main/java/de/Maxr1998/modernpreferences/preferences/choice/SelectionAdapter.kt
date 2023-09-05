@@ -35,10 +35,16 @@ internal class SelectionAdapter(
         holder.apply {
             selector.isChecked = preference.isSelected(item)
             title.apply {
-                if (item.titleRes != -1) setText(item.titleRes) else text = item.title
+                when {
+                    item.titleRes != -1 -> setText(item.titleRes)
+                    else -> text = item.title
+                }
             }
             summary.apply {
-                if (item.summaryRes != -1) setText(item.summaryRes) else text = item.summary
+                when {
+                    item.summaryRes != -1 -> setText(item.summaryRes)
+                    else -> text = item.summary
+                }
                 isVisible = item.summaryRes != -1 || item.summary != null
             }
             if (item.badgeInfo != null) {
@@ -56,8 +62,10 @@ internal class SelectionAdapter(
             itemView.setOnClickListener {
                 if (preference.shouldSelect(item)) {
                     preference.select(item)
-                    if (allowMultiSelect) notifyItemChanged(position)
-                    else notifySelectionChanged()
+                    when {
+                        allowMultiSelect -> notifyItemChanged(position)
+                        else -> notifySelectionChanged()
+                    }
                 }
             }
         }
@@ -82,7 +90,10 @@ internal class SelectionAdapter(
             val attrs = intArrayOf(R.attr.mapAccentTextColor, androidx.appcompat.R.attr.colorAccent)
             accentTextColor = itemView.context.theme.obtainStyledAttributes(attrs).use { array ->
                 // Return first resolved attribute or null
-                if (array.indexCount > 0) array.getColorStateList(array.getIndex(0)) else null
+                when {
+                    array.indexCount > 0 -> array.getColorStateList(array.getIndex(0))
+                    else -> null
+                }
             } ?: ColorStateList.valueOf(Color.BLACK) // fallback to black if no colorAccent is defined (unlikely)
 
             // Set initial badge color

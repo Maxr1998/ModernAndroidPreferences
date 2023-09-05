@@ -46,7 +46,10 @@ class EditTextPreference(key: String) : DialogPreference(key) {
     }
 
     override fun createDialog(context: Context): Dialog = Config.dialogBuilderFactory(context).apply {
-        if (titleRes != -1) setTitle(titleRes) else setTitle(title)
+        when {
+            titleRes != -1 -> setTitle(titleRes)
+            else -> setTitle(title)
+        }
         val editText = AppCompatEditText(context).apply {
             if (textInputType != InputType.TYPE_NULL) {
                 inputType = textInputType

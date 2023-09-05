@@ -67,6 +67,8 @@ abstract class AbstractChoiceDialogPreference(
 
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
         super.onStateChanged(source, event)
-        if (event == Lifecycle.Event.ON_DESTROY) selectionAdapter = null
+        if (event == Lifecycle.Event.ON_DESTROY) {
+            selectionAdapter = null
+        }
     }
 }

@@ -153,15 +153,15 @@ open class Preference(key: String) : AbstractPreference(key) {
     var includeInCollapseSummary = true
 
     @LayoutRes
-    open fun getWidgetLayoutResource(): Int {
-        return DEFAULT_RES_ID
-    }
+    open fun getWidgetLayoutResource(): Int = DEFAULT_RES_ID
 
     internal fun attachToScreen(screen: PreferenceScreen, position: Int) {
         check(parent == null) { "Preference was already attached to a screen!" }
+
         parent = screen
         screenPosition = position
         prefs = if (persistent) screen.prefs else null
+
         DependencyManager.register(this)
         onAttach()
     }
@@ -199,7 +199,10 @@ open class Preference(key: String) : AbstractPreference(key) {
 
         preBindListener?.onPreBind(this, holder)
 
-        holder.itemView.layoutParams.height = if (visible) ViewGroup.LayoutParams.WRAP_CONTENT else 0
+        holder.itemView.layoutParams.height = when {
+            visible -> ViewGroup.LayoutParams.WRAP_CONTENT
+            else -> 0
+        }
         if (!visible) {
             holder.itemView.isVisible = false
             return
@@ -223,7 +226,10 @@ open class Preference(key: String) : AbstractPreference(key) {
         holder.iconFrame.apply {
             isVisible = itemVisible || !preferenceParent.collapseIcon
             if (isVisible && this is LinearLayout) {
-                gravity = if (preferenceParent.centerIcon) Gravity.CENTER else Gravity.START or Gravity.CENTER_VERTICAL
+                gravity = when {
+                    preferenceParent.centerIcon -> Gravity.CENTER
+                    else -> Gravity.START or Gravity.CENTER_VERTICAL
+                }
             }
         }
         holder.title.apply {
@@ -278,7 +284,9 @@ open class Preference(key: String) : AbstractPreference(key) {
 
     internal fun performClick(holder: PreferencesAdapter.ViewHolder) {
         onClick(holder)
-        if (clickListener?.onClick(this, holder) == true) bindViews(holder)
+        if (clickListener?.onClick(this, holder) == true) {
+            bindViews(holder)
+        }
     }
 
     open fun onClick(holder: PreferencesAdapter.ViewHolder) {}
@@ -292,8 +300,9 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    fun getInt(defaultValue: Int): Int =
-        prefs?.getInt(key, defaultValue) ?: defaultValue
+    fun getInt(defaultValue: Int): Int {
+        return prefs?.getInt(key, defaultValue) ?: defaultValue
+    }
 
     /**
      * Save a boolean for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
@@ -304,8 +313,9 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    fun getBoolean(defaultValue: Boolean): Boolean =
-        prefs?.getBoolean(key, defaultValue) ?: defaultValue
+    fun getBoolean(defaultValue: Boolean): Boolean {
+        return prefs?.getBoolean(key, defaultValue) ?: defaultValue
+    }
 
     /**
      * Save a String for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
@@ -316,7 +326,9 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    fun getString(): String? = prefs?.getString(key, null)
+    fun getString(): String? {
+        return prefs?.getString(key, null)
+    }
 
     @Deprecated(
         "Passing a default value is not supported anymore, " +
@@ -333,7 +345,9 @@ open class Preference(key: String) : AbstractPreference(key) {
         }
     }
 
-    fun getStringSet(): Set<String>? = prefs?.getStringSet(key, null)
+    fun getStringSet(): Set<String>? {
+        return prefs?.getStringSet(key, null)
+    }
 
     /**
      * Can be set to [Preference.preBindListener]
@@ -387,8 +401,8 @@ open class Preference(key: String) : AbstractPreference(key) {
         /**
          * Factory for [AlertDialog.Builder] that can be overridden for styling reasons.
          *
-         * It's not recommended to pre-configure this dialog builder with anything else like title, message, or buttons,
-         * since the library may overwrite those wherever necessary.
+         * It's not recommended to pre-configure this dialog builder with anything else like title,
+         * message, or buttons, since the library may overwrite those wherever necessary.
          */
         var dialogBuilderFactory: (Context) -> AlertDialog.Builder = { context ->
             AlertDialog.Builder(context)
@@ -420,8 +434,9 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
 
     init {
         copyFrom(builder)
-        for (i in preferences.indices)
+        for (i in preferences.indices) {
             preferences[i].attachToScreen(this, i)
+        }
     }
 
     /**
@@ -460,7 +475,9 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
      */
     fun requestRebind(key: String) {
         val index = indexOf(key)
-        if (index > 0) requestRebind(index)
+        if (index > 0) {
+            requestRebind(index)
+        }
     }
 
     internal fun requestRebind(position: Int, itemCount: Int = 1) {
@@ -478,7 +495,8 @@ class PreferenceScreen private constructor(builder: Builder) : Preference(builde
         this === other -> true
         this::class.java == other::class.java &&
             key == (other as PreferenceScreen).key &&
-            preferences == other.preferences -> true
+            preferences == other.preferences
+        -> true
         else -> false
     }
 

@@ -69,7 +69,10 @@ abstract class DialogPreference(key: String) : Preference(key), LifecycleEventOb
                     createAndShowDialog(source)
                 }
             }
-            Lifecycle.Event.ON_STOP -> @Suppress("DEPRECATION") onStop()
+            Lifecycle.Event.ON_STOP -> {
+                @Suppress("DEPRECATION")
+                onStop()
+            }
             Lifecycle.Event.ON_DESTROY -> {
                 dialog?.apply {
                     recreateDialog = isShowing
