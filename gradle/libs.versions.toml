@@ -1,6 +1,6 @@
 [versions]
 # Plugins
-android-plugin = "7.4.2"
+android-plugin = "8.1.1"
 kotlin = "1.8.22"
 binarycompatibilityvalidator = "0.13.2"
 detekt = "1.21.0"
