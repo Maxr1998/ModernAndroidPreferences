@@ -15,7 +15,7 @@ class ModernSeekBar(
     attrs: AttributeSet?,
     defStyleAttr: Int,
 ) : AppCompatSeekBar(context, attrs, defStyleAttr) {
-    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, R.attr.seekBarStyle)
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, androidx.appcompat.R.attr.seekBarStyle)
     constructor(context: Context) : this(context, null)
 
     private var tickMarkDrawable: Drawable? = null
