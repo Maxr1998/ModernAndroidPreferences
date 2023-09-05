@@ -350,15 +350,17 @@ class PreferencesAdapter @VisibleForTesting constructor(
      */
     @MainThread
     fun loadSavedState(state: SavedState): Boolean {
+        // Can't load state if we're not in the root screen
         if (screenStack.size != 2) return false
-        state.screenPath.forEach { i ->
-            val screen = currentScreen[i]
-            if (screen is PreferenceScreen) {
-                screenStack.push(screen)
-            } else {
-                return@forEach
+
+        // Restore screens from positions given in state
+        for (i in state.screenPath) {
+            when (val screen = currentScreen[i]) {
+                is PreferenceScreen -> screenStack.push(screen)
+                else -> break
             }
         }
+
         currentScreen.adapter = this
         notifyDataSetChanged()
         return true
