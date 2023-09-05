@@ -6,7 +6,6 @@ fun interface OnItemClickListener {
      * This is called before the change gets persisted and can be prevented by returning false.
      *
      * @param item the clicked item
-     * @param index the index of the clicked item
      *
      * @return true to to allow the selection of the item
      */
