@@ -1,7 +1,7 @@
 package de.Maxr1998.modernpreferences.preferences.choice
 
 import androidx.annotation.StringRes
-import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
+import de.Maxr1998.modernpreferences.helpers.DISABLED_RESOURCE_ID
 import de.Maxr1998.modernpreferences.preferences.Badge
 
 /**
@@ -29,7 +29,7 @@ data class SelectionItem private constructor(
         @StringRes
         titleRes: Int,
         @StringRes
-        summaryRes: Int = DEFAULT_RES_ID,
+        summaryRes: Int = DISABLED_RESOURCE_ID,
         badgeInfo: Badge? = null,
     ) : this(
         key = key,
@@ -50,9 +50,9 @@ data class SelectionItem private constructor(
         badgeInfo: Badge? = null,
     ) : this(
         key = key,
-        titleRes = DEFAULT_RES_ID,
+        titleRes = DISABLED_RESOURCE_ID,
         title = title,
-        summaryRes = DEFAULT_RES_ID,
+        summaryRes = DISABLED_RESOURCE_ID,
         summary = summary,
         badgeInfo = badgeInfo,
     )

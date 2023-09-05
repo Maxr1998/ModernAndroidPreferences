@@ -6,7 +6,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
+import de.Maxr1998.modernpreferences.helpers.DISABLED_RESOURCE_ID
 import de.Maxr1998.modernpreferences.preferences.DialogPreference
 
 abstract class AbstractChoiceDialogPreference(
@@ -32,7 +32,7 @@ abstract class AbstractChoiceDialogPreference(
     }
 
     override fun createDialog(context: Context): Dialog = Config.dialogBuilderFactory(context).apply {
-        if (titleRes != DEFAULT_RES_ID) setTitle(titleRes) else setTitle(title)
+        if (titleRes != DISABLED_RESOURCE_ID) setTitle(titleRes) else setTitle(title)
         val dialogContent = RecyclerView(context).apply {
             selectionAdapter = SelectionAdapter(
                 this@AbstractChoiceDialogPreference,

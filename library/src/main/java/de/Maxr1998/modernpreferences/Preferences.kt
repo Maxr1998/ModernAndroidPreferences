@@ -32,7 +32,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
+import de.Maxr1998.modernpreferences.helpers.DISABLED_RESOURCE_ID
 import de.Maxr1998.modernpreferences.helpers.DependencyManager
 import de.Maxr1998.modernpreferences.helpers.KEY_ROOT_SCREEN
 import de.Maxr1998.modernpreferences.helpers.PreferenceMarker
@@ -45,19 +45,19 @@ import java.util.concurrent.atomic.AtomicBoolean
 abstract class AbstractPreference internal constructor(val key: String) {
     // UI
     @StringRes
-    var titleRes: Int = DEFAULT_RES_ID
+    var titleRes: Int = DISABLED_RESOURCE_ID
     var title: CharSequence = ""
 
     @StringRes
-    var summaryRes: Int = DEFAULT_RES_ID
+    var summaryRes: Int = DISABLED_RESOURCE_ID
     var summary: CharSequence? = null
 
     @StringRes
-    var summaryDisabledRes: Int = DEFAULT_RES_ID
+    var summaryDisabledRes: Int = DISABLED_RESOURCE_ID
     var summaryDisabled: CharSequence? = null
 
     @DrawableRes
-    var iconRes: Int = DEFAULT_RES_ID
+    var iconRes: Int = DISABLED_RESOURCE_ID
     var icon: Drawable? = null
 
     @Deprecated(
@@ -65,7 +65,7 @@ abstract class AbstractPreference internal constructor(val key: String) {
         level = DeprecationLevel.WARNING,
     )
     var badgeRes: Int
-        get() = badgeInfo?.textRes ?: DEFAULT_RES_ID
+        get() = badgeInfo?.textRes ?: DISABLED_RESOURCE_ID
         set(value) {
             badgeInfo = Badge(value)
         }
@@ -153,7 +153,7 @@ open class Preference(key: String) : AbstractPreference(key) {
     var includeInCollapseSummary = true
 
     @LayoutRes
-    open fun getWidgetLayoutResource(): Int = DEFAULT_RES_ID
+    open fun getWidgetLayoutResource(): Int = DISABLED_RESOURCE_ID
 
     internal fun attachToScreen(screen: PreferenceScreen, position: Int) {
         check(parent == null) { "Preference was already attached to a screen!" }
@@ -179,9 +179,9 @@ open class Preference(key: String) : AbstractPreference(key) {
     }
 
     protected open fun resolveSummary(context: Context): CharSequence? = when {
-        !enabled && summaryDisabledRes != DEFAULT_RES_ID -> context.resources.getText(summaryDisabledRes)
+        !enabled && summaryDisabledRes != DISABLED_RESOURCE_ID -> context.resources.getText(summaryDisabledRes)
         !enabled && summaryDisabled != null -> summaryDisabled
-        summaryRes != -1 -> context.resources.getText(summaryRes)
+        summaryRes != DISABLED_RESOURCE_ID -> context.resources.getText(summaryRes)
         summary != null -> summary
         else -> null
     }
@@ -215,7 +215,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         holder.icon?.apply {
             itemVisible = true
             when {
-                iconRes != DEFAULT_RES_ID -> setImageResource(iconRes)
+                iconRes != DISABLED_RESOURCE_ID -> setImageResource(iconRes)
                 icon != null -> setImageDrawable(icon)
                 else -> {
                     setImageDrawable(null)
@@ -233,7 +233,7 @@ open class Preference(key: String) : AbstractPreference(key) {
             }
         }
         holder.title.apply {
-            if (titleRes != DEFAULT_RES_ID) setText(titleRes) else text = title
+            if (titleRes != DISABLED_RESOURCE_ID) setText(titleRes) else text = title
             maxLines = Config.titleMaxLines
         }
         holder.summary?.apply {
@@ -246,7 +246,7 @@ open class Preference(key: String) : AbstractPreference(key) {
         if (badgeInfo != null) {
             holder.badge?.apply {
                 when {
-                    badgeInfo.textRes != DEFAULT_RES_ID -> setText(badgeInfo.textRes)
+                    badgeInfo.textRes != DISABLED_RESOURCE_ID -> setText(badgeInfo.textRes)
                     else -> text = badgeInfo.text
                 }
                 isVisible = badgeInfo.isVisible

@@ -29,12 +29,13 @@ import androidx.core.view.isVisible
 import de.Maxr1998.modernpreferences.Preference
 import de.Maxr1998.modernpreferences.PreferencesAdapter
 import de.Maxr1998.modernpreferences.R
+import de.Maxr1998.modernpreferences.helpers.DISABLED_RESOURCE_ID
 
 class ExpandableTextPreference(key: String) : Preference(key) {
     private var expanded = false
 
     @StringRes
-    var textRes: Int = -1
+    var textRes: Int = DISABLED_RESOURCE_ID
     var text: CharSequence? = null
 
     var monospace = true
@@ -51,7 +52,7 @@ class ExpandableTextPreference(key: String) : Preference(key) {
         widget.tag = tv
         tv.apply {
             when {
-                textRes != -1 -> setText(textRes)
+                textRes != DISABLED_RESOURCE_ID -> setText(textRes)
                 else -> text = this@ExpandableTextPreference.text
             }
             typeface = when {

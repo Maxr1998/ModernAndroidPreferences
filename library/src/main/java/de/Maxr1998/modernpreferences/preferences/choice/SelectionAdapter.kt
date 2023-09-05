@@ -12,7 +12,7 @@ import androidx.core.content.res.use
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.R
-import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
+import de.Maxr1998.modernpreferences.helpers.DISABLED_RESOURCE_ID
 
 internal class SelectionAdapter(
     private val preference: AbstractChoiceDialogPreference,
@@ -36,21 +36,21 @@ internal class SelectionAdapter(
             selector.isChecked = preference.isSelected(item)
             title.apply {
                 when {
-                    item.titleRes != -1 -> setText(item.titleRes)
+                    item.titleRes != DISABLED_RESOURCE_ID -> setText(item.titleRes)
                     else -> text = item.title
                 }
             }
             summary.apply {
                 when {
-                    item.summaryRes != -1 -> setText(item.summaryRes)
+                    item.summaryRes != DISABLED_RESOURCE_ID -> setText(item.summaryRes)
                     else -> text = item.summary
                 }
-                isVisible = item.summaryRes != -1 || item.summary != null
+                isVisible = item.summaryRes != DISABLED_RESOURCE_ID || item.summary != null
             }
             if (item.badgeInfo != null) {
                 badge.apply {
                     when {
-                        item.badgeInfo.textRes != DEFAULT_RES_ID -> setText(item.badgeInfo.textRes)
+                        item.badgeInfo.textRes != DISABLED_RESOURCE_ID -> setText(item.badgeInfo.textRes)
                         else -> text = item.badgeInfo.text
                     }
                     isVisible = item.badgeInfo.isVisible

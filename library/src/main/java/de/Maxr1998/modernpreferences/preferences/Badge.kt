@@ -2,16 +2,16 @@ package de.Maxr1998.modernpreferences.preferences
 
 import android.content.res.ColorStateList
 import androidx.annotation.StringRes
-import de.Maxr1998.modernpreferences.helpers.DEFAULT_RES_ID
+import de.Maxr1998.modernpreferences.helpers.DISABLED_RESOURCE_ID
 
 data class Badge internal constructor(
     @StringRes
-    val textRes: Int = DEFAULT_RES_ID,
+    val textRes: Int = DISABLED_RESOURCE_ID,
     val text: CharSequence? = null,
     val badgeColor: ColorStateList? = null,
 ) {
     constructor(text: CharSequence?, badgeColor: ColorStateList? = null) : this(
-        textRes = DEFAULT_RES_ID,
+        textRes = DISABLED_RESOURCE_ID,
         text = text,
         badgeColor = badgeColor,
     )
@@ -23,5 +23,5 @@ data class Badge internal constructor(
     )
 
     val isVisible: Boolean
-        get() = textRes != DEFAULT_RES_ID || text != null
+        get() = textRes != DISABLED_RESOURCE_ID || text != null
 }

@@ -20,6 +20,7 @@ import android.content.Context
 import android.graphics.drawable.StateListDrawable
 import android.widget.CompoundButton
 import de.Maxr1998.modernpreferences.PreferencesAdapter
+import de.Maxr1998.modernpreferences.helpers.DISABLED_RESOURCE_ID
 
 @Suppress("MemberVisibilityCanBePrivate")
 abstract class TwoStatePreference(key: String) : StatefulPreference(key) {
@@ -43,7 +44,7 @@ abstract class TwoStatePreference(key: String) : StatefulPreference(key) {
     var checkedChangeListener: OnCheckedChangeListener? = null
 
     var summaryOn: CharSequence? = null
-    var summaryOnRes: Int = -1
+    var summaryOnRes: Int = DISABLED_RESOURCE_ID
 
     /**
      * When set to true, dependents are disabled when this preference is checked,
@@ -59,7 +60,7 @@ abstract class TwoStatePreference(key: String) : StatefulPreference(key) {
     }
 
     override fun resolveSummary(context: Context) = when {
-        checkedInternal && summaryOnRes != -1 -> context.resources.getText(summaryOnRes)
+        checkedInternal && summaryOnRes != DISABLED_RESOURCE_ID -> context.resources.getText(summaryOnRes)
         checkedInternal && summaryOn != null -> summaryOn
         else -> super.resolveSummary(context)
     }
@@ -74,7 +75,7 @@ abstract class TwoStatePreference(key: String) : StatefulPreference(key) {
             commitBoolean(new)
             checkedInternal = new // Update internal state
             if (holder != null) {
-                if (summaryOnRes != -1 || summaryOn != null) {
+                if (summaryOnRes != DISABLED_RESOURCE_ID || summaryOn != null) {
                     bindViews(holder)
                 } else {
                     updateButton(holder)

@@ -9,6 +9,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import androidx.annotation.StringRes
 import androidx.appcompat.widget.AppCompatEditText
+import de.Maxr1998.modernpreferences.helpers.DISABLED_RESOURCE_ID
 
 class EditTextPreference(key: String) : DialogPreference(key) {
 
@@ -26,7 +27,7 @@ class EditTextPreference(key: String) : DialogPreference(key) {
     var textInputType: Int = InputType.TYPE_NULL
 
     @StringRes
-    var textInputHintRes: Int = -1
+    var textInputHintRes: Int = DISABLED_RESOURCE_ID
     var textInputHint: CharSequence? = null
 
     var textChangeListener: OnTextChangeListener? = null
@@ -47,7 +48,7 @@ class EditTextPreference(key: String) : DialogPreference(key) {
 
     override fun createDialog(context: Context): Dialog = Config.dialogBuilderFactory(context).apply {
         when {
-            titleRes != -1 -> setTitle(titleRes)
+            titleRes != DISABLED_RESOURCE_ID -> setTitle(titleRes)
             else -> setTitle(title)
         }
         val editText = AppCompatEditText(context).apply {
@@ -55,7 +56,7 @@ class EditTextPreference(key: String) : DialogPreference(key) {
                 inputType = textInputType
             }
             when {
-                textInputHintRes != -1 -> setHint(textInputHintRes)
+                textInputHintRes != DISABLED_RESOURCE_ID -> setHint(textInputHintRes)
                 textInputHint != null -> hint = textInputHint
             }
             setText(currentInput)
