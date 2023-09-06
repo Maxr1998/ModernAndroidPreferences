@@ -35,7 +35,7 @@ import androidx.core.view.get
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewTreeLifecycleOwner
+import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.preferences.AccentButtonPreference
@@ -107,7 +107,7 @@ class PreferencesAdapter @VisibleForTesting constructor(
         if (recyclerView.layoutManager !is LinearLayoutManager) {
             throw UnsupportedOperationException("ModernAndroidPreferences requires a LinearLayoutManager")
         }
-        ViewTreeLifecycleOwner.get(recyclerView)?.lifecycle?.addObserver(this)
+        recyclerView.findViewTreeLifecycleOwner()?.lifecycle?.addObserver(this)
     }
 
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
