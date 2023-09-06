@@ -57,6 +57,12 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dependencies {
@@ -94,11 +100,6 @@ tasks {
     }
 }
 
-val sourcesJar by tasks.registering(Jar::class) {
-    archiveClassifier.set("sources")
-    from(android.sourceSets.getByName("main").java.srcDirs)
-}
-
 var ossrhUsername: String? = null
 var ossrhPassword: String? = null
 var githubToken: String? = null
@@ -113,60 +114,58 @@ if (propFile.exists()) {
 }
 
 // Maven publishing config
-publishing {
-    publications {
-        register<MavenPublication>("production") {
-            groupId = libraryGroup
-            artifactId = libraryName
-            version = libraryVersion
+afterEvaluate {
+    publishing {
+        publications {
+            register<MavenPublication>("production") {
+                groupId = libraryGroup
+                artifactId = libraryName
+                version = libraryVersion
 
-            afterEvaluate {
                 from(components["release"])
-            }
 
-            artifact(sourcesJar.get())
+                pom {
+                    name.set(prettyLibraryName)
+                    description.set("Android Preferences defined through Kotlin DSL, shown in a RecyclerView")
+                    url.set("https://github.com/Maxr1998/ModernAndroidPreferences")
 
-            pom {
-                name.set(prettyLibraryName)
-                description.set("Android Preferences defined through Kotlin DSL, shown in a RecyclerView")
-                url.set("https://github.com/Maxr1998/ModernAndroidPreferences")
-
-                licenses {
-                    license {
-                        name.set("The Apache License, Version 2.0")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    licenses {
+                        license {
+                            name.set("The Apache License, Version 2.0")
+                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                        }
                     }
-                }
-                developers {
-                    developer {
-                        id.set("Maxr1998")
-                        name.set("Max Rumpf")
-                        url.set("https://github.com/Maxr1998")
+                    developers {
+                        developer {
+                            id.set("Maxr1998")
+                            name.set("Max Rumpf")
+                            url.set("https://github.com/Maxr1998")
+                        }
                     }
-                }
-                scm {
-                    connection.set("scm:git:github.com/Maxr1998/ModernAndroidPreferences.git")
-                    developerConnection.set("scm:git:ssh://github.com/Maxr1998/ModernAndroidPreferences.git")
-                    url.set("https://github.com/Maxr1998/ModernAndroidPreferences/tree/master")
+                    scm {
+                        connection.set("scm:git:github.com/Maxr1998/ModernAndroidPreferences.git")
+                        developerConnection.set("scm:git:ssh://github.com/Maxr1998/ModernAndroidPreferences.git")
+                        url.set("https://github.com/Maxr1998/ModernAndroidPreferences/tree/master")
+                    }
                 }
             }
         }
-    }
-    repositories {
-        maven {
-            name = "sonatype"
-            setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = ossrhUsername
-                password = ossrhPassword
+        repositories {
+            maven {
+                name = "sonatype"
+                setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+                credentials {
+                    username = ossrhUsername
+                    password = ossrhPassword
+                }
             }
-        }
-        maven {
-            name = "GitHubPackages"
-            setUrl("https://maven.pkg.github.com/Maxr1998/ModernAndroidPreferences")
-            credentials {
-                username = "Maxr1998"
-                password = githubToken
+            maven {
+                name = "GitHubPackages"
+                setUrl("https://maven.pkg.github.com/Maxr1998/ModernAndroidPreferences")
+                credentials {
+                    username = "Maxr1998"
+                    password = githubToken
+                }
             }
         }
     }
