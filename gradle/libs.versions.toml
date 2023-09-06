@@ -26,7 +26,7 @@ kotest = "5.7.2"
 mockk = "1.13.7"
 
 # Debug
-leakcanary = "2.10"
+leakcanary = "2.12"
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "android-plugin" }
