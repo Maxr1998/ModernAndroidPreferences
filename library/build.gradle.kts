@@ -29,7 +29,7 @@ detekt {
 
 android {
     namespace = "de.Maxr1998.modernpreferences"
-    compileSdk = 31
+    compileSdk = 34
     defaultConfig {
         minSdk = 21
     }
