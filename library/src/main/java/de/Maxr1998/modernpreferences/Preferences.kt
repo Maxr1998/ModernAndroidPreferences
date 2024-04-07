@@ -148,7 +148,7 @@ open class Preference(key: String) : AbstractPreference(key) {
      */
     var persistent: Boolean = true
 
-    private var highlightOnNextBind = AtomicBoolean(false)
+    private val highlightOnNextBind = AtomicBoolean(false)
 
     var includeInCollapseSummary = true
 
