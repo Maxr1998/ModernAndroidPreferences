@@ -5,8 +5,8 @@ import de.Maxr1998.modernpreferences.helpers.DISABLED_RESOURCE_ID
 
 class MultiChoiceDialogPreference(
     key: String,
-    items: List<SelectionItem>,
-) : AbstractChoiceDialogPreference(key, items, true) {
+    items: List<SelectionItem<String>>,
+) : AbstractChoiceDialogPreference<String>(key, items, true) {
 
     /**
      * The initial selections if no choice has been made yet and no value
@@ -14,9 +14,9 @@ class MultiChoiceDialogPreference(
      */
     var initialSelections: Set<String>? = null
 
-    private val selections: MutableSet<SelectionItem> = HashSet()
+    private val selections: MutableSet<SelectionItem<String>> = HashSet()
 
-    val currentSelections: Set<SelectionItem>
+    val currentSelections: Set<SelectionItem<String>>
         get() = HashSet(selections)
 
     var selectionChangeListener: OnSelectionChangeListener? = null
@@ -28,18 +28,18 @@ class MultiChoiceDialogPreference(
         }
     }
 
-    override fun select(item: SelectionItem) {
+    override fun select(item: SelectionItem<String>) {
         if (!selections.add(item)) {
             selections.remove(item)
         }
         selectionAdapter?.notifySelectionChanged()
     }
 
-    override fun isSelected(item: SelectionItem): Boolean = item in selections
+    override fun isSelected(item: SelectionItem<String>): Boolean = item in selections
 
     override fun persistSelection() {
         val resultSet = HashSet<String>()
-        selections.mapTo(resultSet, SelectionItem::key)
+        selections.mapTo(resultSet, SelectionItem<String>::key)
         if (selectionChangeListener?.onSelectionChange(this, HashSet(resultSet)) != false) {
             commitStringSet(resultSet)
         }

@@ -9,15 +9,15 @@ import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.helpers.DISABLED_RESOURCE_ID
 import de.Maxr1998.modernpreferences.preferences.DialogPreference
 
-abstract class AbstractChoiceDialogPreference(
+abstract class AbstractChoiceDialogPreference<T : Any>(
     key: String,
-    protected val items: List<SelectionItem>,
+    protected val items: List<SelectionItem<T>>,
     private val allowMultiSelect: Boolean,
 ) : DialogPreference(key) {
 
-    internal var selectionAdapter: SelectionAdapter? = null
+    internal var selectionAdapter: SelectionAdapter<T>? = null
 
-    var onItemClickListener: OnItemClickListener? = null
+    var onItemClickListener: OnItemClickListener<T>? = null
 
     /**
      * Whether the summary should be auto-generated from the current selection.
@@ -53,17 +53,17 @@ abstract class AbstractChoiceDialogPreference(
         }
     }.create()
 
-    internal fun shouldSelect(item: SelectionItem): Boolean {
+    internal fun shouldSelect(item: SelectionItem<T>): Boolean {
         return onItemClickListener?.onItemSelected(item) ?: true
     }
 
-    internal abstract fun select(item: SelectionItem)
+    internal abstract fun select(item: SelectionItem<T>)
 
     protected abstract fun persistSelection()
 
     protected abstract fun resetSelection()
 
-    abstract fun isSelected(item: SelectionItem): Boolean
+    abstract fun isSelected(item: SelectionItem<T>): Boolean
 
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
         super.onStateChanged(source, event)

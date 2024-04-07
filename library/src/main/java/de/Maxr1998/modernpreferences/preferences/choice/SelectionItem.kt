@@ -6,13 +6,13 @@ import de.Maxr1998.modernpreferences.preferences.Badge
 
 /**
  * Represents a selectable item in a selection dialog preference,
- * e.g. the [SingleChoiceDialogPreference]
+ * e.g. the [AbstractSingleChoiceDialogPreference]
  *
  * @param key The key of this item, will be committed to preferences if selected
  */
 @Suppress("DataClassPrivateConstructor")
-data class SelectionItem private constructor(
-    val key: String,
+data class SelectionItem<T : Any> private constructor(
+    val key: T,
     @StringRes
     val titleRes: Int,
     val title: CharSequence,
@@ -25,7 +25,7 @@ data class SelectionItem private constructor(
      * @see SelectionItem
      */
     constructor(
-        key: String,
+        key: T,
         @StringRes
         titleRes: Int,
         @StringRes
@@ -44,7 +44,7 @@ data class SelectionItem private constructor(
      * @see SelectionItem
      */
     constructor(
-        key: String,
+        key: T,
         title: CharSequence,
         summary: CharSequence? = null,
         badgeInfo: Badge? = null,

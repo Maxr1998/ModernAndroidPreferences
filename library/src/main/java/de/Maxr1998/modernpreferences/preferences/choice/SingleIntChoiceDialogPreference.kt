@@ -16,15 +16,15 @@
 
 package de.Maxr1998.modernpreferences.preferences.choice
 
-class SingleChoiceDialogPreference(
+class SingleIntChoiceDialogPreference(
     key: String,
-    items: List<SelectionItem<String>>,
-) : AbstractSingleChoiceDialogPreference<String>(key, items) {
-    override fun saveKey(key: String) {
-        commitString(key)
+    items: List<SelectionItem<Int>>,
+) : AbstractSingleChoiceDialogPreference<Int>(key, items) {
+    override fun saveKey(key: Int) {
+        commitInt(key)
     }
 
-    override fun loadKey(defaultValue: String?): String? {
-        return getString() ?: defaultValue
+    override fun loadKey(defaultValue: Int?): Int? {
+        return if (hasValue()) getInt(0) else defaultValue
     }
 }

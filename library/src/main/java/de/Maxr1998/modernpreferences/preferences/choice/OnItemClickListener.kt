@@ -1,6 +1,6 @@
 package de.Maxr1998.modernpreferences.preferences.choice
 
-fun interface OnItemClickListener {
+fun interface OnItemClickListener<T : Any> {
     /**
      * Notified when the user clicks a [SelectionItem].
      * This is called before the change gets persisted and can be prevented by returning false.
@@ -9,5 +9,5 @@ fun interface OnItemClickListener {
      *
      * @return true to to allow the selection of the item
      */
-    fun onItemSelected(item: SelectionItem): Boolean
+    fun onItemSelected(item: SelectionItem<T>): Boolean
 }

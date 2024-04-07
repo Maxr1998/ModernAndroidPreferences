@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import de.Maxr1998.modernpreferences.R
 import de.Maxr1998.modernpreferences.helpers.DISABLED_RESOURCE_ID
 
-internal class SelectionAdapter(
-    private val preference: AbstractChoiceDialogPreference,
-    private val items: List<SelectionItem>,
+internal class SelectionAdapter<T : Any>(
+    private val preference: AbstractChoiceDialogPreference<T>,
+    private val items: List<SelectionItem<T>>,
     private val allowMultiSelect: Boolean,
 ) : RecyclerView.Adapter<SelectionAdapter.SelectionViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SelectionViewHolder {

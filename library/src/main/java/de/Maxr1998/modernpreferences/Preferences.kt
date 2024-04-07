@@ -291,6 +291,10 @@ open class Preference(key: String) : AbstractPreference(key) {
 
     open fun onClick(holder: PreferencesAdapter.ViewHolder) {}
 
+    fun hasValue(): Boolean {
+        return prefs?.contains(key) == true
+    }
+
     /**
      * Save an int for this [Preference]s' [key] to the [SharedPreferences] of the attached [PreferenceScreen]
      */

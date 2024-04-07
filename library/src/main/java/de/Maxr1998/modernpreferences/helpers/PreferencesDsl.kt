@@ -32,9 +32,11 @@ import de.Maxr1998.modernpreferences.preferences.ImagePreference
 import de.Maxr1998.modernpreferences.preferences.SeekBarPreference
 import de.Maxr1998.modernpreferences.preferences.SwitchPreference
 import de.Maxr1998.modernpreferences.preferences.TwoStatePreference
+import de.Maxr1998.modernpreferences.preferences.choice.AbstractSingleChoiceDialogPreference
 import de.Maxr1998.modernpreferences.preferences.choice.MultiChoiceDialogPreference
 import de.Maxr1998.modernpreferences.preferences.choice.SelectionItem
 import de.Maxr1998.modernpreferences.preferences.choice.SingleChoiceDialogPreference
+import de.Maxr1998.modernpreferences.preferences.choice.SingleIntChoiceDialogPreference
 
 // PreferenceScreen DSL functions
 inline fun screen(context: Context?, block: PreferenceScreen.Builder.() -> Unit): PreferenceScreen {
@@ -86,15 +88,23 @@ inline fun PreferenceScreen.Appendable.expandText(
 
 inline fun PreferenceScreen.Appendable.singleChoice(
     key: String,
-    items: List<SelectionItem>,
+    items: List<SelectionItem<String>>,
     block: SingleChoiceDialogPreference.() -> Unit,
 ): SingleChoiceDialogPreference {
     return SingleChoiceDialogPreference(key, items).apply(block).also(::addPreferenceItem)
 }
 
+inline fun PreferenceScreen.Appendable.singleChoice(
+    key: String,
+    items: List<SelectionItem<Int>>,
+    block: SingleIntChoiceDialogPreference.() -> Unit,
+): SingleIntChoiceDialogPreference {
+    return SingleIntChoiceDialogPreference(key, items).apply(block).also(::addPreferenceItem)
+}
+
 inline fun PreferenceScreen.Appendable.multiChoice(
     key: String,
-    items: List<SelectionItem>,
+    items: List<SelectionItem<String>>,
     block: MultiChoiceDialogPreference.() -> Unit,
 ): MultiChoiceDialogPreference {
     return MultiChoiceDialogPreference(key, items).apply(block).also(::addPreferenceItem)
@@ -177,22 +187,22 @@ inline fun TwoStatePreference.defaultOnCheckedChange(crossinline callback: (Bool
 }
 
 /**
- * [SingleChoiceDialogPreference.OnSelectionChangeListener] shorthand.
+ * [AbstractSingleChoiceDialogPreference.OnSelectionChangeListener] shorthand.
  * Supplies the changed selection, return value determines whether that state should be persisted
  * to [SharedPreferences][android.content.SharedPreferences].
  */
 inline fun SingleChoiceDialogPreference.onSelectionChange(crossinline callback: (String) -> Boolean) {
-    selectionChangeListener = SingleChoiceDialogPreference.OnSelectionChangeListener { _, selection ->
+    selectionChangeListener = AbstractSingleChoiceDialogPreference.OnSelectionChangeListener { _, selection ->
         callback(selection)
     }
 }
 
 /**
- * [SingleChoiceDialogPreference.OnSelectionChangeListener] shorthand.
+ * [AbstractSingleChoiceDialogPreference.OnSelectionChangeListener] shorthand.
  * Always persists the change to [SharedPreferences][android.content.SharedPreferences].
  */
 inline fun SingleChoiceDialogPreference.defaultOnSelectionChange(crossinline callback: (String) -> Unit) {
-    selectionChangeListener = SingleChoiceDialogPreference.OnSelectionChangeListener { _, selection ->
+    selectionChangeListener = AbstractSingleChoiceDialogPreference.OnSelectionChangeListener { _, selection ->
         callback(selection)
         true
     }
