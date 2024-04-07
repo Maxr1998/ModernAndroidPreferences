@@ -49,6 +49,7 @@ public class de/Maxr1998/modernpreferences/Preference : de/Maxr1998/modernprefer
 	public final fun getStringSet ()Ljava/util/Set;
 	public fun getWidgetLayoutResource ()I
 	public final fun hasParent (Ljava/lang/String;)Z
+	public final fun hasValue ()Z
 	public fun onClick (Lde/Maxr1998/modernpreferences/PreferencesAdapter$ViewHolder;)V
 	public final fun requestRebind ()V
 	public final fun requestRebindAndHighlight ()V
@@ -219,6 +220,7 @@ public final class de/Maxr1998/modernpreferences/helpers/PreferencesDslKt {
 	public static final fun screen (Landroid/content/Context;Lkotlin/jvm/functions/Function1;)Lde/Maxr1998/modernpreferences/PreferenceScreen;
 	public static final fun seekBar (Lde/Maxr1998/modernpreferences/PreferenceScreen$Appendable;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lde/Maxr1998/modernpreferences/preferences/SeekBarPreference;
 	public static final fun singleChoice (Lde/Maxr1998/modernpreferences/PreferenceScreen$Appendable;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;)Lde/Maxr1998/modernpreferences/preferences/choice/SingleChoiceDialogPreference;
+	public static final fun singleChoice (Lde/Maxr1998/modernpreferences/PreferenceScreen$Appendable;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;)Lde/Maxr1998/modernpreferences/preferences/choice/SingleIntChoiceDialogPreference;
 	public static final fun subScreen (Lde/Maxr1998/modernpreferences/PreferenceScreen$Builder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lde/Maxr1998/modernpreferences/PreferenceScreen;
 	public static final fun subScreen (Lde/Maxr1998/modernpreferences/preferences/CollapsePreference;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun subScreen$default (Lde/Maxr1998/modernpreferences/PreferenceScreen$Builder;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lde/Maxr1998/modernpreferences/PreferenceScreen;
@@ -413,6 +415,23 @@ public abstract class de/Maxr1998/modernpreferences/preferences/choice/AbstractC
 	public final fun setOnItemClickListener (Lde/Maxr1998/modernpreferences/preferences/choice/OnItemClickListener;)V
 }
 
+public abstract class de/Maxr1998/modernpreferences/preferences/choice/AbstractSingleChoiceDialogPreference : de/Maxr1998/modernpreferences/preferences/choice/AbstractChoiceDialogPreference {
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public final fun getCurrentSelection ()Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;
+	public final fun getInitialSelection ()Ljava/lang/Object;
+	public final fun getSelectionChangeListener ()Lde/Maxr1998/modernpreferences/preferences/choice/AbstractSingleChoiceDialogPreference$OnSelectionChangeListener;
+	public fun isSelected (Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;)Z
+	protected fun persistSelection ()V
+	protected fun resetSelection ()V
+	protected fun resolveSummary (Landroid/content/Context;)Ljava/lang/CharSequence;
+	public final fun setInitialSelection (Ljava/lang/Object;)V
+	public final fun setSelectionChangeListener (Lde/Maxr1998/modernpreferences/preferences/choice/AbstractSingleChoiceDialogPreference$OnSelectionChangeListener;)V
+}
+
+public abstract interface class de/Maxr1998/modernpreferences/preferences/choice/AbstractSingleChoiceDialogPreference$OnSelectionChangeListener {
+	public abstract fun onSelectionChange (Lde/Maxr1998/modernpreferences/preferences/choice/AbstractSingleChoiceDialogPreference;Ljava/lang/Object;)Z
+}
+
 public final class de/Maxr1998/modernpreferences/preferences/choice/MultiChoiceDialogPreference : de/Maxr1998/modernpreferences/preferences/choice/AbstractChoiceDialogPreference {
 	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
 	public final fun getCurrentSelections ()Ljava/util/Set;
@@ -432,21 +451,21 @@ public abstract interface class de/Maxr1998/modernpreferences/preferences/choice
 }
 
 public final class de/Maxr1998/modernpreferences/preferences/choice/SelectionItem {
-	public fun <init> (Ljava/lang/String;IILde/Maxr1998/modernpreferences/preferences/Badge;)V
-	public synthetic fun <init> (Ljava/lang/String;IILde/Maxr1998/modernpreferences/preferences/Badge;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/CharSequence;Ljava/lang/CharSequence;Lde/Maxr1998/modernpreferences/preferences/Badge;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/CharSequence;Ljava/lang/CharSequence;Lde/Maxr1998/modernpreferences/preferences/Badge;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/String;
+	public fun <init> (Ljava/lang/Object;IILde/Maxr1998/modernpreferences/preferences/Badge;)V
+	public synthetic fun <init> (Ljava/lang/Object;IILde/Maxr1998/modernpreferences/preferences/Badge;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;Ljava/lang/CharSequence;Ljava/lang/CharSequence;Lde/Maxr1998/modernpreferences/preferences/Badge;)V
+	public synthetic fun <init> (Ljava/lang/Object;Ljava/lang/CharSequence;Ljava/lang/CharSequence;Lde/Maxr1998/modernpreferences/preferences/Badge;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/Object;
 	public final fun component2 ()I
 	public final fun component3 ()Ljava/lang/CharSequence;
 	public final fun component4 ()I
 	public final fun component5 ()Ljava/lang/CharSequence;
 	public final fun component6 ()Lde/Maxr1998/modernpreferences/preferences/Badge;
-	public final fun copy (Ljava/lang/String;ILjava/lang/CharSequence;ILjava/lang/CharSequence;Lde/Maxr1998/modernpreferences/preferences/Badge;)Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;
-	public static synthetic fun copy$default (Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;Ljava/lang/String;ILjava/lang/CharSequence;ILjava/lang/CharSequence;Lde/Maxr1998/modernpreferences/preferences/Badge;ILjava/lang/Object;)Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;
+	public final fun copy (Ljava/lang/Object;ILjava/lang/CharSequence;ILjava/lang/CharSequence;Lde/Maxr1998/modernpreferences/preferences/Badge;)Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;
+	public static synthetic fun copy$default (Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;Ljava/lang/Object;ILjava/lang/CharSequence;ILjava/lang/CharSequence;Lde/Maxr1998/modernpreferences/preferences/Badge;ILjava/lang/Object;)Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getBadgeInfo ()Lde/Maxr1998/modernpreferences/preferences/Badge;
-	public final fun getKey ()Ljava/lang/String;
+	public final fun getKey ()Ljava/lang/Object;
 	public final fun getSummary ()Ljava/lang/CharSequence;
 	public final fun getSummaryRes ()I
 	public final fun getTitle ()Ljava/lang/CharSequence;
@@ -455,18 +474,16 @@ public final class de/Maxr1998/modernpreferences/preferences/choice/SelectionIte
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class de/Maxr1998/modernpreferences/preferences/choice/SingleChoiceDialogPreference : de/Maxr1998/modernpreferences/preferences/choice/AbstractChoiceDialogPreference {
+public final class de/Maxr1998/modernpreferences/preferences/choice/SingleChoiceDialogPreference : de/Maxr1998/modernpreferences/preferences/choice/AbstractSingleChoiceDialogPreference {
 	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
-	public final fun getCurrentSelection ()Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;
-	public final fun getInitialSelection ()Ljava/lang/String;
-	public final fun getSelectionChangeListener ()Lde/Maxr1998/modernpreferences/preferences/choice/SingleChoiceDialogPreference$OnSelectionChangeListener;
-	public fun isSelected (Lde/Maxr1998/modernpreferences/preferences/choice/SelectionItem;)Z
-	public final fun setInitialSelection (Ljava/lang/String;)V
-	public final fun setSelectionChangeListener (Lde/Maxr1998/modernpreferences/preferences/choice/SingleChoiceDialogPreference$OnSelectionChangeListener;)V
+	public synthetic fun loadKey$modernandroidpreferences (Ljava/lang/Object;)Ljava/lang/Object;
+	public synthetic fun saveKey$modernandroidpreferences (Ljava/lang/Object;)V
 }
 
-public abstract interface class de/Maxr1998/modernpreferences/preferences/choice/SingleChoiceDialogPreference$OnSelectionChangeListener {
-	public abstract fun onSelectionChange (Lde/Maxr1998/modernpreferences/preferences/choice/SingleChoiceDialogPreference;Ljava/lang/String;)Z
+public final class de/Maxr1998/modernpreferences/preferences/choice/SingleIntChoiceDialogPreference : de/Maxr1998/modernpreferences/preferences/choice/AbstractSingleChoiceDialogPreference {
+	public fun <init> (Ljava/lang/String;Ljava/util/List;)V
+	public synthetic fun loadKey$modernandroidpreferences (Ljava/lang/Object;)Ljava/lang/Object;
+	public synthetic fun saveKey$modernandroidpreferences (Ljava/lang/Object;)V
 }
 
 public final class de/Maxr1998/modernpreferences/views/ModernSeekBar : androidx/appcompat/widget/AppCompatSeekBar {
