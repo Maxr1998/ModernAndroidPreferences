@@ -17,8 +17,8 @@ plugins {
 // Versions
 val libraryVersion = "2.4.0-beta2"
 val libraryGroup = "de.maxr1998"
-val libraryName = "modernandroidpreferences"
-val prettyLibraryName = "ModernAndroidPreferences"
+val libraryName = "modernandroidpreferencesfork"
+val prettyLibraryName = "ModernAndroidPreferencesFork"
 
 detekt {
     buildUponDefaultConfig = true
@@ -127,7 +127,7 @@ afterEvaluate {
                 pom {
                     name.set(prettyLibraryName)
                     description.set("Android Preferences defined through Kotlin DSL, shown in a RecyclerView")
-                    url.set("https://github.com/Maxr1998/ModernAndroidPreferences")
+                    url.set("https://github.com/aquilesTrindade/modern-preferences-fork")
 
                     licenses {
                         license {
@@ -144,8 +144,8 @@ afterEvaluate {
                     }
                     scm {
                         connection.set("scm:git:github.com/Maxr1998/ModernAndroidPreferences.git")
-                        developerConnection.set("scm:git:ssh://github.com/Maxr1998/ModernAndroidPreferences.git")
-                        url.set("https://github.com/Maxr1998/ModernAndroidPreferences/tree/master")
+                        developerConnection.set("scm:git:ssh://github.com/aquilesTrindade/modern-preferences-fork.git")
+                        url.set("https://github.com/aquilesTrindade/modern-preferences-fork/tree/master")
                     }
                 }
             }
@@ -161,7 +161,7 @@ afterEvaluate {
             }
             maven {
                 name = "GitHubPackages"
-                setUrl("https://maven.pkg.github.com/Maxr1998/ModernAndroidPreferences")
+                setUrl("https://maven.pkg.github.com/aquilesTrindade/modern-preferences-fork")
                 credentials {
                     username = "Maxr1998"
                     password = githubToken
