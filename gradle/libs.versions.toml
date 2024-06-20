@@ -5,7 +5,7 @@ kotlin = "1.9.23"
 binarycompatibilityvalidator = "0.14.0"
 detekt = "1.21.0"
 android-junit5 = "1.9.3.0"
-testlogger = "3.2.0"
+testlogger = "4.0.0"
 
 # Core
 androidx-core = "1.10.1"
