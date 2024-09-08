@@ -3,7 +3,7 @@
 android-plugin = "8.3.1"
 kotlin = "1.9.23"
 binarycompatibilityvalidator = "0.14.0"
-detekt = "1.21.0"
+detekt = "1.23.7"
 android-junit5 = "1.9.3.0"
 testlogger = "3.2.0"
 
